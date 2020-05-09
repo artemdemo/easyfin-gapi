@@ -1,3 +1,5 @@
+import parseISO from 'date-fns/parseISO';
+import formatISO from 'date-fns/formatISO';
 import _cloneDeep from 'lodash/cloneDeep';
 import GRow from './GRow';
 
@@ -15,7 +17,7 @@ export enum ETransactionType {
 }
 
 export type TRowValues = {
-    date: string;
+    date: Date;
     accountFrom: string;
     accountTo?: string;
     transactionType: ETransactionType;
@@ -59,7 +61,7 @@ class GTransactionRow extends GRow {
             throw new Error(`"rowArr" doesn't have enough data. Length should be ${rowArrLength}`);
         }
         return new GTransactionRow({
-            date: rowArr[0],
+            date: parseISO(rowArr[0]),
             accountFrom: rowArr[1],
             accountTo: getStringMaybe(rowArr[2]),
             transactionType: ETransactionType[rowArr[3]],
@@ -85,7 +87,7 @@ class GTransactionRow extends GRow {
 
     toJSON(): any[] {
         return [
-            this._values.date,
+            formatISO(this._values.date),
             this._values.accountFrom,
             this._values.accountTo ?? '',
             this._values.transactionType,

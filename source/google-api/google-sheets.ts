@@ -57,7 +57,7 @@ export const getAllRows = (sheetName: string) => new Promise<string[][]>((resolv
         .get(params)
         .then((resultData) => {
             if (resultData.status === 200) {
-                resolve(resultData.result.values);
+                resolve(resultData.result.values || []);
             } else {
                 reject(resultData);
             }

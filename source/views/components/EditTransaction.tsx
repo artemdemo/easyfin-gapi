@@ -31,7 +31,7 @@ class EditTransaction extends React.PureComponent<TProps, TState> {
     handleSubmit = (values: TValues, { setSubmitting }) => {
         setSubmitting(false);
         addTransaction(new GTransactionRow({
-            date: '2020-01-12',
+            date: new Date(),
             accountFrom: 'account',
             transactionType: ETransactionType.expense,
             amountInDefaultCoin: parseFloat('33.5'),
