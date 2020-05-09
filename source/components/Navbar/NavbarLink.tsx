@@ -29,7 +29,7 @@ class NavbarLink extends React.PureComponent<TProps, TState> {
         onClick: undefined,
     };
 
-    static linkClass = 'py-2 px-2 rounded text-gray-800 hover:bg-gray-400 leading-none';
+    static linkClass = 'py-2 px-2 rounded text-gray-800 hover:bg-gray-400 leading-none inline-block';
 
     renderChildren() {
         if (this.props.to) {

@@ -66,15 +66,12 @@ class AppView extends React.PureComponent<TProps, TState> {
     }
 
     render() {
-        const initializedContent = (
-            <>
-                <MainMenu />
-                {this.props.children}
-            </>
-        );
         return (
             <Container>
-                {this.state.initialized ? initializedContent : this.state.status}
+                <MainMenu />
+                <div className='px-2'>
+                    {this.state.initialized ? this.props.children : this.state.status}
+                </div>
             </Container>
         );
     }

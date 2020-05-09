@@ -10,7 +10,7 @@ const Navbar = (props: TProps) => {
     return (
         <nav className={classnames(
             props.className,
-            'flex items-center justify-between flex-wrap bg-gray-200 px-4 py-2',
+            'flex items-center justify-between flex-wrap bg-gray-200 px-2 py-2',
         )}>
             {props.children}
         </nav>
