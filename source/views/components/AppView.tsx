@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import history from '../../history';
 import Container from '../../components/Container/Container';
 import MainMenu from '../../containers/MainMenu/MainMenu';
 import * as googleApi from '../../google-api/google-api';
 import { signedIn, signedOut } from '../../model/user/userActions';
-import { loadTransactions } from '../../model/transactions/transactionsReq';
 import BasicProfile = gapi.auth2.BasicProfile;
 
 type TProps = {
@@ -39,10 +39,6 @@ class AppView extends React.PureComponent<TProps, TState> {
     handleClientInitialized = () => {
         this.setState({ initialized: true });
 
-        loadTransactions()
-            .then((transactions) => console.log(transactions))
-            .catch(console.error);
-
         googleApi.listenIsSignedIn(this.updateSigninStatus);
 
         this.updateSigninStatus(
@@ -59,8 +55,10 @@ class AppView extends React.PureComponent<TProps, TState> {
     updateSigninStatus = (isSignedIn: boolean) => {
         const { signedIn, signedOut } = this.props;
         if (isSignedIn) {
+            history.push('/');
             signedIn(googleApi.getBasicProfile())
         } else {
+            history.push('/login');
             signedOut()
         }
     }
