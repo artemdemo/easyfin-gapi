@@ -1,5 +1,5 @@
-import * as googleSheets from '../../services/google-sheets';
-import GTransactionRow from '../../services/GTransactionRow';
+import * as googleSheets from '../../google-api/google-sheets';
+import GTransactionRow from '../../google-api/GTransactionRow';
 
 export const loadTransactions = (): Promise<GTransactionRow[]> => {
     return googleSheets.getAllRows('2020')

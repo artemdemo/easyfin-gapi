@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Container from '../../components/Container/Container';
 import MainMenu from '../../containers/MainMenu/MainMenu';
-import * as googleApi from '../../services/google-api';
+import * as googleApi from '../../google-api/google-api';
 import { signedIn, signedOut } from '../../model/user/userActions';
 import { loadTransactions } from '../../model/transactions/transactionsReq';
 import BasicProfile = gapi.auth2.BasicProfile;

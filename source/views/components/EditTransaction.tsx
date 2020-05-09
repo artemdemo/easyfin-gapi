@@ -2,7 +2,7 @@ import React from 'react';
 import { Formik } from 'formik';
 import Button from '../../components/Button/Button';
 import { addTransaction } from '../../model/transactions/transactionsReq';
-import GTransactionRow, { ECoin, ETransactionType } from '../../services/GTransactionRow';
+import GTransactionRow, { ECoin, ETransactionType } from '../../google-api/GTransactionRow';
 
 type TValues = {
     date: string;
