@@ -21,14 +21,15 @@ class MainMenu extends React.PureComponent<TProps, TState> {
         gapi.auth2.getAuthInstance().signOut();
     };
 
-    renderUserMenu() {
+    renderLeftMenu() {
         const {user} = this.props;
         if (user.basicProfile) {
             return (
-                <>
+                <div>
+                    <NavbarLink to='/'>Main</NavbarLink>
                     <NavbarLink to='/transactions/new'>New Transaction</NavbarLink>
                     <NavbarLink to='/settings'>Settings</NavbarLink>
-                </>
+                </div>
             );
         }
         return null;
@@ -49,10 +50,7 @@ class MainMenu extends React.PureComponent<TProps, TState> {
     render() {
         return (
             <Navbar className={classnames(this.props.className, 'mb-3')}>
-                <div>
-                    <NavbarLink to='/'>Main</NavbarLink>
-                    {this.renderUserMenu()}
-                </div>
+                {this.renderLeftMenu()}
                 {this.renderRightMenu()}
             </Navbar>
         );
