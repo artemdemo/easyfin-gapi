@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NavbarLink render default 1`] = `
+<div
+  className="sc-AxirZ jjcDso"
+>
+  <div
+    data-mock="Link"
+  >
+    {
+  "to": "/test-link"
+}
+  </div>
+</div>
+`;
+
+exports[`NavbarLink should render active 1`] = `
+<div
+  className="sc-AxirZ jjcDso active"
+>
+  <div
+    data-mock="Link"
+  >
+    {
+  "to": "/test-link"
+}
+  </div>
+</div>
+`;

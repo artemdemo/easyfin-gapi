@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<AppView> Render with children 1`] = `
+<div
+  className="container mx-auto"
+>
+  Loading client.js
+</div>
+`;
+
+exports[`<AppView> Simple render 1`] = `
+<div
+  className="container mx-auto"
+>
+  Loading client.js
+</div>
+`;

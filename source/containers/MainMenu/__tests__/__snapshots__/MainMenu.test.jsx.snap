@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<MainMenu> Render 1`] = `
+<div
+  data-mock="Navbar"
+>
+  {
+  "className": "mb-3"
+}
+  <div>
+    <div
+      data-mock="NavbarLink"
+    >
+      {
+  "to": "/"
+}
+      Main
+    </div>
+  </div>
+</div>
+`;
