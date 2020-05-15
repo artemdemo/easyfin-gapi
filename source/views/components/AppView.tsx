@@ -17,6 +17,8 @@ type TState = {
     status: string;
 };
 
+const LOGIN_PATH = '/login';
+
 class AppView extends React.PureComponent<TProps, TState> {
     state: TState = {
         initialized: false,
@@ -55,10 +57,12 @@ class AppView extends React.PureComponent<TProps, TState> {
     updateSigninStatus = (isSignedIn: boolean) => {
         const { signedIn, signedOut } = this.props;
         if (isSignedIn) {
-            history.push('/');
+            if (history.location.pathname === LOGIN_PATH) {
+                history.push('/');
+            }
             signedIn(googleApi.getBasicProfile())
         } else {
-            history.push('/login');
+            history.push(LOGIN_PATH);
             signedOut()
         }
     }
