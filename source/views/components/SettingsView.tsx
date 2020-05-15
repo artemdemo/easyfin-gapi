@@ -1,6 +1,8 @@
 import React from "react";
+import { Route } from 'react-router-dom';
 import TabLink from "../../components/Tabs/TabLink";
 import TabsContainer from "../../components/Tabs/TabsContainer";
+import AccountsView from "./AccountsView";
 
 type TProps = {};
 type TState = {};
@@ -9,7 +11,7 @@ class SettingsView extends React.PureComponent<TProps, TState> {
     render() {
         return (
             <>
-                <TabsContainer>
+                <TabsContainer className="mb-4">
                     <TabLink
                         to="/settings/accounts"
                     >
@@ -21,7 +23,7 @@ class SettingsView extends React.PureComponent<TProps, TState> {
                         API keys
                     </TabLink>
                 </TabsContainer>
-                {this.props.children}
+                <Route path='/settings/accounts' component={AccountsView} />
             </>
         );
     }
