@@ -1,5 +1,17 @@
 import parseISO from "date-fns/parseISO";
-import {ECoin, ETransactionType} from "../GTransactionRow";
+
+export enum ECoin {
+    ils = 'ILS',
+    usd = 'USD',
+    eur = 'EUR',
+    rub = 'RUB',
+}
+
+export enum ETransactionType {
+    income = 'income',
+    expense = 'expense',
+    transferFromAccount = 'transferFromAccount',
+}
 
 const getFloatMaybe = (valueStr: string): number|undefined => {
     return valueStr !== '' ? parseFloat(valueStr) : undefined;
@@ -21,7 +33,7 @@ const getTags = (valueStr: string): string[] => {
     return valueStr !== '' ? valueStr.split(',') : [];
 };
 
-export type TRowValues = {
+export type TTransactionRowValues = {
     date: Date;
     accountFrom: string;
     accountTo?: string;
@@ -39,7 +51,7 @@ export type TRowValues = {
     rootCategory: string;
 };
 
-const transactionArrToData = (rowArr: string[]): TRowValues => {
+const transactionArrToData = (rowArr: string[]): TTransactionRowValues => {
     const rowArrLength = 15;
     if (rowArr.length !== rowArrLength) {
         console.error(rowArr);

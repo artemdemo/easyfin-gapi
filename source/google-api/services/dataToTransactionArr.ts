@@ -1,5 +1,5 @@
 import formatISO from "date-fns/formatISO";
-import { TRowValues } from "./transactionArrToData";
+import { TTransactionRowValues } from "./transactionArrToData";
 
 const propsExportList = [
     'date',
@@ -30,7 +30,7 @@ const formatsMap = new Map([
     ['category', category => category ?? ''],
 ]);
 
-const dataToTransactionArr = (values: TRowValues): any[] => {
+const dataToTransactionArr = (values: TTransactionRowValues): any[] => {
     return propsExportList.map((key) => {
         if (formatsMap.has(key)) {
             // @ts-ignore

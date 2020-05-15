@@ -3,7 +3,8 @@ import { Formik } from "formik";
 import Button from "../../components/Button/Button";
 import Select from "../../components/Select/Select";
 import { addTransaction } from "../../model/transactions/transactionsReq";
-import GTransactionRow, { ECoin, ETransactionType } from "../../google-api/GTransactionRow";
+import GTransactionRow from "../../google-api/GTransactionRow";
+import { ECoin, ETransactionType } from "../../google-api/services/transactionArrToData";
 
 type TValues = {
     date: string;
