@@ -7,15 +7,5 @@ exports[`<MainMenu> Render 1`] = `
   {
   "className": "mb-3"
 }
-  <div>
-    <div
-      data-mock="NavbarLink"
-    >
-      {
-  "to": "/"
-}
-      Main
-    </div>
-  </div>
 </div>
 `;

@@ -1,12 +1,37 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<MainView> Simple render 1`] = `
-<button
-  className="py-2 px-4 rounded bg-blue-500 hover:bg-blue-700 text-white"
-  disabled={false}
-  onClick={[Function]}
-  type="submit"
+<table
+  className="table-auto"
 >
-  Authorize
-</button>
+  <thead>
+    <tr>
+      <th
+        className="px-4 py-2"
+      >
+        Category
+      </th>
+      <th
+        className="px-4 py-2"
+      >
+        Amount
+      </th>
+      <th
+        className="px-4 py-2"
+      >
+        Comment
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td
+        className="border px-4 py-2"
+        colSpan={10}
+      >
+        loading...
+      </td>
+    </tr>
+  </tbody>
+</table>
 `;

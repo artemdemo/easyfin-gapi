@@ -14,16 +14,16 @@ exports[`NavbarLink render default 1`] = `
 </div>
 `;
 
-exports[`NavbarLink should render active 1`] = `
+exports[`NavbarLink should render button 1`] = `
 <div
-  className="sc-AxirZ jjcDso active"
+  className="sc-AxjAm iHbqWH"
 >
-  <div
-    data-mock="Link"
+  <button
+    data-mock="TransparentButton"
   >
     {
-  "to": "/test-link"
+  "className": "sc-AxirZ fskEG py-2 px-2 rounded text-gray-600 hover:bg-gray-300 leading-none inline-block"
 }
-  </div>
+  </button>
 </div>
 `;
