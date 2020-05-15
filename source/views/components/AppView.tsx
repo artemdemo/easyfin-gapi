@@ -6,6 +6,7 @@ import MainMenu from '../../containers/MainMenu/MainMenu';
 import * as googleApi from '../../google-api/google-api';
 import { signedIn, signedOut } from '../../model/user/userActions';
 import BasicProfile = gapi.auth2.BasicProfile;
+import {loadSheets} from "../../model/sheets/sheetsReq";
 
 type TProps = {
     signedIn: (user: BasicProfile) => void;
@@ -60,6 +61,8 @@ class AppView extends React.PureComponent<TProps, TState> {
             if (history.location.pathname === LOGIN_PATH) {
                 history.push('/');
             }
+            loadSheets()
+                .then(console.log)
             signedIn(googleApi.getBasicProfile())
         } else {
             history.push(LOGIN_PATH);
