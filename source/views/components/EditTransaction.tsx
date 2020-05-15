@@ -27,7 +27,7 @@ type TProps = {};
 type TState = {};
 
 class EditTransaction extends React.PureComponent<TProps, TState> {
-    static inputClass = 'appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline';
+    static inputClass = 'appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white';
 
     handleSubmit = (values: TValues, { setSubmitting }) => {
         setSubmitting(false);
