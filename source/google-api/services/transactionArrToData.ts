@@ -39,7 +39,7 @@ export type TRowValues = {
     rootCategory: string;
 };
 
-const transactionArrToData = (rowArr: string[]) => {
+const transactionArrToData = (rowArr: string[]): TRowValues => {
     const rowArrLength = 15;
     if (rowArr.length !== rowArrLength) {
         console.error(rowArr);

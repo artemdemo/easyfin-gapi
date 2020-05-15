@@ -1,5 +1,5 @@
-import { TRowValues } from "./transactionArrToData";
 import formatISO from "date-fns/formatISO";
+import { TRowValues } from "./transactionArrToData";
 
 const propsExportList = [
     'date',
