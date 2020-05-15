@@ -1,8 +1,9 @@
-import React from 'react';
-import { Formik } from 'formik';
-import Button from '../../components/Button/Button';
-import { addTransaction } from '../../model/transactions/transactionsReq';
-import GTransactionRow, { ECoin, ETransactionType } from '../../google-api/GTransactionRow';
+import React from "react";
+import { Formik } from "formik";
+import Button from "../../components/Button/Button";
+import Select from "../../components/Select/Select";
+import { addTransaction } from "../../model/transactions/transactionsReq";
+import GTransactionRow, { ECoin, ETransactionType } from "../../google-api/GTransactionRow";
 
 type TValues = {
     date: string;
@@ -79,8 +80,7 @@ class EditTransaction extends React.PureComponent<TProps, TState> {
                         />
                     </div>
                     <div className="w-1/2 px-2">
-                        <input
-                            type="text"
+                        <Select
                             className={EditTransaction.inputClass}
                             placeholder="Account From"
                             name="accountFrom"
@@ -88,7 +88,10 @@ class EditTransaction extends React.PureComponent<TProps, TState> {
                             onBlur={handleBlur}
                             value={values.accountFrom}
                             disabled={formDisabled}
-                        />
+                        >
+                            <option>account one</option>
+                            <option>account two</option>
+                        </Select>
                     </div>
                 </div>
                 <div className='flex flex-wrap -mx-2 mb-4'>
@@ -105,16 +108,18 @@ class EditTransaction extends React.PureComponent<TProps, TState> {
                         />
                     </div>
                     <div className="w-1/2 px-2">
-                        <input
-                            type="text"
+                        <Select
                             className={EditTransaction.inputClass}
                             placeholder="Category"
                             name="category"
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            value={values.category}
+                            value={values.accountFrom}
                             disabled={formDisabled}
-                        />
+                        >
+                            <option>category one</option>
+                            <option>category two</option>
+                        </Select>
                     </div>
                 </div>
                 <div className="mb-4">
