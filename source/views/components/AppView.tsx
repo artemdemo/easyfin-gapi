@@ -1,16 +1,19 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import history from '../../history';
-import Container from '../../components/Container/Container';
-import MainMenu from '../../containers/MainMenu/MainMenu';
-import * as googleApi from '../../google-api/google-api';
-import { signedIn, signedOut } from '../../model/user/userActions';
+import { connect } from "react-redux";
+import history from "../../history";
+import Container from "../../components/Container/Container";
+import MainMenu from "../../containers/MainMenu/MainMenu";
+import * as googleApi from "../../google-api/google-api";
+import { signedIn, signedOut } from "../../model/user/userActions";
+import { setSheets } from "../../model/sheets/sheetsActions";
 import BasicProfile = gapi.auth2.BasicProfile;
 import {loadSheets} from "../../model/sheets/sheetsReq";
+import GSheet from "../../google-api/GSheet";
 
 type TProps = {
     signedIn: (user: BasicProfile) => void;
     signedOut: () => void;
+    setSheets: (sheets: GSheet[]) => void;
 };
 
 type TState = {
@@ -56,13 +59,15 @@ class AppView extends React.PureComponent<TProps, TState> {
     };
 
     updateSigninStatus = (isSignedIn: boolean) => {
-        const { signedIn, signedOut } = this.props;
+        const { signedIn, signedOut, setSheets } = this.props;
         if (isSignedIn) {
             if (history.location.pathname === LOGIN_PATH) {
                 history.push('/');
             }
             loadSheets()
-                .then(console.log)
+                .then((sheets) => {
+                    setSheets(sheets);
+                })
             signedIn(googleApi.getBasicProfile())
         } else {
             history.push(LOGIN_PATH);
@@ -87,5 +92,6 @@ export default connect(
     {
         signedIn,
         signedOut,
+        setSheets,
     },
 )(AppView);
