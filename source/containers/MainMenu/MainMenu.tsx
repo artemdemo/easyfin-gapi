@@ -1,9 +1,9 @@
-import React from 'react';
-import classnames from 'classnames';
-import { connect } from 'react-redux'
-import { TUserState } from '../../model/user/userReducer';
-import Navbar from '../../components/Navbar/Navbar';
-import NavbarLink from '../../components/Navbar/NavbarLink';
+import React from "react";
+import classnames from "classnames";
+import { connect } from "react-redux"
+import { TUserState } from "../../model/user/userReducer";
+import Navbar from "../../components/Navbar/Navbar";
+import NavbarLink from "../../components/Navbar/NavbarLink";
 
 type TProps = {
     className: string;
