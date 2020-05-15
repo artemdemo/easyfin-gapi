@@ -9,7 +9,7 @@ type TProps = {
 
 type TState = {};
 
-class MainView extends React.PureComponent<TProps, TState> {
+class LoginView extends React.PureComponent<TProps, TState> {
     handleAuthorization() {
         gapi.auth2.getAuthInstance().signIn();
     }
@@ -41,4 +41,4 @@ export default connect(
     state => ({
         user: state.user,
     }),
-)(MainView);
+)(LoginView);
