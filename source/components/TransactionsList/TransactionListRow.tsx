@@ -1,5 +1,6 @@
-import React from 'react';
-import GTransactionRow from '../../google-api/GTransactionRow';
+import React from "react";
+import format from "date-fns/format";
+import GTransactionRow from "../../google-api/GTransactionRow";
 
 type TProps = {
     transaction?: GTransactionRow;
@@ -15,6 +16,9 @@ class TransactionsListRow extends React.PureComponent<TProps, TState> {
             const values = transaction.getValues();
             return (
                 <tr>
+                    <td className="border px-4 py-2">
+                        {format(values.date, "yyyy-MM-dd HH:mm")}
+                    </td>
                     <td className="border px-4 py-2">
                         {values.rootCategory}
                     </td>

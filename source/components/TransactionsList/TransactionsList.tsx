@@ -33,6 +33,7 @@ class TransactionsList extends React.PureComponent<TProps, TState> {
             <table className="table-auto">
                 <thead>
                     <tr>
+                        <th className="px-4 py-2">Date</th>
                         <th className="px-4 py-2">Category</th>
                         <th className="px-4 py-2">Amount</th>
                         <th className="px-4 py-2">Comment</th>
