@@ -1,7 +1,7 @@
-import formatISO from "date-fns/formatISO";
 import _cloneDeep from "lodash/cloneDeep";
 import GRow from "./GRow";
 import transactionArrToData, { TRowValues } from "./services/transactionArrToData";
+import dataToTransactionArr from "./services/dataToTransactionArr";
 
 export enum ECoin {
     ils = 'ILS',
@@ -31,23 +31,7 @@ class GTransactionRow extends GRow {
     }
 
     toJSON(): any[] {
-        return [
-            formatISO(this._values.date),
-            this._values.accountFrom,
-            this._values.accountTo ?? '',
-            this._values.transactionType,
-            this._values.amountInDefaultCoin,
-            this._values.defaultCoin,
-            this._values.amountInAccountFromCoin,
-            this._values.accountFromCoin,
-            this._values.exchangeRate ?? 1,
-            this._values.amountInAccountToCoin ?? '',
-            this._values.accountToCoin ?? '',
-            this._values.comment ?? '',
-            this._values.tags ?? '',
-            this._values.category ?? '',
-            this._values.rootCategory,
-        ];
+        return dataToTransactionArr(this._values);
     }
 
     setRowIdx(idx: number): void {
