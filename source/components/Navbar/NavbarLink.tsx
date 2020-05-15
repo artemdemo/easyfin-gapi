@@ -1,8 +1,7 @@
-import React from 'react';
-import classnames from 'classnames';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
-import TransparentButton from '../TransparentButton/TransparentButton';
+import React from "react";
+import { NavLink } from "react-router-dom";
+import styled from "styled-components";
+import TransparentButton from "../TransparentButton/TransparentButton";
 
 const NavItem = styled.div`
     display: inline-block;
@@ -15,7 +14,7 @@ const ButtonItem = styled(TransparentButton)`
 
 type TProps = {
     to: string;
-    active: boolean;
+    exact: boolean;
     children?: any;
     onClick: (e?: any) => void;
 }
@@ -25,41 +24,39 @@ type TState = {}
 class NavbarLink extends React.PureComponent<TProps, TState> {
     static defaultProps = {
         to: undefined,
-        active: false,
         onClick: undefined,
+        exact: false,
     };
 
-    static linkClass = 'py-2 px-2 rounded text-gray-800 hover:bg-gray-400 leading-none inline-block';
+    static linkClass = 'py-2 px-2 rounded text-gray-600 hover:bg-gray-300 leading-none inline-block';
 
     renderChildren() {
         if (this.props.to) {
             return (
                 // @ts-ignore
-                <Link
+                <NavLink
                     className={NavbarLink.linkClass}
+                    activeClassName="text-gray-900"
                     to={this.props.to}
+                    exact={this.props.exact}
                 >
                     {this.props.children}
-                </Link>
+                </NavLink>
             );
         }
         return (
-            <button
+            <ButtonItem
                 className={NavbarLink.linkClass}
                 onClick={this.props.onClick}
             >
                 {this.props.children}
-            </button>
+            </ButtonItem>
         );
     }
 
     render() {
         return (
-            <NavItem
-                className={classnames({
-                    'active': this.props.active,
-                })}
-            >
+            <NavItem>
                 {this.renderChildren()}
             </NavItem>
         );

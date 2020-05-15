@@ -26,7 +26,7 @@ class MainMenu extends React.PureComponent<TProps, TState> {
         if (user.basicProfile) {
             return (
                 <div>
-                    <NavbarLink to='/'>Main</NavbarLink>
+                    <NavbarLink to='/' exact>Main</NavbarLink>
                     <NavbarLink to='/transactions/new'>New Transaction</NavbarLink>
                     <NavbarLink to='/settings'>Settings</NavbarLink>
                 </div>
