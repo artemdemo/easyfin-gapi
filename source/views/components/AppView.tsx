@@ -37,6 +37,13 @@ class AppView extends React.PureComponent<TProps, TState> {
                 this.setState({ status: 'Script loaded, initializing' });
 
                 googleApi.init()
+                    // At this point I'm loading sheets.
+                    // This list is important in order to make all other data.
+                    // Therefore I'm not initializing the app until I have the list of sheets.
+                    .then(loadSheets)
+                    .then((sheets) => {
+                        setSheets(sheets);
+                    })
                     .then(this.handleClientInitialized)
                     .catch(this.handleClientInitializingErr)
             });
@@ -64,10 +71,6 @@ class AppView extends React.PureComponent<TProps, TState> {
             if (history.location.pathname === LOGIN_PATH) {
                 history.push('/');
             }
-            loadSheets()
-                .then((sheets) => {
-                    setSheets(sheets);
-                })
             signedIn(googleApi.getBasicProfile())
         } else {
             history.push(LOGIN_PATH);
