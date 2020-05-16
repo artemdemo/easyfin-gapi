@@ -24,16 +24,14 @@ const accountArrToData = (rowArr: string[]): TAccountRowValues => {
 
 class GAccountRow extends GRow {
     private readonly _values: TAccountRowValues;
-    private _rowIdx: number|undefined;
 
     static fromArr(rowArr: string[], rowIdx?: number): GAccountRow {
         return new GAccountRow(accountArrToData(rowArr), rowIdx);
     }
 
     constructor(values: TAccountRowValues, rowIdx?:number) {
-        super();
+        super(rowIdx);
         this._values = values;
-        this._rowIdx = rowIdx;
     }
 
     toJSON(): any[] {
@@ -42,14 +40,6 @@ class GAccountRow extends GRow {
             this._values.type,
             this._values.startAmount,
         ];
-    }
-
-    setRowIdx(idx: number): void {
-        this._rowIdx = idx;
-    }
-
-    getRowIdx(): number|undefined {
-        return this._rowIdx;
     }
 
     getValues(): TAccountRowValues {

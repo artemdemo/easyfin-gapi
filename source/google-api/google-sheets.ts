@@ -18,7 +18,7 @@ const spreadsheetId = '14jrtwzsJzU8TeMfP-qU-HJ0xm6D_P3yshd_B2wYTuqQ';
 
 const getMsgFromErr = errData => errData?.result?.error?.message || JSON.stringify(errData);
 
-export const appendRow = (row: GRow, sheetName: string) => new Promise<TUpdateRowResult>((resolve, reject) => {
+export const appendRow = (row: GRow, sheetName: string) => new Promise<GRow>((resolve, reject) => {
     const params = {
         spreadsheetId,
         // Here `A1` is default value, data will be added one after another.
@@ -33,11 +33,30 @@ export const appendRow = (row: GRow, sheetName: string) => new Promise<TUpdateRo
         values: [row.toJSON()],
     };
 
+    // Splitting range definition into components
+    // '2020'!A5:O5
+    const rangeRegex = /^'([^']+)'!([^:]+):(\S+)$/;
+    // Getting index from cell definition
+    // A5
+    const idxRegex = /^[^\d\s]+(\d+)$/;
+
     googleApi.getSpreadsheetsInstance().values
         .append(params, valueRangeBody)
         .then((resultData) => {
             if (resultData.status === 200) {
-                resolve(resultData.result);
+                const result: TUpdateRowResult = resultData.result;
+                const rangeMatch = rangeRegex.exec(result.updates.updatedRange);
+                if (rangeMatch) {
+                    const startCell = rangeMatch[2];
+                    const idxMatch = idxRegex.exec(startCell);
+                    if (idxMatch) {
+                        row.setRowIdx(parseInt(idxMatch[1], 10) - 1)
+                        resolve(row);
+                        reject(new Error('Index can\'t be parsed from range'));
+                    }
+                } else {
+                    reject(new Error('Range can\'t be parsed'));
+                }
             } else {
                 reject(resultData);
             }

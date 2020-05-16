@@ -18,20 +18,8 @@ export const loadTransactions = (): Promise<GTransactionRow[]> => {
 };
 
 export const addTransaction = (transaction: GTransactionRow): Promise<GTransactionRow> => {
-    const rangeRegex = /^'([^']+)'!([^:]+):(\S+)$/;
-    const idxRegex = /^[^\d\s]+(\d+)$/;
     return googleSheets.appendRow(transaction, '2020')
         .then((result) => {
-            const rangeMatch = rangeRegex.exec(result.updates.updatedRange);
-            if (rangeMatch) {
-                const startCell = rangeMatch[2];
-                const idxMatch = idxRegex.exec(startCell);
-                if (idxMatch) {
-                    transaction.setRowIdx(parseInt(idxMatch[1], 10) - 1)
-                    return transaction;
-                }
-            }
-            console.error(result);
-            throw new Error('Transaction append result can\'t be parsed');
+            return <GTransactionRow>result;
         });
 };

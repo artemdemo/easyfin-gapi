@@ -1,6 +1,12 @@
 class GRow {
+    private _rowIdx: number|undefined;
+
     static fromArr(rowArr: string[], rowIdx?: number): GRow {
         throw new Error('"fromArr" is not implemented yet');
+    }
+
+    constructor(rowIdx?:number) {
+        this._rowIdx = rowIdx;
     }
 
     toJSON(): any[] {
@@ -8,9 +14,12 @@ class GRow {
         return [];
     }
 
+    setRowIdx(idx: number): void {
+        this._rowIdx = idx;
+    }
+
     getRowIdx(): number|undefined {
-        console.error('getRowIdx() is not implemented yet');
-        return undefined;
+        return this._rowIdx;
     }
 
     getValues(): any {
