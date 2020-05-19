@@ -66,7 +66,7 @@ class AppView extends React.PureComponent<TProps, TState> {
     };
 
     updateSigninStatus = (isSignedIn: boolean) => {
-        const { signedIn, signedOut, setSheets } = this.props;
+        const { signedIn, signedOut } = this.props;
         if (isSignedIn) {
             if (history.location.pathname === LOGIN_PATH) {
                 history.push('/');

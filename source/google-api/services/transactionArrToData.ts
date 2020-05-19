@@ -49,6 +49,17 @@ export type TTransactionRowValues = {
     tags?: string[];
     category?: string;
     rootCategory: string;
+    // `parentId` is used to group related transactions.
+    // For example when you purchased number of goods together,
+    // but you need to place it in different categories.
+    // This is only are unique id, not a reference to somewhere.
+    // There is no actual parent, just a way to find all related transactions.
+    parentId?: string;
+    // In order to manage family budget I need to keep all transactions in one file,
+    // but to allow different family members access to it.
+    // In order to distinguish between entries I'm using `userId`,
+    // which most likely will be an email.
+    userId: string;
 };
 
 const transactionArrToData = (rowArr: string[]): TTransactionRowValues => {
@@ -73,6 +84,8 @@ const transactionArrToData = (rowArr: string[]): TTransactionRowValues => {
         tags: getTags(rowArr[12]),
         category: getStringMaybe(rowArr[13]),
         rootCategory: rowArr[14],
+        parentId: rowArr[15],
+        userId: rowArr[16],
     };
 };
 

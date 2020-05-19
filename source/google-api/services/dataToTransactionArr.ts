@@ -17,6 +17,8 @@ const propsExportList = [
     'tags',
     'category',
     'rootCategory',
+    'parentId',
+    'userId',
 ];
 
 const formatsMap = new Map([
