@@ -29,7 +29,7 @@ export const load = () => new Promise((resolve) => {
     const script = document.createElement('script');
     script.src = 'https://apis.google.com/js/client.js';
 
-    script.onload = (...args) => {
+    script.onload = () => {
         gapi.load('client:auth2', () => {
             resolve();
         });
