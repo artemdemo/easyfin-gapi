@@ -37,15 +37,12 @@ class AppView extends React.PureComponent<TProps, TState> {
                 this.setState({ status: 'Script loaded, initializing' });
 
                 googleApi.init()
-                    // At this point I'm loading sheets.
-                    // This list is important in order to make all other data.
-                    // Therefore I'm not initializing the app until I have the list of sheets.
+                    .then(this.handleClientInitialized)
+                    .catch(this.handleClientInitializingErr)
                     .then(loadSheets)
                     .then((sheets) => {
                         setSheets(sheets);
-                    })
-                    .then(this.handleClientInitialized)
-                    .catch(this.handleClientInitializingErr)
+                    });
             });
     }
 

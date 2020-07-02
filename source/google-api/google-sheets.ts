@@ -1,6 +1,7 @@
 import * as googleApi from './google-api';
 import { ESortOrder } from './TSpreadsheetsApi';
 import GRow from './GRow';
+import { spreadsheetID } from '../services/settingsStorage';
 
 type TUpdateRowResult = {
     spreadsheetId: string;
@@ -14,13 +15,11 @@ type TUpdateRowResult = {
     };
 };
 
-const spreadsheetId = '14jrtwzsJzU8TeMfP-qU-HJ0xm6D_P3yshd_B2wYTuqQ';
-
 const getMsgFromErr = errData => errData?.result?.error?.message || JSON.stringify(errData);
 
 export const appendRow = (row: GRow, sheetName: string) => new Promise<GRow>((resolve, reject) => {
     const params = {
-        spreadsheetId,
+        spreadsheetId: spreadsheetID.get(),
         // Here `A1` is default value, data will be added one after another.
         // Without `A1` data wouldn't be added starting from A column.
         range: `${sheetName}!A1`,
@@ -68,7 +67,7 @@ export const appendRow = (row: GRow, sheetName: string) => new Promise<GRow>((re
 
 export const getAllRows = (sheetName: string) => new Promise<string[][]>((resolve, reject) => {
     const params = {
-        spreadsheetId,
+        spreadsheetId: spreadsheetID.get(),
         range: `${sheetName}!A1:Z`,
     };
 
@@ -109,7 +108,7 @@ export const createSpreadsheet = (title: string) => new Promise((resolve, reject
 
 export const createSheet = (title: string) => new Promise((resolve, reject) => {
     const params = {
-        spreadsheetId,
+        spreadsheetId: spreadsheetID.get(),
         requests: [{
             addSheet: {
                 properties: {
@@ -136,7 +135,7 @@ export const createSheet = (title: string) => new Promise((resolve, reject) => {
 export const getAllSheets = () => new Promise((resolve, reject) => {
     googleApi.getSpreadsheetsInstance()
         .get({
-            spreadsheetId
+            spreadsheetId: spreadsheetID.get(),
         })
         .then((resultData) => {
             if (resultData.status === 200) {
@@ -152,7 +151,7 @@ export const getAllSheets = () => new Promise((resolve, reject) => {
 
 export const sortByDate = () => new Promise((resolve, reject) => {
     const params = {
-        spreadsheetId,
+        spreadsheetId: spreadsheetID.get(),
         requests: [{
             sortRange: {
                 range: {

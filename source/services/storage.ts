@@ -1,4 +1,4 @@
-const formatKey = key => `easyfin.${key}`;
+const formatKey = key => `easyfin-gapi.${key}`;
 
 export const setItem = (key: string, value: string) => {
     localStorage.setItem(formatKey(key), value);
