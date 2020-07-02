@@ -26,6 +26,9 @@ class TransactionsListRow extends React.PureComponent<TProps, TState> {
                         {values.amountInDefaultCoin}
                     </td>
                     <td className="border px-4 py-2">
+                        {values.tags?.join(', ')}
+                    </td>
+                    <td className="border px-4 py-2">
                         {values.comment}
                     </td>
                 </tr>

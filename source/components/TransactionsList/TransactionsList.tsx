@@ -36,6 +36,7 @@ class TransactionsList extends React.PureComponent<TProps, TState> {
                         <th className="px-4 py-2">Date</th>
                         <th className="px-4 py-2">Category</th>
                         <th className="px-4 py-2">Amount</th>
+                        <th className="px-4 py-2">Tags</th>
                         <th className="px-4 py-2">Comment</th>
                     </tr>
                 </thead>

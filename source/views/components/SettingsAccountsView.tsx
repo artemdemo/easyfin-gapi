@@ -7,7 +7,7 @@ type TState = {
     accounts: GAccountRow[];
 };
 
-class AccountsView extends React.PureComponent<TProps, TState> {
+class SettingsAccountsView extends React.PureComponent<TProps, TState> {
     state = {
         accounts: [],
     };
@@ -33,4 +33,4 @@ class AccountsView extends React.PureComponent<TProps, TState> {
     }
 }
 
-export default AccountsView;
+export default SettingsAccountsView;

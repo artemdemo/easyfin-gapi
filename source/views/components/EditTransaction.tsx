@@ -1,10 +1,13 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Formik } from "formik";
-import Button from "../../components/Button/Button";
+import parseISO from "date-fns/parseISO";
+import Button, {buttonAppearance} from "../../components/Button/Button";
 import Select from "../../components/Select/Select";
 import { addTransaction } from "../../model/transactions/transactionsReq";
 import GTransactionRow from "../../google-api/GTransactionRow";
 import { ECoin, ETransactionType } from "../../google-api/services/transactionArrToData";
+import {TUserState} from "../../model/user/userReducer";
 
 type TValues = {
     date: string;
@@ -24,14 +27,16 @@ type TFormProps = {
     isSubmitting: boolean;
 };
 
-type TProps = {};
+type TProps = {
+    user: TUserState;
+};
 type TState = {};
 
 class EditTransaction extends React.PureComponent<TProps, TState> {
     static inputClass = 'appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white';
 
-    handleSubmit = (values: TValues, { setSubmitting }) => {
-        setSubmitting(false);
+    mockSubmit = () => {
+        const { user } = this.props;
         addTransaction(new GTransactionRow({
             date: new Date(),
             accountFrom: 'account',
@@ -40,13 +45,22 @@ class EditTransaction extends React.PureComponent<TProps, TState> {
             defaultCoin: ECoin.ils,
             rootCategory: 'category',
             comment: 'some comment',
-            // date: values.date,
-            // accountFrom: values.accountFrom,
-            // transactionType: ETransactionType.expense,
-            // amountInDefaultCoin: parseFloat(values.amount),
-            // defaultCoin: ECoin.ils,
-            // rootCategory: values.category,
-            // comment: values.comment,
+            userId: user.basicProfile?.getEmail() || '',
+        }));
+    }
+
+    handleSubmit = (values: TValues, { setSubmitting }) => {
+        const { user } = this.props;
+        setSubmitting(false);
+        addTransaction(new GTransactionRow({
+            date: parseISO(values.date),
+            accountFrom: values.accountFrom,
+            transactionType: ETransactionType.expense,
+            amountInDefaultCoin: parseFloat(values.amount),
+            defaultCoin: ECoin.ils,
+            rootCategory: values.category,
+            comment: values.comment,
+            userId: user.basicProfile?.getId() || '',
         }));
     }
 
@@ -138,6 +152,15 @@ class EditTransaction extends React.PureComponent<TProps, TState> {
                 <Button type="submit" disabled={formDisabled}>
                     Submit
                 </Button>
+                &nbsp;
+                <Button
+                    type="button"
+                    disabled={formDisabled}
+                    onClick={this.mockSubmit}
+                    appearance={buttonAppearance.LIGHT}
+                >
+                    Mock submit
+                </Button>
             </form>
         );
     };
@@ -163,4 +186,8 @@ class EditTransaction extends React.PureComponent<TProps, TState> {
     }
 }
 
-export default EditTransaction;
+export default connect(
+    state => ({
+        user: state.user,
+    }),
+)(EditTransaction);

@@ -2,7 +2,8 @@ import React from "react";
 import { Route } from 'react-router-dom';
 import TabLink from "../../components/Tabs/TabLink";
 import TabsContainer from "../../components/Tabs/TabsContainer";
-import AccountsView from "./AccountsView";
+import SettingsMainView from "./SettingsMainView";
+import SettingsAccountsView from "./SettingsAccountsView";
 import * as routes from "../../routing/routes";
 
 type TProps = {};
@@ -13,6 +14,9 @@ class SettingsView extends React.PureComponent<TProps, TState> {
         return (
             <>
                 <TabsContainer className="mb-4">
+                    <TabLink to={routes.getSettingsRoute()}>
+                        Main Settings
+                    </TabLink>
                     <TabLink to={routes.getSettingsAccountsRoute()}>
                         Accounts
                     </TabLink>
@@ -21,8 +25,13 @@ class SettingsView extends React.PureComponent<TProps, TState> {
                     </TabLink>
                 </TabsContainer>
                 <Route
+                    path={routes.getSettingsRoute()}
+                    component={SettingsMainView}
+                    exact
+                />
+                <Route
                     path={routes.getSettingsAccountsRoute()}
-                    component={AccountsView}
+                    component={SettingsAccountsView}
                 />
             </>
         );

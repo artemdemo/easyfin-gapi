@@ -63,11 +63,6 @@ export type TTransactionRowValues = {
 };
 
 const transactionArrToData = (rowArr: string[]): TTransactionRowValues => {
-    const rowArrLength = 15;
-    if (rowArr.length !== rowArrLength) {
-        console.error(rowArr);
-        throw new Error(`"rowArr" doesn't have enough data. Length should be ${rowArrLength}`);
-    }
     return {
         date: parseISO(rowArr[0]),
         accountFrom: rowArr[1],
