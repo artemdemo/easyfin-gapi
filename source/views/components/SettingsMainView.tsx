@@ -2,20 +2,15 @@ import React from "react";
 import { Formik } from "formik";
 import {getInputClass, getLinkBtnClass} from "../../styles/elements";
 import {spreadsheetID} from "../../services/settingsStorage";
+import {IFormProps} from "../../types/formik";
 
 type TValues = {
     spreadsheetId: string;
 };
 
-type TFormProps = {
+interface IMainSettingsForm extends IFormProps {
     values: TValues;
-    errors: any;
-    touched: any;
-    handleChange: () => void;
-    handleBlur: () => void;
-    handleSubmit: () => void;
-    isSubmitting: boolean;
-};
+}
 
 type TProps = {};
 type TState = {};
@@ -28,7 +23,7 @@ class SettingsMainView extends React.PureComponent<TProps, TState> {
 
     handleValidation = (values: TValues) => {}
 
-    renderForm = (formProps: TFormProps) => {
+    renderForm = (formProps: IMainSettingsForm) => {
         const {
             values,
             errors,

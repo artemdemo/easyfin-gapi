@@ -9,6 +9,7 @@ import GTransactionRow from "../../google-api/GTransactionRow";
 import { ECoin, ETransactionType } from "../../google-api/services/transactionArrToData";
 import {TUserState} from "../../model/user/userReducer";
 import {getInputClass} from "../../styles/elements";
+import {IFormProps} from "../../types/formik";
 
 type TValues = {
     date: string;
@@ -18,15 +19,9 @@ type TValues = {
     comment: string;
 };
 
-type TFormProps = {
+interface IEditTransactionForm extends IFormProps {
     values: TValues;
-    errors: any;
-    touched: any;
-    handleChange: () => void;
-    handleBlur: () => void;
-    handleSubmit: () => void;
-    isSubmitting: boolean;
-};
+}
 
 type TProps = {
     user: TUserState;
@@ -65,7 +60,7 @@ class EditTransaction extends React.PureComponent<TProps, TState> {
 
     handleValidation = (values: TValues) => {}
 
-    renderForm = (formProps: TFormProps) => {
+    renderForm = (formProps: IEditTransactionForm) => {
         const {
             values,
             errors,
