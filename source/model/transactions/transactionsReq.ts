@@ -1,8 +1,8 @@
 import * as googleSheets from '../../google-api/google-sheets';
 import GTransactionRow from '../../google-api/GTransactionRow';
 
-export const loadTransactions = (): Promise<GTransactionRow[]> => {
-    return googleSheets.getAllRows('2020')
+export const loadTransactions = (sheetTitle: string): Promise<GTransactionRow[]> => {
+    return googleSheets.getAllRows(sheetTitle)
         .then((values) => {
             const result: GTransactionRow[] = [];
             values.forEach((dataArr, idx) => {

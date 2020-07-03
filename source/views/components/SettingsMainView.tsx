@@ -54,6 +54,7 @@ class SettingsMainView extends React.PureComponent<TProps, TState> {
                             className={getLinkBtnClass({
                                 disabled: values.spreadsheetId === '',
                             })}
+                            target="_blank"
                             href={`https://docs.google.com/spreadsheets/d/${values.spreadsheetId}/edit#gid=0`}
                         >
                             Open spreadsheet DB

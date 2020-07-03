@@ -65,10 +65,10 @@ export const appendRow = (row: GRow, sheetName: string) => new Promise<GRow>((re
         });
 });
 
-export const getAllRows = (sheetName: string) => new Promise<string[][]>((resolve, reject) => {
+export const getAllRows = (sheetTitle: string) => new Promise<string[][]>((resolve, reject) => {
     const params = {
         spreadsheetId: spreadsheetID.get(),
-        range: `${sheetName}!A1:Z`,
+        range: `${sheetTitle}!A1:Z`,
     };
 
     googleApi.getSpreadsheetsInstance().values

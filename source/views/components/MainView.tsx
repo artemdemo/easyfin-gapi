@@ -4,33 +4,63 @@ import { TUserState } from '../../model/user/userReducer';
 import { loadTransactions } from '../../model/transactions/transactionsReq';
 import GTransactionRow from '../../google-api/GTransactionRow';
 import TransactionsList from '../../components/TransactionsList/TransactionsList';
+import {loadSheets} from "../../model/sheets/sheetsReq";
+import {getLastTransactionsSheetTitle} from "../../services/sheets";
+import {TSheetsState} from "../../model/sheets/sheetsReducer";
+import { setSheets } from "../../model/sheets/sheetsActions";
+import GSheet from "../../google-api/GSheet";
 
 type TProps = {
     user: TUserState;
+    sheets: TSheetsState;
+    setSheets: (sheets: GSheet[]) => void;
 };
 
 type TState = {
     transactions: GTransactionRow[],
     loading: boolean,
+    loadingErr: Error|null,
 };
 
 class MainView extends React.PureComponent<TProps, TState> {
     state = {
         transactions: [],
         loading: false,
+        loadingErr: null,
     };
 
     componentDidMount() {
+        const { sheets, setSheets } = this.props;
+
         this.setState({ loading: true });
-        loadTransactions()
+
+        if (sheets.list.length > 0) {
+            this.handleTransactionsLoading(sheets.list);
+        } else {
+            loadSheets()
+                .then((loadedSheets) => {
+                    setSheets(loadedSheets);
+                    this.handleTransactionsLoading(loadedSheets);
+                });
+        }
+    }
+
+    handleTransactionsLoading = (sheets: GSheet[]) => {
+        loadTransactions(getLastTransactionsSheetTitle(sheets))
             .then((transactions) => {
                 this.setState({
                     transactions,
                     loading: false,
                 });
             })
-            .catch(console.error);
-    }
+            .catch((err) => {
+                console.error(err);
+                this.setState({
+                    loading: false,
+                    loadingErr: err,
+                });
+            });
+    };
 
     render() {
         return (
@@ -47,5 +77,9 @@ class MainView extends React.PureComponent<TProps, TState> {
 export default connect(
     state => ({
         user: state.user,
+        sheets: state.sheets,
     }),
+    {
+        setSheets,
+    },
 )(MainView);

@@ -5,9 +5,7 @@ import Container from "../../components/Container/Container";
 import MainMenu from "../../containers/MainMenu/MainMenu";
 import * as googleApi from "../../google-api/google-api";
 import { signedIn, signedOut } from "../../model/user/userActions";
-import { setSheets } from "../../model/sheets/sheetsActions";
 import BasicProfile = gapi.auth2.BasicProfile;
-import {loadSheets} from "../../model/sheets/sheetsReq";
 import GSheet from "../../google-api/GSheet";
 
 type TProps = {
@@ -38,11 +36,7 @@ class AppView extends React.PureComponent<TProps, TState> {
 
                 googleApi.init()
                     .then(this.handleClientInitialized)
-                    .catch(this.handleClientInitializingErr)
-                    .then(loadSheets)
-                    .then((sheets) => {
-                        setSheets(sheets);
-                    });
+                    .catch(this.handleClientInitializingErr);
             });
     }
 
@@ -92,6 +86,5 @@ export default connect(
     {
         signedIn,
         signedOut,
-        setSheets,
     },
 )(AppView);

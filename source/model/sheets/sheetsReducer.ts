@@ -2,17 +2,17 @@ import { handleActions } from 'redux-actions';
 import * as actions from './sheetsActions';
 import GSheet from "../../google-api/GSheet";
 
-export type TUserState = {
-    sheets: GSheet[];
+export type TSheetsState = {
+    list: GSheet[];
 };
 
-const initState: TUserState = {
-    sheets: [],
+const initState: TSheetsState = {
+    list: [],
 };
 
 export default handleActions({
-    [actions.setSheets]: (state: TUserState, action) => ({
+    [actions.setSheets]: (state: TSheetsState, action) => ({
         ...state,
-        sheets: action.payload,
+        list: action.payload,
     }),
 }, initState);
