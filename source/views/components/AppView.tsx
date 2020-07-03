@@ -45,9 +45,8 @@ class AppView extends React.PureComponent<TProps, TState> {
 
         googleApi.listenIsSignedIn(this.updateSigninStatus);
 
-        this.updateSigninStatus(
-            googleApi.getIsSignedIn(),
-        );
+        googleApi.getIsSignedIn()
+            .then(status => this.updateSigninStatus(status));
     };
 
     handleClientInitializingErr = (err) => {
@@ -62,7 +61,8 @@ class AppView extends React.PureComponent<TProps, TState> {
             if (history.location.pathname === LOGIN_PATH) {
                 history.push('/');
             }
-            signedIn(googleApi.getBasicProfile())
+            googleApi.getBasicProfile()
+                .then(status => signedIn(status));
         } else {
             history.push(LOGIN_PATH);
             signedOut()

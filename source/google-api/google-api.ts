@@ -3,6 +3,7 @@
  * are available here https://console.developers.google.com/apis/credentials
  */
 import { TSpreadsheetsApi } from './TSpreadsheetsApi';
+import BasicProfile = gapi.auth2.BasicProfile;
 
 const getClientId = () => {
     if (ENV.clientId) {
@@ -26,6 +27,7 @@ const DISCOVERY_DOCS = ['https://sheets.googleapis.com/$discovery/rest?version=v
 const SCOPES = 'https://www.googleapis.com/auth/spreadsheets';
 
 const GOOGLE_SCRIPT_ID = 'apis-google-client-#@123';
+const DATA_LOADED_ATTR_NAME = 'data-loaded';
 
 export const load = () => new Promise((resolve) => {
     let scriptEl = <HTMLScriptElement> document.getElementById(GOOGLE_SCRIPT_ID);
@@ -34,10 +36,12 @@ export const load = () => new Promise((resolve) => {
     } else {
         scriptEl = document.createElement('script');
         scriptEl.setAttribute('id', GOOGLE_SCRIPT_ID);
+        scriptEl.setAttribute(DATA_LOADED_ATTR_NAME, 'false');
         scriptEl.src = 'https://apis.google.com/js/client.js';
 
         scriptEl.onload = () => {
             gapi.load('client:auth2', () => {
+                scriptEl.setAttribute(DATA_LOADED_ATTR_NAME, 'true');
                 resolve();
             });
         };
@@ -64,21 +68,35 @@ export const init = () => new Promise((resolve, reject) => {
     }
 });
 
-export const getBasicProfile = () => {
-    return gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile();
+export const getBasicProfile = (): Promise<BasicProfile> => {
+    return load()
+        .then(init)
+        .then(() => {
+            return gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile();
+        });
 };
 
-export const getIsSignedIn = () => {
-    return gapi.auth2.getAuthInstance().isSignedIn.get();
+export const getIsSignedIn = (): Promise<boolean> => {
+    return load()
+        .then(init)
+        .then(() => {
+            return gapi.auth2.getAuthInstance().isSignedIn.get();
+        });
 };
 
 export const listenIsSignedIn = (cb: (isSignedIn: boolean) => void) => {
-    gapi.auth2.getAuthInstance().isSignedIn.listen(cb);
+    load()
+        .then(init)
+        .then(() => {
+            gapi.auth2.getAuthInstance().isSignedIn.listen(cb);
+        });
 };
 
-export const getSpreadsheetsInstance = (): Promise<TSpreadsheetsApi> => load()
-    .then(init)
-    .then(() => {
-        // @ts-ignore
-        return gapi.client.sheets.spreadsheets;
-    });
+export const getSpreadsheetsInstance = (): Promise<TSpreadsheetsApi> => {
+    return load()
+        .then(init)
+        .then(() => {
+            // @ts-ignore
+            return gapi.client.sheets.spreadsheets;
+        });
+}
