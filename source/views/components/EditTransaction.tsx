@@ -8,6 +8,7 @@ import { addTransaction } from "../../model/transactions/transactionsReq";
 import GTransactionRow from "../../google-api/GTransactionRow";
 import { ECoin, ETransactionType } from "../../google-api/services/transactionArrToData";
 import {TUserState} from "../../model/user/userReducer";
+import {getInputClass} from "../../styles/elements";
 
 type TValues = {
     date: string;
@@ -33,8 +34,6 @@ type TProps = {
 type TState = {};
 
 class EditTransaction extends React.PureComponent<TProps, TState> {
-    static inputClass = 'appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white';
-
     mockSubmit = () => {
         const { user } = this.props;
         addTransaction(new GTransactionRow({
@@ -85,7 +84,7 @@ class EditTransaction extends React.PureComponent<TProps, TState> {
                     <div className="w-1/2 px-2">
                         <input
                             type="text"
-                            className={EditTransaction.inputClass}
+                            className={getInputClass()}
                             placeholder="Amount"
                             name="amount"
                             onChange={handleChange}
@@ -96,7 +95,7 @@ class EditTransaction extends React.PureComponent<TProps, TState> {
                     </div>
                     <div className="w-1/2 px-2">
                         <Select
-                            className={EditTransaction.inputClass}
+                            className={getInputClass()}
                             placeholder="Account From"
                             name="accountFrom"
                             onChange={handleChange}
@@ -113,7 +112,7 @@ class EditTransaction extends React.PureComponent<TProps, TState> {
                     <div className="w-1/2 px-2">
                         <input
                             type="date"
-                            className={EditTransaction.inputClass}
+                            className={getInputClass()}
                             placeholder="Date"
                             name="date"
                             onChange={handleChange}
@@ -124,7 +123,7 @@ class EditTransaction extends React.PureComponent<TProps, TState> {
                     </div>
                     <div className="w-1/2 px-2">
                         <Select
-                            className={EditTransaction.inputClass}
+                            className={getInputClass()}
                             placeholder="Category"
                             name="category"
                             onChange={handleChange}
@@ -140,7 +139,7 @@ class EditTransaction extends React.PureComponent<TProps, TState> {
                 <div className="mb-4">
                     <textarea
                         rows={3}
-                        className={EditTransaction.inputClass}
+                        className={getInputClass()}
                         placeholder="Comment"
                         name="comment"
                         onChange={handleChange}

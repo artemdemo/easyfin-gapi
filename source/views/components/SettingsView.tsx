@@ -4,6 +4,7 @@ import TabLink from "../../components/Tabs/TabLink";
 import TabsContainer from "../../components/Tabs/TabsContainer";
 import SettingsMainView from "./SettingsMainView";
 import SettingsAccountsView from "./SettingsAccountsView";
+import SettingsApiKeys from "./SettingsApiKeys";
 import * as routes from "../../routing/routes";
 
 type TProps = {};
@@ -32,6 +33,10 @@ class SettingsView extends React.PureComponent<TProps, TState> {
                 <Route
                     path={routes.getSettingsAccountsRoute()}
                     component={SettingsAccountsView}
+                />
+                <Route
+                    path={routes.getSettingsApiKeysRoute()}
+                    component={SettingsApiKeys}
                 />
             </>
         );

@@ -8,7 +8,7 @@ type TProps = {
 type TState = {};
 
 const TabsContainer = (props: TProps) => (
-    <div className={classnames('flex', props.className)}>
+    <div className={classnames('flex border-b border-gray-200 pb-2', props.className)}>
         {props.children}
     </div>
 );
