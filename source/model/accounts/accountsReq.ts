@@ -1,8 +1,9 @@
 import * as googleSheets from '../../google-api/google-sheets';
 import GAccountRow from '../../google-api/GAccountRow';
+import {EDataSheetTitles} from "../../services/sheets";
 
 export const loadAccounts = (): Promise<GAccountRow[]> => {
-    return googleSheets.getAllRows('accounts')
+    return googleSheets.getAllRows(EDataSheetTitles.ACCOUNTS)
         .then((values) => {
             const result: GAccountRow[] = [];
             values.forEach((dataArr, idx) => {
@@ -18,8 +19,12 @@ export const loadAccounts = (): Promise<GAccountRow[]> => {
 };
 
 export const addAccount = (account: GAccountRow): Promise<GAccountRow> => {
-    return googleSheets.appendRow(account, 'accounts')
+    return googleSheets.appendRow(account, EDataSheetTitles.ACCOUNTS)
         .then((result) => {
             return <GAccountRow>result;
         });
+};
+
+export const creatAccountsSheet = (): Promise<any> => {
+    return googleSheets.createSheet(EDataSheetTitles.ACCOUNTS);
 };

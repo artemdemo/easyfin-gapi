@@ -3,7 +3,11 @@ import GSheet from "../google-api/GSheet";
 
 const transactionSheetNameRegex = /^\d{4}$/;
 
-export enum EHelpSheetTitles {
+/**
+ * Available data sheet titles.
+ * These sheets will be used in order to keep additional user data besides transaction.
+ */
+export enum EDataSheetTitles {
     ACCOUNTS = 'accounts',
 }
 
