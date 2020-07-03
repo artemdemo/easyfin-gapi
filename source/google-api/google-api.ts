@@ -25,31 +25,43 @@ const DISCOVERY_DOCS = ['https://sheets.googleapis.com/$discovery/rest?version=v
 // included, separated by spaces.
 const SCOPES = 'https://www.googleapis.com/auth/spreadsheets';
 
+const GOOGLE_SCRIPT_ID = 'apis-google-client-#@123';
+
 export const load = () => new Promise((resolve) => {
-    const script = document.createElement('script');
-    script.src = 'https://apis.google.com/js/client.js';
+    let scriptEl = <HTMLScriptElement> document.getElementById(GOOGLE_SCRIPT_ID);
+    if (scriptEl) {
+        resolve();
+    } else {
+        scriptEl = document.createElement('script');
+        scriptEl.setAttribute('id', GOOGLE_SCRIPT_ID);
+        scriptEl.src = 'https://apis.google.com/js/client.js';
 
-    script.onload = () => {
-        gapi.load('client:auth2', () => {
-            resolve();
-        });
-    };
+        scriptEl.onload = () => {
+            gapi.load('client:auth2', () => {
+                resolve();
+            });
+        };
 
-    document.body.appendChild(script);
+        document.body.appendChild(scriptEl);
+    }
 });
 
 export const init = () => new Promise((resolve, reject) => {
-    gapi.client
-        .init({
-            apiKey: getApiKey(),
-            clientId: getClientId(),
-            discoveryDocs: DISCOVERY_DOCS,
-            scope: SCOPES
-        })
-        .then(
-            resolve,
-            reject,
-        );
+    if (!gapi.client.getToken()) {
+        gapi.client
+            .init({
+                apiKey: getApiKey(),
+                clientId: getClientId(),
+                discoveryDocs: DISCOVERY_DOCS,
+                scope: SCOPES
+            })
+            .then(
+                resolve,
+                reject,
+            );
+    } else {
+        resolve();
+    }
 });
 
 export const getBasicProfile = () => {
@@ -64,7 +76,9 @@ export const listenIsSignedIn = (cb: (isSignedIn: boolean) => void) => {
     gapi.auth2.getAuthInstance().isSignedIn.listen(cb);
 };
 
-export const getSpreadsheetsInstance = (): TSpreadsheetsApi => {
-    // @ts-ignore
-    return gapi.client.sheets.spreadsheets;
-};
+export const getSpreadsheetsInstance = (): Promise<TSpreadsheetsApi> => load()
+    .then(init)
+    .then(() => {
+        // @ts-ignore
+        return gapi.client.sheets.spreadsheets;
+    });
