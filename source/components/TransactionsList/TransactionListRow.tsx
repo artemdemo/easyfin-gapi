@@ -1,6 +1,7 @@
 import React from "react";
 import format from "date-fns/format";
 import GTransactionRow from "../../google-api/GTransactionRow";
+import {formatMoney} from "../../services/numbers";
 
 type TProps = {
     transaction?: GTransactionRow;
@@ -23,7 +24,7 @@ class TransactionsListRow extends React.PureComponent<TProps, TState> {
                         {values.rootCategory}
                     </td>
                     <td className="border px-4 py-2">
-                        {values.amountInDefaultCoin}
+                        {formatMoney(values.amountInDefaultCoin)}
                     </td>
                     <td className="border px-4 py-2">
                         {values.tags?.join(', ')}
