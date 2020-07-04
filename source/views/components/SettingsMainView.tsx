@@ -3,6 +3,7 @@ import { Formik } from "formik";
 import {getInputClass, getLinkBtnClass} from "../../styles/elements";
 import {spreadsheetID} from "../../services/settingsStorage";
 import {IFormProps} from "../../types/formik";
+import Button, {buttonAppearance} from "../../components/Button/Button";
 
 type TValues = {
     spreadsheetId: string;
@@ -61,6 +62,7 @@ class SettingsMainView extends React.PureComponent<TProps, TState> {
                         </a>
                     </div>
                 </div>
+                <Button appearance={buttonAppearance.LIGHT}>Save</Button>
             </form>
         );
     };
