@@ -3,8 +3,11 @@
  * are available here https://console.developers.google.com/apis/credentials
  */
 import { TSpreadsheetsApi } from "./TSpreadsheetsApi";
-import {getRandom} from "../services/numbers";
+import { getRandom } from "../services/numbers";
+import { createNanoEvents } from "nanoevents";
 import BasicProfile = gapi.auth2.BasicProfile;
+
+const emitter = createNanoEvents();
 
 const getClientId = () => {
     if (ENV.clientId) {
@@ -29,14 +32,21 @@ const SCOPES = 'https://www.googleapis.com/auth/spreadsheets';
 
 const GOOGLE_SCRIPT_ID = `apis-google-client-${getRandom(5)}`;
 const DATA_LOADED_ATTR_NAME = 'data-gapi-loaded';
+const SCRIPT_GAPI_LOADED = 'SCRIPT_GAPI_LOADED';
 
 export const load = () => new Promise((resolve) => {
     let scriptEl = <HTMLScriptElement> document.getElementById(GOOGLE_SCRIPT_ID);
     if (scriptEl) {
         if (scriptEl.getAttribute(DATA_LOADED_ATTR_NAME) !== 'true') {
-            // TODO: Here I need to subscribe to event `gapi.load`
+            const unbind = emitter.on(SCRIPT_GAPI_LOADED, () => {
+                resolve();
+                // This event should be called only once.
+                // Since script is loaded only at the start of the app.
+                unbind();
+            })
+        } else {
+            resolve();
         }
-        resolve();
     } else {
         scriptEl = document.createElement('script');
         scriptEl.setAttribute('id', GOOGLE_SCRIPT_ID);
@@ -46,6 +56,7 @@ export const load = () => new Promise((resolve) => {
         scriptEl.onload = () => {
             gapi.load('client:auth2', () => {
                 scriptEl.setAttribute(DATA_LOADED_ATTR_NAME, 'true');
+                emitter.emit(SCRIPT_GAPI_LOADED);
                 resolve();
             });
         };

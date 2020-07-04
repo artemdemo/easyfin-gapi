@@ -14,26 +14,14 @@ type TProps = {
     setSheets: (sheets: GSheet[]) => void;
 };
 
-type TState = {
-    initialized: boolean;
-    status: string;
-};
+type TState = {};
 
 const LOGIN_PATH = '/login';
 
 class AppView extends React.PureComponent<TProps, TState> {
-    state: TState = {
-        initialized: false,
-        status: '',
-    };
-
     componentDidMount() {
-        this.setState({ status: 'Loading client.js' });
-
         googleApi.load()
             .then(() => {
-                this.setState({ status: 'Script loaded, initializing' });
-
                 googleApi.init()
                     .then(this.handleClientInitialized)
                     .catch(this.handleClientInitializingErr);
@@ -74,7 +62,7 @@ class AppView extends React.PureComponent<TProps, TState> {
             <Container>
                 <MainMenu />
                 <div className='px-2'>
-                    {this.state.initialized ? this.props.children : this.state.status}
+                    {this.props.children}
                 </div>
             </Container>
         );
