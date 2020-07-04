@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { TUserState } from '../../model/user/userReducer';
 import { loadTransactions } from '../../model/transactions/transactionsReq';
 import GTransactionRow from '../../google-api/GTransactionRow';
-import TransactionsList from '../../components/TransactionsList/TransactionsList';
+import TransactionsList from '../../containers/TransactionsList/TransactionsList';
 import {loadSheets} from "../../model/sheets/sheetsReq";
 import {getLastTransactionsSheetTitle} from "../../services/sheets";
 import {TSheetsState} from "../../model/sheets/sheetsReducer";
