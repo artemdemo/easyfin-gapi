@@ -2,7 +2,8 @@
  * CLIENT_ID and API_KEY
  * are available here https://console.developers.google.com/apis/credentials
  */
-import { TSpreadsheetsApi } from './TSpreadsheetsApi';
+import { TSpreadsheetsApi } from "./TSpreadsheetsApi";
+import {getRandom} from "../services/numbers";
 import BasicProfile = gapi.auth2.BasicProfile;
 
 const getClientId = () => {
@@ -26,12 +27,15 @@ const DISCOVERY_DOCS = ['https://sheets.googleapis.com/$discovery/rest?version=v
 // included, separated by spaces.
 const SCOPES = 'https://www.googleapis.com/auth/spreadsheets';
 
-const GOOGLE_SCRIPT_ID = 'apis-google-client-#@123';
-const DATA_LOADED_ATTR_NAME = 'data-loaded';
+const GOOGLE_SCRIPT_ID = `apis-google-client-${getRandom(5)}`;
+const DATA_LOADED_ATTR_NAME = 'data-gapi-loaded';
 
 export const load = () => new Promise((resolve) => {
     let scriptEl = <HTMLScriptElement> document.getElementById(GOOGLE_SCRIPT_ID);
     if (scriptEl) {
+        if (scriptEl.getAttribute(DATA_LOADED_ATTR_NAME) !== 'true') {
+            // TODO: Here I need to subscribe to event `gapi.load`
+        }
         resolve();
     } else {
         scriptEl = document.createElement('script');
