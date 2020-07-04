@@ -36,7 +36,7 @@ class SettingsMainView extends React.PureComponent<TProps, TState> {
         } = formProps;
 
         return (
-            <form className="max-w-md" onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit}>
                 <div className="flex flex-wrap -mx-2 mb-4">
                     <div className="w-1/2 px-2">
                         <input
