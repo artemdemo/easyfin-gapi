@@ -7,6 +7,7 @@ import * as googleApi from "../../google-api/google-api";
 import { signedIn, signedOut } from "../../model/user/userActions";
 import BasicProfile = gapi.auth2.BasicProfile;
 import GSheet from "../../google-api/GSheet";
+import {loadAndInit} from "../../google-api/google-api";
 
 type TProps = {
     signedIn: (user: BasicProfile) => void;
@@ -20,12 +21,9 @@ const LOGIN_PATH = '/login';
 
 class AppView extends React.PureComponent<TProps, TState> {
     componentDidMount() {
-        googleApi.load()
-            .then(() => {
-                googleApi.init()
-                    .then(this.handleClientInitialized)
-                    .catch(this.handleClientInitializingErr);
-            });
+        googleApi.loadAndInit()
+            .then(this.handleClientInitialized)
+            .catch(this.handleClientInitializingErr);
     }
 
     handleClientInitialized = () => {

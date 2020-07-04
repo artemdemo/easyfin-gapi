@@ -34,7 +34,7 @@ const GOOGLE_SCRIPT_ID = `apis-google-client-${getRandom(5)}`;
 const DATA_LOADED_ATTR_NAME = 'data-gapi-loaded';
 const SCRIPT_GAPI_LOADED = 'SCRIPT_GAPI_LOADED';
 
-export const load = () => new Promise((resolve) => {
+export const _load = () => new Promise((resolve) => {
     let scriptEl = <HTMLScriptElement> document.getElementById(GOOGLE_SCRIPT_ID);
     if (scriptEl) {
         if (scriptEl.getAttribute(DATA_LOADED_ATTR_NAME) !== 'true') {
@@ -65,7 +65,7 @@ export const load = () => new Promise((resolve) => {
     }
 });
 
-export const init = () => new Promise((resolve, reject) => {
+export const _init = () => new Promise((resolve, reject) => {
     if (!gapi.client.getToken()) {
         gapi.client
             .init({
@@ -83,33 +83,34 @@ export const init = () => new Promise((resolve, reject) => {
     }
 });
 
+export const loadAndInit = () => {
+    return _load()
+        .then(_init)
+};
+
 export const getBasicProfile = (): Promise<BasicProfile> => {
-    return load()
-        .then(init)
+    return loadAndInit()
         .then(() => {
             return gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile();
         });
 };
 
 export const getIsSignedIn = (): Promise<boolean> => {
-    return load()
-        .then(init)
+    return loadAndInit()
         .then(() => {
             return gapi.auth2.getAuthInstance().isSignedIn.get();
         });
 };
 
-export const listenIsSignedIn = (cb: (isSignedIn: boolean) => void) => {
-    load()
-        .then(init)
+export const listenIsSignedIn = (cb: (isSignedIn: boolean) => void): void => {
+    loadAndInit()
         .then(() => {
             gapi.auth2.getAuthInstance().isSignedIn.listen(cb);
         });
 };
 
 export const getSpreadsheetsInstance = (): Promise<TSpreadsheetsApi> => {
-    return load()
-        .then(init)
+    return loadAndInit()
         .then(() => {
             // @ts-ignore
             return gapi.client.sheets.spreadsheets;
