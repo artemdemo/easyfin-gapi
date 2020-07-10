@@ -1,7 +1,13 @@
 import { v4 as uuidv4 } from "uuid";
 
+export enum ENotificationAppearance {
+    SUCCESS = 'success',
+    ERROR = 'error',
+}
+
 type TNotificationProps = {
     msg: string;
+    appearance?: ENotificationAppearance;
 };
 
 type TOnDeleteCb = (self: Notification) => void;
@@ -13,11 +19,13 @@ class Notification {
     readonly id: string;
     readonly msg: string;
     readonly timeoutToken: number;
+    readonly appearance: ENotificationAppearance;
     private readonly onDeleteCbs: Set<TOnDeleteCb>;
 
     constructor(props: TNotificationProps) {
         this.id = uuidv4();
         this.msg = props.msg;
+        this.appearance = props.appearance || ENotificationAppearance.SUCCESS;
         this.onDeleteCbs = new Set<TOnDeleteCb>();
 
         this.timeoutToken = setTimeout(() => {

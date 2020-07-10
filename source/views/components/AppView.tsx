@@ -8,6 +8,7 @@ import { signedIn, signedOut } from "../../model/user/userActions";
 import { sendNotification } from "../../model/notifications/notificationsActions";
 import Notifications from "../../containers/Notifications/Notifications";
 import BasicProfile = gapi.auth2.BasicProfile;
+import {ENotificationAppearance} from "../../model/notifications/Notification";
 
 type TProps = {
     signedIn: (user: BasicProfile) => void;
@@ -47,7 +48,7 @@ class AppView extends React.PureComponent<TProps, TState> {
             if (history.location.pathname === LOGIN_PATH) {
                 history.push('/');
             }
-            sendNotification({ msg: 'Test' });
+            sendNotification({ msg: 'Test', appearance: ENotificationAppearance.ERROR });
             sendNotification({ msg: 'Test 1' });
             googleApi.getBasicProfile()
                 .then(status => signedIn(status));
