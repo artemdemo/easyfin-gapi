@@ -24,7 +24,7 @@ class SettingsApiKeys extends React.PureComponent<TProps, TState> {
         setSubmitting(false);
         apiKey.set(values.apiKey);
         clientId.set(values.clientId);
-        store.dispatch(sendNotification({ msg: "Settings saved" }));
+        store.dispatch(sendNotification('Settings saved'));
     }
 
     handleValidation = (values: TValues) => {}

@@ -1,4 +1,5 @@
 import { handleActions } from "redux-actions";
+import _isString from "lodash/isString";
 import * as actions from "./notificationsActions";
 import Notification from "./Notification";
 import store from "../../store";
@@ -13,7 +14,10 @@ const initState: TNotificationsState = {
 
 export default handleActions({
     [actions.sendNotification]: (state: TNotificationsState, action) => {
-        const notification = new Notification(action.payload);
+        const notificationProps = _isString(action.payload) ? {
+            msg: action.payload
+        } : action.payload;
+        const notification = new Notification(notificationProps);
         notification.onDelete((self) => {
             store.dispatch(actions.deleteNotification(self));
         });

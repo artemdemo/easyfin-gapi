@@ -22,7 +22,7 @@ class SettingsMainView extends React.PureComponent<TProps, TState> {
     handleSubmit = (values: TValues, { setSubmitting }) => {
         setSubmitting(false);
         spreadsheetID.set(values.spreadsheetId);
-        store.dispatch(sendNotification({ msg: "Settings saved" }));
+        store.dispatch(sendNotification("Settings saved"));
     }
 
     handleValidation = (values: TValues) => {}

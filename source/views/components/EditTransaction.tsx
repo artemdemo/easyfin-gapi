@@ -62,7 +62,7 @@ class EditTransaction extends React.PureComponent<TProps, TState> {
 
     handleAddedTransaction = () => {
         const { sendNotification } = this.props;
-        sendNotification({ msg: 'Transaction added' });
+        sendNotification('Transaction added');
     };
 
     handleValidation = (values: TValues) => {}
