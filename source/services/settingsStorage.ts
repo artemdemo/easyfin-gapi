@@ -17,6 +17,9 @@ class SettingStorage {
         if (_isString(id) && id !== '') {
             return <string> id;
         }
+        if (ENV[this.key]) {
+            return ENV[this.key];
+        }
         throw new Error(`No "${this.key}" stored`);
     }
 

@@ -2,26 +2,13 @@
  * CLIENT_ID and API_KEY
  * are available here https://console.developers.google.com/apis/credentials
  */
+import { createNanoEvents } from "nanoevents";
 import { TSpreadsheetsApi } from "./TSpreadsheetsApi";
 import { getRandom } from "../services/numbers";
-import { createNanoEvents } from "nanoevents";
+import { apiKey, clientId } from "../services/settingsStorage";
 import BasicProfile = gapi.auth2.BasicProfile;
 
 const emitter = createNanoEvents();
-
-const getClientId = () => {
-    if (ENV.clientId) {
-        return ENV.clientId;
-    }
-    throw new Error('No clientId found');
-};
-
-const getApiKey = () => {
-    if (ENV.apiKey) {
-        return ENV.apiKey;
-    }
-    throw new Error('No apiKey found');
-};
 
 // Array of API discovery doc URLs for APIs used by the quickstart
 const DISCOVERY_DOCS = ['https://sheets.googleapis.com/$discovery/rest?version=v4'];
@@ -69,8 +56,8 @@ export const _init = () => new Promise((resolve, reject) => {
     if (!gapi.client.getToken()) {
         gapi.client
             .init({
-                apiKey: getApiKey(),
-                clientId: getClientId(),
+                apiKey: apiKey.get(),
+                clientId: clientId.get(),
                 discoveryDocs: DISCOVERY_DOCS,
                 scope: SCOPES
             })
