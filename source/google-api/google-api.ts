@@ -41,7 +41,7 @@ export const _load = () => new Promise((resolve) => {
             const unbind = emitter.on(SCRIPT_GAPI_LOADED, () => {
                 resolve();
                 // This event should be called only once.
-                // Since script is loaded only at the start of the app.
+                // Since the script is loaded only at the start of the app.
                 unbind();
             })
         } else {
