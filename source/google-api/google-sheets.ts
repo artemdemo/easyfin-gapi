@@ -30,6 +30,17 @@ const generalRejectHandler = (reject: () => any) => (errData) => {
     reject();
 };
 
+const batchUpdateSpreadsheet = (params) => new Promise((resolve, reject) => {
+    googleApi.getSpreadsheetsInstance()
+        .then((spreadsheets) => {
+            spreadsheets.batchUpdate(params)
+                .then(
+                    generalFulfillHandler(resolve, reject),
+                    generalRejectHandler(reject),
+                );
+        });
+});
+
 export const appendRow = (row: GRow, sheetName: string) => new Promise<GRow>((resolve, reject) => {
     const params = {
         spreadsheetId: spreadsheetID.get(),
@@ -116,7 +127,7 @@ export const createSpreadsheet = (title: string) => new Promise((resolve, reject
 
 });
 
-export const createSheet = (title: string) => new Promise((resolve, reject) => {
+export const createSheet = (title: string) => {
     const params = {
         spreadsheetId: spreadsheetID.get(),
         requests: [{
@@ -128,15 +139,8 @@ export const createSheet = (title: string) => new Promise((resolve, reject) => {
         }],
     };
 
-    googleApi.getSpreadsheetsInstance()
-        .then((spreadsheets) => {
-            spreadsheets.batchUpdate(params)
-                .then(
-                    generalFulfillHandler(resolve, reject),
-                    generalRejectHandler(reject),
-                );
-        });
-});
+    return batchUpdateSpreadsheet(params);
+};
 
 export const getAllSheets = () => new Promise((resolve, reject) => {
     googleApi.getSpreadsheetsInstance()
@@ -151,7 +155,7 @@ export const getAllSheets = () => new Promise((resolve, reject) => {
         });
 });
 
-export const sortByDate = () => new Promise((resolve, reject) => {
+export const sortByDate = () => {
     const params = {
         spreadsheetId: spreadsheetID.get(),
         requests: [{
@@ -170,12 +174,5 @@ export const sortByDate = () => new Promise((resolve, reject) => {
         }],
     };
 
-    googleApi.getSpreadsheetsInstance()
-        .then((spreadsheets) => {
-            spreadsheets.batchUpdate(params)
-                .then(
-                    generalFulfillHandler(resolve, reject),
-                    generalRejectHandler(reject),
-                );
-        });
-});
+    return batchUpdateSpreadsheet(params);
+};
