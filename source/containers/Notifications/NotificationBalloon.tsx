@@ -1,5 +1,6 @@
 import React from "react";
 import classnames from "classnames";
+import Notification from "../../model/notifications/Notification";
 
 export enum ENotificationAppearance {
     SUCCESS = 'success',
@@ -7,14 +8,20 @@ export enum ENotificationAppearance {
 }
 
 type TProps = {
-    className: string;
-    appearance: ENotificationAppearance;
+    className?: string;
+    appearance?: ENotificationAppearance;
+    data: Notification;
 };
 type TState = {};
 
-class Notification extends React.PureComponent<TProps, TState> {
+class NotificationBalloon extends React.PureComponent<TProps, TState> {
+    defaultProps = {
+        className: '',
+        appearance: ENotificationAppearance.SUCCESS,
+    };
+
     render() {
-        const { className, appearance } = this.props;
+        const { className, appearance, data } = this.props;
         const notificationClass = classnames(className, {
             'py-2 px-4 rounded text-white': true,
             'bg-green-500': appearance === ENotificationAppearance.SUCCESS,
@@ -22,10 +29,10 @@ class Notification extends React.PureComponent<TProps, TState> {
         });
         return (
             <div className={notificationClass}>
-                {this.props.children}
+                {data.msg}
             </div>
         )
     }
 }
 
-export default Notification;
+export default NotificationBalloon;

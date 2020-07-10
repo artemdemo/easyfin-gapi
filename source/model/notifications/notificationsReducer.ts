@@ -1,20 +1,21 @@
-import { handleActions } from 'redux-actions';
-import * as actions from './notificationsActions';
+import { handleActions } from "redux-actions";
+import * as actions from "./notificationsActions";
+import Notification from "./Notification";
 
 export type TNotificationsState = {
-    notifications: any[];
+    list: Notification[];
 };
 
 const initState: TNotificationsState = {
-    notifications: [],
+    list: [],
 };
 
 export default handleActions({
     [actions.sendNotification]: (state: TNotificationsState, action) => ({
         ...state,
-        notifications: [
-            ...state.notifications,
-            action.payload,
+        list: [
+            ...state.list,
+            new Notification(action.payload),
         ],
     }),
 }, initState);
