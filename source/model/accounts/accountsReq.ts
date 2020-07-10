@@ -4,6 +4,9 @@ import {EDataSheetTitles} from "../../services/sheets";
 
 export const loadAccounts = (): Promise<GAccountRow[]> => {
     return googleSheets.getAllRows(EDataSheetTitles.ACCOUNTS)
+        .then((data: any) => {
+            return data.values || [];
+        })
         .then((values) => {
             const result: GAccountRow[] = [];
             values.forEach((dataArr, idx) => {

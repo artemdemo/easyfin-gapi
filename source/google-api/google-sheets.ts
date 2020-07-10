@@ -68,7 +68,7 @@ export const appendRow = (row: GRow, sheetName: string) => new Promise<GRow>((re
         });
 });
 
-export const getAllRows = (sheetTitle: string) => new Promise<string[][]>((resolve, reject) => {
+export const getAllRows = (sheetTitle: string) => new Promise((resolve, reject) => {
     const params = {
         spreadsheetId: spreadsheetID.get(),
         range: `${sheetTitle}!A1:Z`,
@@ -80,7 +80,7 @@ export const getAllRows = (sheetTitle: string) => new Promise<string[][]>((resol
                 .get(params)
                 .then((resultData) => {
                     if (resultData.status === 200) {
-                        resolve(resultData.result.values || []);
+                        resolve(resultData.result);
                     } else {
                         reject(resultData);
                     }
