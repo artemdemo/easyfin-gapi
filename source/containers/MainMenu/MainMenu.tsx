@@ -4,6 +4,7 @@ import { connect } from "react-redux"
 import { TUserState } from "../../model/user/userReducer";
 import Navbar from "../../components/Navbar/Navbar";
 import NavbarLink from "../../components/Navbar/NavbarLink";
+import * as routes from "../../routing/routes";
 
 type TProps = {
     className: string;
@@ -26,9 +27,10 @@ class MainMenu extends React.PureComponent<TProps, TState> {
         if (user.basicProfile) {
             return (
                 <div>
-                    <NavbarLink to='/' exact>Main</NavbarLink>
-                    <NavbarLink to='/transactions/new'>New Transaction</NavbarLink>
-                    <NavbarLink to='/settings'>Settings</NavbarLink>
+                    <NavbarLink to={routes.getMainRoute()} exact>Main</NavbarLink>
+                    <NavbarLink to={routes.getTransactionsRoute()}>Transactions</NavbarLink>
+                    <NavbarLink to={routes.getTransactionsNewRoute()}>New Transaction</NavbarLink>
+                    <NavbarLink to={routes.getSettingsRoute()}>Settings</NavbarLink>
                 </div>
             );
         }

@@ -7,6 +7,7 @@ import LoginView from "../views/components/LoginView";
 import EditTransaction from "../views/components/EditTransaction";
 import SettingsView from "../views/components/SettingsView";
 import * as routes from "./routes";
+import TransactionsView from "../views/components/TransactionsView";
 
 type TProps = {
     store: any;
@@ -19,7 +20,8 @@ const MainRoutes = (props: TProps) => (
             <AppView>
                 <Route path={routes.getMainRoute()} component={MainView} exact />
                 <Route path={routes.getLoginRoute()} component={LoginView} />
-                <Route path={routes.getEditTransactionsRoute()} component={EditTransaction} />
+                <Route path={routes.getTransactionsRoute()} component={TransactionsView} exact />
+                <Route path={routes.getTransactionsNewRoute()} component={EditTransaction} />
                 <Route path={routes.getSettingsRoute()} component={SettingsView} />
             </AppView>
         </Router>
