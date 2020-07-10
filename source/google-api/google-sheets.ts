@@ -151,7 +151,7 @@ export const getAllSheets = () => new Promise((resolve, reject) => {
             })
                 .then((resultData) => {
                     if (resultData.status === 200) {
-                        resolve(resultData.result.sheets);
+                        resolve(resultData.result);
                     } else {
                         reject(resultData);
                     }
