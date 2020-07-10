@@ -6,6 +6,7 @@ export const buttonAppearance = {
     PRIMARY: 'primary',
     DANGER: 'danger',
     LIGHT: 'light',
+    TEXT: 'text',
 };
 
 export const buttonSize = {
@@ -20,9 +21,10 @@ const Button = (props) => {
         'text-lg': buttonSize.LG === size,
         'text-sm': buttonSize.SM === size,
         'btn-block': block,
-        'bg-white hover:bg-gray-100 text-gray-800': buttonAppearance.LIGHT === appearance,
-        'bg-blue-500 hover:bg-blue-700 text-white': buttonAppearance.PRIMARY === appearance,
-        'bg-red-500 hover:bg-red-700 text-white': buttonAppearance.DANGER === appearance,
+        'bg-blue-500 hover:bg-blue-600 text-white': buttonAppearance.PRIMARY === appearance,
+        'bg-red-500 hover:bg-red-600 text-white': buttonAppearance.DANGER === appearance,
+        'bg-gray-200 hover:bg-gray-300 text-gray-800': buttonAppearance.LIGHT === appearance,
+        'bg-white hover:bg-gray-100 text-gray-800': buttonAppearance.TEXT === appearance,
         'cursor-not-allowed opacity-50': disabled,
     });
     return (
