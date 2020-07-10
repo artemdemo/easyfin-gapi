@@ -5,14 +5,14 @@ import Container from "../../components/Container/Container";
 import MainMenu from "../../containers/MainMenu/MainMenu";
 import * as googleApi from "../../google-api/google-api";
 import { signedIn, signedOut } from "../../model/user/userActions";
+import { sendNotification } from "../../model/notifications/notificationsActions";
+import Notifications from "../../containers/Notifications/Notifications";
 import BasicProfile = gapi.auth2.BasicProfile;
-import GSheet from "../../google-api/GSheet";
-import {loadAndInit} from "../../google-api/google-api";
 
 type TProps = {
     signedIn: (user: BasicProfile) => void;
     signedOut: () => void;
-    setSheets: (sheets: GSheet[]) => void;
+    sendNotification: (props: any) => void;
 };
 
 type TState = {};
@@ -42,11 +42,13 @@ class AppView extends React.PureComponent<TProps, TState> {
     };
 
     updateSigninStatus = (isSignedIn: boolean) => {
-        const { signedIn, signedOut } = this.props;
+        const { signedIn, signedOut, sendNotification } = this.props;
         if (isSignedIn) {
             if (history.location.pathname === LOGIN_PATH) {
                 history.push('/');
             }
+            sendNotification({ msg: 'Test' });
+            sendNotification({ msg: 'Test 1' });
             googleApi.getBasicProfile()
                 .then(status => signedIn(status));
         } else {
@@ -59,6 +61,7 @@ class AppView extends React.PureComponent<TProps, TState> {
         return (
             <Container>
                 <MainMenu />
+                <Notifications />
                 <div className='px-2'>
                     {this.props.children}
                 </div>
@@ -72,5 +75,6 @@ export default connect(
     {
         signedIn,
         signedOut,
+        sendNotification,
     },
 )(AppView);

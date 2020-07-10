@@ -15,7 +15,7 @@ type TProps = {
 type TState = {};
 
 class NotificationBalloon extends React.PureComponent<TProps, TState> {
-    defaultProps = {
+    static defaultProps = {
         className: '',
         appearance: ENotificationAppearance.SUCCESS,
     };
@@ -23,7 +23,7 @@ class NotificationBalloon extends React.PureComponent<TProps, TState> {
     render() {
         const { className, appearance, data } = this.props;
         const notificationClass = classnames(className, {
-            'py-2 px-4 rounded text-white': true,
+            'py-2 px-4 rounded text-white mb-1': true,
             'bg-green-500': appearance === ENotificationAppearance.SUCCESS,
             'bg-red-500': appearance === ENotificationAppearance.ERROR,
         });

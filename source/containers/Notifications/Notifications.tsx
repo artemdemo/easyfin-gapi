@@ -11,10 +11,12 @@ type TState = {};
 
 const NotificationWrapper = styled.div`
     position: absolute;
+    right: 20%;
+    top: 25px;
 `;
 
 class Notifications extends React.PureComponent<TProps, TState> {
-    return() {
+    render() {
         const { notifications } = this.props;
         return (
             <NotificationWrapper>
