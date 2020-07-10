@@ -1,5 +1,5 @@
 import * as googleApi from './google-api';
-import { ESortOrder } from './TSpreadsheetsApi';
+import {ESortOrder, IHttpResponse} from './TSpreadsheetsApi';
 import GRow from './GRow';
 import { spreadsheetID } from '../services/settingsStorage';
 
@@ -16,6 +16,19 @@ type TUpdateRowResult = {
 };
 
 const getMsgFromErr = errData => errData?.result?.error?.message || JSON.stringify(errData);
+
+const generalFulfillHandler = (resolve: (result: any) => any, reject: (err: any) => any) => (resultData: IHttpResponse) => {
+    if (resultData.status === 200) {
+        resolve(resultData.result);
+    } else {
+        reject(resultData);
+    }
+};
+
+const generalRejectHandler = (reject: () => any) => (errData) => {
+    console.error(new Error(getMsgFromErr(errData)));
+    reject();
+};
 
 export const appendRow = (row: GRow, sheetName: string) => new Promise<GRow>((resolve, reject) => {
     const params = {
@@ -78,16 +91,10 @@ export const getAllRows = (sheetTitle: string) => new Promise((resolve, reject) 
         .then((spreadsheets) => {
             spreadsheets.values
                 .get(params)
-                .then((resultData) => {
-                    if (resultData.status === 200) {
-                        resolve(resultData.result);
-                    } else {
-                        reject(resultData);
-                    }
-                }, (errData) => {
-                    console.error(new Error(getMsgFromErr(errData)));
-                    reject();
-                });
+                .then(
+                    generalFulfillHandler(resolve, reject),
+                    generalRejectHandler(reject),
+                );
         });
 });
 
@@ -101,16 +108,10 @@ export const createSpreadsheet = (title: string) => new Promise((resolve, reject
     googleApi.getSpreadsheetsInstance()
         .then((spreadsheets) => {
             spreadsheets.create(params)
-                .then((resultData) => {
-                    if (resultData.status === 200) {
-                        resolve(resultData.result);
-                    } else {
-                        reject(resultData);
-                    }
-                }, (errData) => {
-                    console.error(new Error(getMsgFromErr(errData)));
-                    reject();
-                });
+                .then(
+                    generalFulfillHandler(resolve, reject),
+                    generalRejectHandler(reject),
+                );
         });
 
 });
@@ -130,16 +131,10 @@ export const createSheet = (title: string) => new Promise((resolve, reject) => {
     googleApi.getSpreadsheetsInstance()
         .then((spreadsheets) => {
             spreadsheets.batchUpdate(params)
-                .then((resultData) => {
-                    if (resultData.status === 200) {
-                        resolve(resultData.result);
-                    } else {
-                        reject(resultData);
-                    }
-                }, (errData) => {
-                    console.error(new Error(getMsgFromErr(errData)));
-                    reject();
-                });
+                .then(
+                    generalFulfillHandler(resolve, reject),
+                    generalRejectHandler(reject),
+                );
         });
 });
 
@@ -149,16 +144,10 @@ export const getAllSheets = () => new Promise((resolve, reject) => {
             spreadsheets.get({
                 spreadsheetId: spreadsheetID.get(),
             })
-                .then((resultData) => {
-                    if (resultData.status === 200) {
-                        resolve(resultData.result);
-                    } else {
-                        reject(resultData);
-                    }
-                }, (errData) => {
-                    console.error(new Error(getMsgFromErr(errData)));
-                    reject();
-                });
+                .then(
+                    generalFulfillHandler(resolve, reject),
+                    generalRejectHandler(reject),
+                );
         });
 });
 
@@ -184,15 +173,9 @@ export const sortByDate = () => new Promise((resolve, reject) => {
     googleApi.getSpreadsheetsInstance()
         .then((spreadsheets) => {
             spreadsheets.batchUpdate(params)
-                .then((resultData) => {
-                    if (resultData.status === 200) {
-                        resolve(resultData.result);
-                    } else {
-                        reject(resultData);
-                    }
-                }, (errData) => {
-                    console.error(new Error(getMsgFromErr(errData)));
-                    reject();
-                });
+                .then(
+                    generalFulfillHandler(resolve, reject),
+                    generalRejectHandler(reject),
+                );
         });
 });

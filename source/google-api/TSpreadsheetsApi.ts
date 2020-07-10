@@ -70,7 +70,7 @@ type TBatchUpdateParams = {
     requests: TBatchUpdateReq[]
 };
 
-interface IHttpResponse {
+export interface IHttpResponse {
     body: any;
     headers: any;
     result: any;
