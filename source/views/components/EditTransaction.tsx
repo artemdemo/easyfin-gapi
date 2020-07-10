@@ -10,6 +10,7 @@ import { ECoin, ETransactionType } from "../../google-api/services/transactionAr
 import {TUserState} from "../../model/user/userReducer";
 import {getInputClass} from "../../styles/elements";
 import {IFormProps} from "../../types/formik";
+import { sendNotification } from "../../model/notifications/notificationsActions";
 
 type TValues = {
     date: string;
@@ -25,6 +26,7 @@ interface IEditTransactionForm extends IFormProps {
 
 type TProps = {
     user: TUserState;
+    sendNotification: (data: any) => void;
 };
 type TState = {};
 
@@ -40,7 +42,7 @@ class EditTransaction extends React.PureComponent<TProps, TState> {
             rootCategory: 'category',
             comment: 'some comment',
             userId: user.basicProfile?.getEmail() || '',
-        }));
+        })).then(this.handleAddedTransaction);
     }
 
     handleSubmit = (values: TValues, { setSubmitting }) => {
@@ -55,8 +57,13 @@ class EditTransaction extends React.PureComponent<TProps, TState> {
             rootCategory: values.category,
             comment: values.comment,
             userId: user.basicProfile?.getId() || '',
-        }));
+        })).then(this.handleAddedTransaction);
     }
+
+    handleAddedTransaction = () => {
+        const { sendNotification } = this.props;
+        sendNotification({ msg: 'Transaction added' });
+    };
 
     handleValidation = (values: TValues) => {}
 
@@ -184,4 +191,7 @@ export default connect(
     state => ({
         user: state.user,
     }),
+    {
+        sendNotification,
+    },
 )(EditTransaction);

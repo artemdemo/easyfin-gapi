@@ -4,6 +4,8 @@ import {getInputClass, getLinkBtnClass} from "../../styles/elements";
 import {spreadsheetID} from "../../services/settingsStorage";
 import {IFormProps} from "../../types/formik";
 import Button, {buttonAppearance} from "../../components/Button/Button";
+import { sendNotification } from "../../model/notifications/notificationsActions";
+import store from "../../store";
 
 type TValues = {
     spreadsheetId: string;
@@ -20,6 +22,7 @@ class SettingsMainView extends React.PureComponent<TProps, TState> {
     handleSubmit = (values: TValues, { setSubmitting }) => {
         setSubmitting(false);
         spreadsheetID.set(values.spreadsheetId);
+        store.dispatch(sendNotification({ msg: "Settings saved" }));
     }
 
     handleValidation = (values: TValues) => {}

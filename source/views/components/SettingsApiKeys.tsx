@@ -4,6 +4,8 @@ import {IFormProps} from "../../types/formik";
 import {apiKey, clientId} from "../../services/settingsStorage";
 import {Formik} from "formik";
 import Button, {buttonAppearance} from "../../components/Button/Button";
+import {sendNotification} from "../../model/notifications/notificationsActions";
+import store from "../../store";
 
 type TValues = {
     apiKey: string;
@@ -22,6 +24,7 @@ class SettingsApiKeys extends React.PureComponent<TProps, TState> {
         setSubmitting(false);
         apiKey.set(values.apiKey);
         clientId.set(values.clientId);
+        store.dispatch(sendNotification({ msg: "Settings saved" }));
     }
 
     handleValidation = (values: TValues) => {}
