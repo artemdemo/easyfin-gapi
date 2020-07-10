@@ -1,5 +1,5 @@
 import React from "react";
-import {getInputClass} from "../../styles/elements";
+import {getInputClass, getLinkBtnClass} from "../../styles/elements";
 import {IFormProps} from "../../types/formik";
 import {apiKey, clientId} from "../../services/settingsStorage";
 import {Formik} from "formik";
@@ -53,7 +53,13 @@ class SettingsApiKeys extends React.PureComponent<TProps, TState> {
                         />
                     </div>
                     <div className="w-1/2 px-2">
-                        &nbsp;
+                        <a
+                            className={getLinkBtnClass()}
+                            target="_blank"
+                            href="https://console.developers.google.com/apis/credentials"
+                        >
+                            Google API credentials
+                        </a>
                     </div>
                 </div>
                 <div className="flex flex-wrap -mx-2 mb-4">
