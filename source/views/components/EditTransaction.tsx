@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Formik } from "formik";
 import parseISO from "date-fns/parseISO";
-import Button, {buttonAppearance} from "../../components/Button/Button";
+import Button from "../../components/Button/Button";
 import Select from "../../components/Select/Select";
 import { addTransaction } from "../../model/transactions/transactionsReq";
 import GTransactionRow from "../../google-api/GTransactionRow";
@@ -11,6 +11,7 @@ import {TUserState} from "../../model/user/userReducer";
 import {getInputClass} from "../../styles/elements";
 import {IFormProps} from "../../types/formik";
 import { sendNotification } from "../../model/notifications/notificationsActions";
+import {EButtonAppearance} from "../../styles/elements";
 
 type TValues = {
     date: string;
@@ -158,7 +159,7 @@ class EditTransaction extends React.PureComponent<TProps, TState> {
                     type="button"
                     disabled={formDisabled}
                     onClick={this.mockSubmit}
-                    appearance={buttonAppearance.LIGHT}
+                    appearance={EButtonAppearance.LIGHT}
                 >
                     Mock submit
                 </Button>

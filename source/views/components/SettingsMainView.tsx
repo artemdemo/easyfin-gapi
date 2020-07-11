@@ -1,10 +1,10 @@
 import React from "react";
-import { Formik } from "formik";
-import {getInputClass, getLinkBtnClass} from "../../styles/elements";
+import {Formik} from "formik";
+import {EButtonAppearance, getBtnClass, getInputClass} from "../../styles/elements";
 import {spreadsheetID} from "../../services/settingsStorage";
 import {IFormProps} from "../../types/formik";
-import Button, {buttonAppearance} from "../../components/Button/Button";
-import { sendNotification } from "../../model/notifications/notificationsActions";
+import Button from "../../components/Button/Button";
+import {sendNotification} from "../../model/notifications/notificationsActions";
 import store from "../../store";
 
 type TValues = {
@@ -55,8 +55,9 @@ class SettingsMainView extends React.PureComponent<TProps, TState> {
                     </div>
                     <div className="w-1/2 px-2">
                         <a
-                            className={getLinkBtnClass({
+                            className={getBtnClass({
                                 disabled: values.spreadsheetId === '',
+                                appearance: EButtonAppearance.TEXT,
                             })}
                             target="_blank"
                             href={`https://docs.google.com/spreadsheets/d/${values.spreadsheetId}/edit#gid=0`}
@@ -65,7 +66,7 @@ class SettingsMainView extends React.PureComponent<TProps, TState> {
                         </a>
                     </div>
                 </div>
-                <Button appearance={buttonAppearance.LIGHT}>Save</Button>
+                <Button appearance={EButtonAppearance.LIGHT}>Save</Button>
             </form>
         );
     };

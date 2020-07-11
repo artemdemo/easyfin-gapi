@@ -1,9 +1,9 @@
 import React from "react";
-import {getInputClass, getLinkBtnClass} from "../../styles/elements";
+import {getInputClass, getBtnClass, EButtonAppearance} from "../../styles/elements";
 import {IFormProps} from "../../types/formik";
 import {apiKey, clientId} from "../../services/settingsStorage";
 import {Formik} from "formik";
-import Button, {buttonAppearance} from "../../components/Button/Button";
+import Button from "../../components/Button/Button";
 import {sendNotification} from "../../model/notifications/notificationsActions";
 import store from "../../store";
 
@@ -57,7 +57,9 @@ class SettingsApiKeys extends React.PureComponent<TProps, TState> {
                     </div>
                     <div className="w-1/2 px-2">
                         <a
-                            className={getLinkBtnClass()}
+                            className={getBtnClass({
+                                appearance: EButtonAppearance.TEXT,
+                            })}
                             target="_blank"
                             href="https://console.developers.google.com/apis/credentials"
                         >
@@ -82,7 +84,7 @@ class SettingsApiKeys extends React.PureComponent<TProps, TState> {
                         &nbsp;
                     </div>
                 </div>
-                <Button appearance={buttonAppearance.LIGHT}>Save</Button>
+                <Button appearance={EButtonAppearance.LIGHT}>Save</Button>
             </form>
         );
     }
