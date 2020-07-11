@@ -1,7 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import classnames from "classnames";
 import history from "../../history";
+import {EButtonAppearance, getBtnClass} from "../../styles/elements";
 
 type TProps = {
     to: string;
@@ -34,14 +35,15 @@ class TabLink extends React.PureComponent<TProps, TState> {
 
     render() {
         const isActive = history.location.pathname === this.props.to;
+        const linkClass = classnames({
+            'border-blue-500 text-white bg-blue-500': isActive,
+        }, getBtnClass({
+            appearance: !isActive ? EButtonAppearance.TEXT : undefined,
+        }))
         return (
             // @ts-ignore
             <Link
-                className={classnames({
-                    'inline-block border border-white rounded py-1 px-3': true,
-                    'text-blue-500': !isActive,
-                    'border-blue-500 text-white bg-blue-500': isActive,
-                })}
+                className={linkClass}
                 to={this.props.to}
             >
                 {this.props.children}

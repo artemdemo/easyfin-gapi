@@ -23,7 +23,7 @@ export enum EButtonSize {
 
 export interface IBtnProps extends IGeneralControlProps {
     size?: EButtonSize,
-    appearance: EButtonAppearance,
+    appearance?: EButtonAppearance,
     block?: boolean,
 }
 
