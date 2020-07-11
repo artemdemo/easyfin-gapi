@@ -3,7 +3,6 @@ import { Route } from 'react-router-dom';
 import TabLink from "../../components/Tabs/TabLink";
 import TabsContainer from "../../components/Tabs/TabsContainer";
 import SettingsMainView from "./SettingsMainView";
-import SettingsAccountsView from "./SettingsAccountsView";
 import SettingsApiKeys from "./SettingsApiKeys";
 import * as routes from "../../routing/routes";
 
@@ -18,9 +17,6 @@ class SettingsView extends React.PureComponent<TProps, TState> {
                     <TabLink to={routes.getSettingsRoute()}>
                         Main Settings
                     </TabLink>
-                    <TabLink to={routes.getSettingsAccountsRoute()}>
-                        Accounts
-                    </TabLink>
                     <TabLink to={routes.getSettingsApiKeysRoute()}>
                         API keys
                     </TabLink>
@@ -29,10 +25,6 @@ class SettingsView extends React.PureComponent<TProps, TState> {
                     path={routes.getSettingsRoute()}
                     component={SettingsMainView}
                     exact
-                />
-                <Route
-                    path={routes.getSettingsAccountsRoute()}
-                    component={SettingsAccountsView}
                 />
                 <Route
                     path={routes.getSettingsApiKeysRoute()}
