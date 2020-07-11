@@ -1,14 +1,17 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { TUserState } from '../../model/user/userReducer';
-import { loadTransactions } from '../../model/transactions/transactionsReq';
+import {connect} from 'react-redux';
+import {TUserState} from '../../model/user/userReducer';
+import {loadTransactions} from '../../model/transactions/transactionsReq';
 import GTransactionRow from '../../google-api/GTransactionRow';
 import TransactionsList from '../../containers/TransactionsList/TransactionsList';
 import {loadSheets} from "../../model/sheets/sheetsReq";
 import {getLastTransactionsSheetTitle} from "../../services/sheets";
 import {TSheetsState} from "../../model/sheets/sheetsReducer";
-import { setSheets } from "../../model/sheets/sheetsActions";
+import {setSheets} from "../../model/sheets/sheetsActions";
 import GSheet from "../../google-api/GSheet";
+import ButtonLink from "../../components/ButtonLink/ButtonLink";
+import * as routes from "../../routing/routes";
+import {EButtonAppearance} from "../../styles/elements";
 
 type TProps = {
     user: TUserState;
@@ -65,6 +68,12 @@ class TransactionsView extends React.PureComponent<TProps, TState> {
     render() {
         return (
             <>
+                <ButtonLink
+                    to={routes.getTransactionsNewRoute()}
+                    appearance={EButtonAppearance.PRIMARY}
+                >
+                    New Transaction
+                </ButtonLink>
                 <TransactionsList
                     transactions={this.state.transactions}
                     loading={this.state.loading}

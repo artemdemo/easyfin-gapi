@@ -29,7 +29,7 @@ class MainMenu extends React.PureComponent<TProps, TState> {
                 <div>
                     <NavbarLink to={routes.getMainRoute()} exact>Main</NavbarLink>
                     <NavbarLink to={routes.getTransactionsRoute()}>Transactions</NavbarLink>
-                    <NavbarLink to={routes.getTransactionsNewRoute()}>New Transaction</NavbarLink>
+                    <NavbarLink to={routes.getSettingsAccountsRoute()}>Accounts</NavbarLink>
                     <NavbarLink to={routes.getSettingsRoute()}>Settings</NavbarLink>
                 </div>
             );
