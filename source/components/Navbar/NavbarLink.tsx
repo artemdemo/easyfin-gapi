@@ -9,7 +9,7 @@ const NavItem = styled.div`
 
 const ButtonItem = styled(TransparentButton)`
     padding: .5rem 1rem;
-    line-height: inherit;
+    line-height: 1;
 `;
 
 type TProps = {

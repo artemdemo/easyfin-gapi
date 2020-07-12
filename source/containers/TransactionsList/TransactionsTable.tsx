@@ -2,8 +2,7 @@ import React from "react";
 import {Column, useSortBy, useTable} from "react-table";
 import classnames from "classnames";
 import {TTransactionRowValues} from "../../google-api/services/transactionArrToData";
-import Button from "../../components/Button/Button";
-import {EButtonAppearance} from "../../styles/elements";
+import TransactionRowMenu from "./TransactionRowMenu";
 
 type TProps = {
     columns: Column[];
@@ -74,9 +73,7 @@ const TransactionsTable = (props: TProps) => {
                         <td
                             className="px-4 border-gray-300 border-b border-r"
                         >
-                            <Button appearance={EButtonAppearance.TEXT}>
-                                ...
-                            </Button>
+                            <TransactionRowMenu data={row.original as TTransactionRowValues} />
                         </td>
                     </tr>
                 )
