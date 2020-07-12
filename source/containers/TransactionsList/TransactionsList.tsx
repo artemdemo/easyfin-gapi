@@ -41,7 +41,10 @@ const TransactionsList = (props: TProps) => {
     )
 
     return (
-        <TransactionsTable columns={columns} data={data.map(item => item.getValues())} />
+        <TransactionsTable
+            columns={columns}
+            data={data.map(item => item.getValues())}
+        />
     );
 };
 

@@ -59,9 +59,7 @@ class AppView extends React.PureComponent<TProps, TState> {
             <Container>
                 <MainMenu />
                 <Notifications />
-                <div className='px-2'>
-                    {this.props.children}
-                </div>
+                {this.props.children}
             </Container>
         );
     }
