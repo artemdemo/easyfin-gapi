@@ -75,7 +75,7 @@ class TransactionsView extends React.PureComponent<TProps, TState> {
                     New Transaction
                 </ButtonLink>
                 <TransactionsList
-                    transactions={this.state.transactions}
+                    data={this.state.transactions}
                     loading={this.state.loading}
                 />
             </>
