@@ -68,12 +68,14 @@ class TransactionsView extends React.PureComponent<TProps, TState> {
     render() {
         return (
             <>
-                <ButtonLink
-                    to={routes.transactions.new()}
-                    appearance={EButtonAppearance.PRIMARY}
-                >
-                    New Transaction
-                </ButtonLink>
+                <div className="mb-2">
+                    <ButtonLink
+                        to={routes.transactions.new()}
+                        appearance={EButtonAppearance.PRIMARY}
+                    >
+                        New Transaction
+                    </ButtonLink>
+                </div>
                 <TransactionsList
                     data={this.state.transactions}
                     loading={this.state.loading}
