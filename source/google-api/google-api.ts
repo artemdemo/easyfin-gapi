@@ -6,6 +6,7 @@ import { createNanoEvents } from "nanoevents";
 import { TSpreadsheetsApi } from "./TSpreadsheetsApi";
 import { getRandom } from "../services/numbers";
 import { apiKey, clientId } from "../services/settingsStorage";
+import getGapi from "./services/gapi";
 import BasicProfile = gapi.auth2.BasicProfile;
 
 const emitter = createNanoEvents();
@@ -41,7 +42,7 @@ export const _load = () => new Promise((resolve) => {
         scriptEl.src = 'https://apis.google.com/js/client.js';
 
         scriptEl.onload = () => {
-            gapi.load('client:auth2', () => {
+            getGapi().load('client:auth2', () => {
                 scriptEl.setAttribute(DATA_LOADED_ATTR_NAME, 'true');
                 emitter.emit(SCRIPT_GAPI_LOADED);
                 resolve();
@@ -53,8 +54,8 @@ export const _load = () => new Promise((resolve) => {
 });
 
 export const _init = () => new Promise((resolve, reject) => {
-    if (!gapi.client.getToken()) {
-        gapi.client
+    if (!getGapi().client.getToken()) {
+        getGapi().client
             .init({
                 apiKey: apiKey.get(),
                 clientId: clientId.get(),
@@ -78,21 +79,21 @@ export const loadAndInit = () => {
 export const getBasicProfile = (): Promise<BasicProfile> => {
     return loadAndInit()
         .then(() => {
-            return gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile();
+            return getGapi().auth2.getAuthInstance().currentUser.get().getBasicProfile();
         });
 };
 
 export const getIsSignedIn = (): Promise<boolean> => {
     return loadAndInit()
         .then(() => {
-            return gapi.auth2.getAuthInstance().isSignedIn.get();
+            return getGapi().auth2.getAuthInstance().isSignedIn.get();
         });
 };
 
 export const listenIsSignedIn = (cb: (isSignedIn: boolean) => void): void => {
     loadAndInit()
         .then(() => {
-            gapi.auth2.getAuthInstance().isSignedIn.listen(cb);
+            getGapi().auth2.getAuthInstance().isSignedIn.listen(cb);
         });
 };
 
@@ -100,6 +101,6 @@ export const getSpreadsheetsInstance = (): Promise<TSpreadsheetsApi> => {
     return loadAndInit()
         .then(() => {
             // @ts-ignore
-            return gapi.client.sheets.spreadsheets;
+            return getGapi().client.sheets.spreadsheets;
         });
 }
