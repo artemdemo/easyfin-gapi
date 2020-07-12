@@ -14,20 +14,20 @@ class SettingsView extends React.PureComponent<TProps, TState> {
         return (
             <>
                 <TabsContainer className="mb-4">
-                    <TabLink to={routes.getSettingsRoute()}>
+                    <TabLink to={routes.settings()}>
                         Main Settings
                     </TabLink>
-                    <TabLink to={routes.getSettingsApiKeysRoute()}>
+                    <TabLink to={routes.settings.apiKeys()}>
                         API keys
                     </TabLink>
                 </TabsContainer>
                 <Route
-                    path={routes.getSettingsRoute()}
+                    path={routes.settings()}
                     component={SettingsMainView}
                     exact
                 />
                 <Route
-                    path={routes.getSettingsApiKeysRoute()}
+                    path={routes.settings.apiKeys()}
                     component={SettingsApiKeys}
                 />
             </>

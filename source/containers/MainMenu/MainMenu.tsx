@@ -27,10 +27,10 @@ class MainMenu extends React.PureComponent<TProps, TState> {
         if (user.basicProfile) {
             return (
                 <div>
-                    <NavbarLink to={routes.getMainRoute()} exact>Main</NavbarLink>
-                    <NavbarLink to={routes.getTransactionsRoute()}>Transactions</NavbarLink>
-                    <NavbarLink to={routes.getAccountsRoute()}>Accounts</NavbarLink>
-                    <NavbarLink to={routes.getSettingsRoute()}>Settings</NavbarLink>
+                    <NavbarLink to={routes.main()} exact>Main</NavbarLink>
+                    <NavbarLink to={routes.transactions()}>Transactions</NavbarLink>
+                    <NavbarLink to={routes.accounts()}>Accounts</NavbarLink>
+                    <NavbarLink to={routes.settings()}>Settings</NavbarLink>
                 </div>
             );
         }

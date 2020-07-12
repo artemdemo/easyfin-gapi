@@ -69,7 +69,7 @@ class TransactionsView extends React.PureComponent<TProps, TState> {
         return (
             <>
                 <ButtonLink
-                    to={routes.getTransactionsNewRoute()}
+                    to={routes.transactions.new()}
                     appearance={EButtonAppearance.PRIMARY}
                 >
                     New Transaction

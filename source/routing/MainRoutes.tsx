@@ -19,12 +19,12 @@ const MainRoutes = (props: TProps) => (
     <Provider store={props.store}>
         <Router history={props.history}>
             <AppView>
-                <Route path={routes.getMainRoute()} component={MainView} exact />
-                <Route path={routes.getLoginRoute()} component={LoginView} />
-                <Route path={routes.getTransactionsRoute()} component={TransactionsView} exact />
-                <Route path={routes.getTransactionsNewRoute()} component={EditTransaction} />
-                <Route path={routes.getAccountsRoute()} component={AccountsView} />
-                <Route path={routes.getSettingsRoute()} component={SettingsView} />
+                <Route path={routes.main()} component={MainView} exact />
+                <Route path={routes.login()} component={LoginView} />
+                <Route path={routes.transactions()} component={TransactionsView} exact />
+                <Route path={routes.transactions.new()} component={EditTransaction} />
+                <Route path={routes.accounts()} component={AccountsView} />
+                <Route path={routes.settings()} component={SettingsView} />
             </AppView>
         </Router>
     </Provider>
