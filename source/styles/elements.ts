@@ -14,6 +14,7 @@ export enum EButtonAppearance {
     DANGER = 'danger',
     LIGHT = 'light',
     TEXT = 'text',
+    TEXT_LINK = 'text-link',
 }
 
 export enum EButtonSize {
@@ -35,6 +36,7 @@ export const getBtnClass = (props?: IBtnProps) => classnames({
     'bg-blue-500 hover:bg-blue-600 text-white': EButtonAppearance.PRIMARY === props?.appearance,
     'bg-red-500 hover:bg-red-600 text-white': EButtonAppearance.DANGER === props?.appearance,
     'bg-gray-200 hover:bg-gray-300 text-gray-800': EButtonAppearance.LIGHT === props?.appearance,
-    'bg-white hover:bg-gray-100 text-blue-500': EButtonAppearance.TEXT === props?.appearance,
+    'bg-white hover:bg-gray-100': EButtonAppearance.TEXT === props?.appearance,
+    'bg-white hover:bg-gray-100 text-blue-500': EButtonAppearance.TEXT_LINK === props?.appearance,
     'cursor-not-allowed opacity-50': props?.disabled,
 });

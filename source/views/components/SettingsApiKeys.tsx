@@ -58,7 +58,7 @@ class SettingsApiKeys extends React.PureComponent<TProps, TState> {
                     <div className="w-1/2 px-2">
                         <a
                             className={getBtnClass({
-                                appearance: EButtonAppearance.TEXT,
+                                appearance: EButtonAppearance.TEXT_LINK,
                             })}
                             target="_blank"
                             href="https://console.developers.google.com/apis/credentials"

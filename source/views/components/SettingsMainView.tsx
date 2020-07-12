@@ -57,7 +57,7 @@ class SettingsMainView extends React.PureComponent<TProps, TState> {
                         <a
                             className={getBtnClass({
                                 disabled: values.spreadsheetId === '',
-                                appearance: EButtonAppearance.TEXT,
+                                appearance: EButtonAppearance.TEXT_LINK,
                             })}
                             target="_blank"
                             href={`https://docs.google.com/spreadsheets/d/${values.spreadsheetId}/edit#gid=0`}

@@ -23,11 +23,13 @@ const Button = (props: TProps) => {
         onClick,
         disabled,
     } = props;
+
     const buttonClass = classnames(className, getBtnClass({
         size: size,
         appearance: appearance || EButtonAppearance.PRIMARY,
         block: block || false,
     }));
+
     return (
         <button
             className={buttonClass}
