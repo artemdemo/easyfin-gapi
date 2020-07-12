@@ -1,5 +1,5 @@
 import React from "react";
-import {Column, useTable} from "react-table";
+import {Column, useTable, useSortBy} from "react-table";
 import classnames from "classnames";
 import {TTransactionRowValues} from "../../google-api/services/transactionArrToData";
 
@@ -16,15 +16,18 @@ const TransactionsTable = (props: TProps) => {
         headerGroups,
         rows,
         prepareRow,
-    } = useTable({
-        columns,
-        data,
-    })
+    } = useTable(
+        {
+            columns,
+            data,
+        },
+        useSortBy,
+    )
 
     // Render the UI for your table
     return (
         <table className="table-auto w-full" {...getTableProps()}>
-            <thead className="">
+            <thead>
             {headerGroups.map(headerGroup => (
                 <tr {...headerGroup.getHeaderGroupProps()}>
                     {headerGroup.headers.map((column, idx) => (
@@ -34,7 +37,11 @@ const TransactionsTable = (props: TProps) => {
                                 'rounded-tl': idx === 0,
                                 'rounded-tr': idx === headerGroup.headers.length - 1,
                             })}
-                            {...column.getHeaderProps()}
+
+                            {...column.getHeaderProps(
+                                // @ts-ignore
+                                column.getSortByToggleProps()
+                            )}
                         >
                             {column.render('Header')}
                         </th>
