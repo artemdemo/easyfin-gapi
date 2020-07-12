@@ -1,7 +1,9 @@
 import React from "react";
-import {Column, useTable, useSortBy} from "react-table";
+import {Column, useSortBy, useTable} from "react-table";
 import classnames from "classnames";
 import {TTransactionRowValues} from "../../google-api/services/transactionArrToData";
+import Button from "../../components/Button/Button";
+import {EButtonAppearance} from "../../styles/elements";
 
 type TProps = {
     columns: Column[];
@@ -35,7 +37,6 @@ const TransactionsTable = (props: TProps) => {
                             className={classnames({
                                 'px-4 py-2 bg-gray-200 border-gray-300 border-b-2 text-left': true,
                                 'rounded-tl': idx === 0,
-                                'rounded-tr': idx === headerGroup.headers.length - 1,
                             })}
 
                             {...column.getHeaderProps(
@@ -46,6 +47,11 @@ const TransactionsTable = (props: TProps) => {
                             {column.render('Header')}
                         </th>
                     ))}
+                    <th
+                        className="px-4 py-2 bg-gray-200 border-gray-300 border-b-2 text-left rounded-tr"
+                    >
+                        &nbsp;
+                    </th>
                 </tr>
             ))}
             </thead>
@@ -59,13 +65,19 @@ const TransactionsTable = (props: TProps) => {
                                 className={classnames({
                                     'px-4 py-2 border-gray-300 border-b': true,
                                     'border-l': idxCell === 0,
-                                    'border-r': idxCell === row.cells.length - 1,
                                 })}
                                 {...cell.getCellProps()}
                             >
                                 {cell.render('Cell')}
                             </td>
                         ))}
+                        <td
+                            className="px-4 border-gray-300 border-b border-r"
+                        >
+                            <Button appearance={EButtonAppearance.TEXT}>
+                                ...
+                            </Button>
+                        </td>
                     </tr>
                 )
             })}
