@@ -14,6 +14,7 @@ type TState = {
 };
 
 const Wrapper = styled.div`
+    display: inline-block;
     position: relative;
 `;
 
@@ -21,12 +22,10 @@ type TMenuContainerProps = {
     visible: boolean;
 };
 const MenuContainer = styled.div<TMenuContainerProps>`
-    display: none;
+    display: ${props => props.visible ? 'block' : 'none'};
     position: absolute;
-    ${props => props.visible && `
-        display: block;
-        z-index: 1;
-    `};
+    z-index: 1;
+    right: 0;
 `;
 
 class TransactionRowMenu extends React.PureComponent<TProps, TState> {
