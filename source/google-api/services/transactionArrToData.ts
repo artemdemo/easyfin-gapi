@@ -1,4 +1,5 @@
 import parseISO from "date-fns/parseISO";
+import {string} from "prop-types";
 
 export enum ECoin {
     ils = 'ILS',
@@ -34,6 +35,7 @@ const getTags = (valueStr: string): string[] => {
 };
 
 export type TTransactionRowValues = {
+    id: string;
     date: Date;
     accountFrom: string;
     accountTo?: string;
@@ -64,23 +66,24 @@ export type TTransactionRowValues = {
 
 const transactionArrToData = (rowArr: string[]): TTransactionRowValues => {
     return {
-        date: parseISO(rowArr[0]),
-        accountFrom: rowArr[1],
-        accountTo: getStringMaybe(rowArr[2]),
-        transactionType: ETransactionType[rowArr[3]],
-        amountInDefaultCoin: parseFloat(rowArr[4]),
-        defaultCoin: ECoin[rowArr[5]],
-        amountInAccountFromCoin: getFloatMaybe(rowArr[6]),
-        accountFromCoin: getCoinMaybe(rowArr[7]),
-        exchangeRate: getExchangeRate(rowArr[8]),
-        amountInAccountToCoin: getFloatMaybe(rowArr[9]),
-        accountToCoin: getCoinMaybe(rowArr[10]),
-        comment: getStringMaybe(rowArr[11]),
-        tags: getTags(rowArr[12]),
-        category: getStringMaybe(rowArr[13]),
-        rootCategory: rowArr[14],
-        parentId: rowArr[15],
-        userId: rowArr[16],
+        id: rowArr[0],
+        date: parseISO(rowArr[1]),
+        accountFrom: rowArr[2],
+        accountTo: getStringMaybe(rowArr[3]),
+        transactionType: ETransactionType[rowArr[4]],
+        amountInDefaultCoin: parseFloat(rowArr[5]),
+        defaultCoin: ECoin[rowArr[6]],
+        amountInAccountFromCoin: getFloatMaybe(rowArr[7]),
+        accountFromCoin: getCoinMaybe(rowArr[8]),
+        exchangeRate: getExchangeRate(rowArr[9]),
+        amountInAccountToCoin: getFloatMaybe(rowArr[10]),
+        accountToCoin: getCoinMaybe(rowArr[11]),
+        comment: getStringMaybe(rowArr[12]),
+        tags: getTags(rowArr[13]),
+        category: getStringMaybe(rowArr[14]),
+        rootCategory: rowArr[15],
+        parentId: rowArr[16],
+        userId: rowArr[17],
     };
 };
 

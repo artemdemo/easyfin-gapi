@@ -2,6 +2,7 @@ import formatISO from "date-fns/formatISO";
 import { TTransactionRowValues } from "./transactionArrToData";
 
 const propsExportList = [
+    'id',
     'date',
     'accountFrom',
     'accountTo',

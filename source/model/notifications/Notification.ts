@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from "uuid";
+import { generateId } from "../../services/id";
 
 export enum ENotificationAppearance {
     SUCCESS = 'success',
@@ -23,7 +23,7 @@ class Notification {
     private readonly onDeleteCbs: Set<TOnDeleteCb>;
 
     constructor(props: TNotificationProps) {
-        this.id = uuidv4();
+        this.id = generateId();
         this.msg = props.msg;
         this.appearance = props.appearance || ENotificationAppearance.SUCCESS;
         this.onDeleteCbs = new Set<TOnDeleteCb>();

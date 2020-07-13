@@ -12,6 +12,7 @@ import {getInputClass} from "../../styles/elements";
 import {IFormProps} from "../../types/formik";
 import { sendNotification } from "../../model/notifications/notificationsActions";
 import {EButtonAppearance} from "../../styles/elements";
+import { generateId } from "../../services/id";
 
 type TValues = {
     date: string;
@@ -35,6 +36,7 @@ class EditTransaction extends React.PureComponent<TProps, TState> {
     mockSubmit = () => {
         const { user } = this.props;
         addTransaction(new GTransactionRow({
+            id: generateId(),
             date: new Date(),
             accountFrom: 'account',
             transactionType: ETransactionType.expense,
@@ -50,6 +52,7 @@ class EditTransaction extends React.PureComponent<TProps, TState> {
         const { user } = this.props;
         setSubmitting(false);
         addTransaction(new GTransactionRow({
+            id: generateId(),
             date: parseISO(values.date),
             accountFrom: values.accountFrom,
             transactionType: ETransactionType.expense,
