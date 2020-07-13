@@ -1,0 +1,8 @@
+{
+    "transactions.table.date": "Date",
+    "transactions.table.category": "Category",
+    "transactions.table.amount": "Amount",
+    "transactions.table.tags": "Tags",
+    "transactions.table.comment": "Comment",
+    "transactions.table.no_transactions": "No transactions loaded"
+}
