@@ -64,27 +64,38 @@ export type TTransactionRowValues = {
     userId: string;
 };
 
+type TParserMapItem = {
+    key: string;
+    converter?: (value: string) => any;
+};
+
 const transactionArrToData = (rowArr: string[]): TTransactionRowValues => {
-    return {
-        id: rowArr[0],
-        date: parseISO(rowArr[1]),
-        accountFrom: rowArr[2],
-        accountTo: getStringMaybe(rowArr[3]),
-        transactionType: ETransactionType[rowArr[4]],
-        amountInDefaultCoin: parseFloat(rowArr[5]),
-        defaultCoin: ECoin[rowArr[6]],
-        amountInAccountFromCoin: getFloatMaybe(rowArr[7]),
-        accountFromCoin: getCoinMaybe(rowArr[8]),
-        exchangeRate: getExchangeRate(rowArr[9]),
-        amountInAccountToCoin: getFloatMaybe(rowArr[10]),
-        accountToCoin: getCoinMaybe(rowArr[11]),
-        comment: getStringMaybe(rowArr[12]),
-        tags: getTags(rowArr[13]),
-        category: getStringMaybe(rowArr[14]),
-        rootCategory: rowArr[15],
-        parentId: rowArr[16],
-        userId: rowArr[17],
-    };
+    const parserMap: TParserMapItem[] = [
+        {key: 'id'},
+        {key: 'date', converter: parseISO},
+        {key: 'accountFrom'},
+        {key: 'accountTo', converter: getStringMaybe},
+        {key: 'transactionType', converter: value => ETransactionType[value]},
+        {key: 'amountInDefaultCoin', converter: parseFloat},
+        {key: 'defaultCoin', converter: value => ECoin[value]},
+        {key: 'amountInAccountFromCoin', converter: getFloatMaybe},
+        {key: 'accountFromCoin', converter: getCoinMaybe},
+        {key: 'exchangeRate', converter: getExchangeRate},
+        {key: 'amountInAccountToCoin', converter: getFloatMaybe},
+        {key: 'accountToCoin', converter: getCoinMaybe},
+        {key: 'comment', converter: getStringMaybe},
+        {key: 'tags', converter: getTags},
+        {key: 'category', converter: getStringMaybe},
+        {key: 'rootCategory'},
+        {key: 'userId'},
+    ];
+    return <TTransactionRowValues> parserMap.reduce((acc, item, idx) => {
+        if (acc.hasOwnProperty(item.key)) {
+            console.error(`Same kay is used twice. Key was: "${item.key}"`);
+        }
+        acc[item.key] = item.converter ? item.converter(rowArr[idx]) : rowArr[idx];
+        return acc;
+    }, {});
 };
 
 export default transactionArrToData;
