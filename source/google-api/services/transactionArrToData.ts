@@ -1,5 +1,5 @@
 import parseISO from "date-fns/parseISO";
-import {string} from "prop-types";
+import convertArrToData, { TParserMapItem } from "./convertArrToData";
 
 export enum ECoin {
     ils = 'ILS',
@@ -64,11 +64,6 @@ export type TTransactionRowValues = {
     userId: string;
 };
 
-type TParserMapItem = {
-    key: string;
-    converter?: (value: string) => any;
-};
-
 const transactionArrToData = (rowArr: string[]): TTransactionRowValues => {
     const parserMap: TParserMapItem[] = [
         {key: 'id'},
@@ -89,13 +84,7 @@ const transactionArrToData = (rowArr: string[]): TTransactionRowValues => {
         {key: 'rootCategory'},
         {key: 'userId'},
     ];
-    return <TTransactionRowValues> parserMap.reduce((acc, item, idx) => {
-        if (acc.hasOwnProperty(item.key)) {
-            console.error(`Same kay is used twice. Key was: "${item.key}"`);
-        }
-        acc[item.key] = item.converter ? item.converter(rowArr[idx]) : rowArr[idx];
-        return acc;
-    }, {});
+    return <TTransactionRowValues> convertArrToData(rowArr, parserMap);
 };
 
 export default transactionArrToData;

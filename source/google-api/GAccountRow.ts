@@ -1,5 +1,6 @@
 import _cloneDeep from "lodash/cloneDeep";
 import GRow from "./GRow";
+import convertArrToData, { TParserMapItem } from "./services/convertArrToData";
 
 enum EAccountType {
     credit = 'credit',
@@ -15,11 +16,12 @@ type TAccountRowValues = {
 }
 
 const accountArrToData = (rowArr: string[]): TAccountRowValues => {
-    return {
-        name: rowArr[0],
-        type: EAccountType[rowArr[1]],
-        startAmount: parseFloat(rowArr[2]),
-    };
+    const parserMap: TParserMapItem[] = [
+        {key: 'name'},
+        {key: 'type', converter: value => EAccountType[value]},
+        {key: 'startAmount', converter: parseFloat},
+    ];
+    return <TAccountRowValues> convertArrToData(rowArr, parserMap);
 };
 
 class GAccountRow extends GRow {
