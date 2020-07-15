@@ -1,46 +1,30 @@
 import formatISO from "date-fns/formatISO";
 import { TTransactionRowValues } from "./transactionArrToData";
+import { TParserMapItem, convertDataToArr } from "./converter";
 
-const propsExportList = [
-    'id',
-    'date',
-    'accountFrom',
-    'accountTo',
-    'transactionType',
-    'amountInDefaultCoin',
-    'defaultCoin',
-    'amountInAccountFromCoin',
-    'accountFromCoin',
-    'exchangeRate',
-    'amountInAccountToCoin',
-    'accountToCoin',
-    'comment',
-    'tags',
-    'category',
-    'rootCategory',
-    'parentId',
-    'userId',
+const parserMap: TParserMapItem[] = [
+    { key: 'id' },
+    { key: 'date', converter: date => formatISO(date) },
+    { key: 'accountFrom' },
+    { key: 'accountTo', converter: accountTo => accountTo ?? '' },
+    { key: 'transactionType' },
+    { key: 'amountInDefaultCoin' },
+    { key: 'defaultCoin' },
+    { key: 'amountInAccountFromCoin' },
+    { key: 'accountFromCoin' },
+    { key: 'exchangeRate', converter: exchangeRate => exchangeRate ?? 1 },
+    { key: 'amountInAccountToCoin', converter: amountInAccountToCoin => amountInAccountToCoin ?? '' },
+    { key: 'accountToCoin', converter: accountToCoin => accountToCoin ?? '' },
+    { key: 'comment', converter: comment => comment ?? '' },
+    { key: 'tags', converter: tags => tags ?? '' },
+    { key: 'category', converter: category => category ?? '' },
+    { key: 'rootCategory' },
+    { key: 'parentId' },
+    { key: 'userId' },
 ];
 
-const formatsMap = new Map([
-    ['date', date => formatISO(date)],
-    ['accountTo', accountTo => accountTo ?? ''],
-    ['exchangeRate', exchangeRate => exchangeRate ?? 1],
-    ['amountInAccountToCoin', amountInAccountToCoin => amountInAccountToCoin ?? ''],
-    ['accountToCoin', accountToCoin => accountToCoin ?? ''],
-    ['comment', comment => comment ?? ''],
-    ['tags', tags => tags ?? ''],
-    ['category', category => category ?? ''],
-]);
-
 const dataToTransactionArr = (values: TTransactionRowValues): any[] => {
-    return propsExportList.map((key) => {
-        if (formatsMap.has(key)) {
-            // @ts-ignore
-            return formatsMap.get(key)(values[key]);
-        }
-        return values[key];
-    });
+    return convertDataToArr(values, parserMap);
 };
 
 export default dataToTransactionArr;

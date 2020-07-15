@@ -1,5 +1,5 @@
 import parseISO from "date-fns/parseISO";
-import convertArrToData, { TParserMapItem } from "./convertArrToData";
+import { TParserMapItem, convertArrToData } from "./converter";
 
 export enum ECoin {
     ils = 'ILS',
