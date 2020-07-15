@@ -1,6 +1,5 @@
 import React from "react";
 import {Column, useSortBy, useTable} from "react-table";
-import classnames from "classnames";
 import {TTransactionRowValues} from "../../google-api/services/transactionArrToData";
 import TransactionRowMenu from "./TransactionRowMenu";
 import { getTableClass, getTableThClass, getTableTdClass } from "../../styles/table";

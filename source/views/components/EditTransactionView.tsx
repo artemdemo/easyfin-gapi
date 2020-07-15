@@ -32,7 +32,7 @@ type TProps = {
 };
 type TState = {};
 
-class EditTransaction extends React.PureComponent<TProps, TState> {
+class EditTransactionView extends React.PureComponent<TProps, TState> {
     mockSubmit = () => {
         const { user } = this.props;
         addTransaction(new GTransactionRow({
@@ -198,4 +198,4 @@ export default connect(
     {
         sendNotification,
     },
-)(EditTransaction);
+)(EditTransactionView);

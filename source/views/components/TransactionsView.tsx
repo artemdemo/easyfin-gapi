@@ -12,6 +12,7 @@ import GSheet from "../../google-api/GSheet";
 import ButtonLink from "../../components/ButtonLink/ButtonLink";
 import * as routes from "../../routing/routes";
 import {EButtonAppearance} from "../../styles/elements";
+import {t} from "../../services/i18n";
 
 type TProps = {
     user: TUserState;
@@ -22,14 +23,12 @@ type TProps = {
 type TState = {
     transactions: GTransactionRow[],
     loading: boolean,
-    loadingErr: Error|null,
 };
 
 class TransactionsView extends React.PureComponent<TProps, TState> {
     state = {
         transactions: [],
         loading: false,
-        loadingErr: null,
     };
 
     componentDidMount() {
@@ -60,7 +59,6 @@ class TransactionsView extends React.PureComponent<TProps, TState> {
                 console.error(err);
                 this.setState({
                     loading: false,
-                    loadingErr: err,
                 });
             });
     };
@@ -73,7 +71,7 @@ class TransactionsView extends React.PureComponent<TProps, TState> {
                         to={routes.transactions.new()}
                         appearance={EButtonAppearance.PRIMARY}
                     >
-                        New Transaction
+                        {t('transactions.new')}
                     </ButtonLink>
                 </div>
                 <TransactionsList

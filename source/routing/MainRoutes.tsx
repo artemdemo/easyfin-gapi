@@ -4,7 +4,7 @@ import { Router, Route } from "react-router-dom";
 import AppView from "../views/components/AppView";
 import MainView from "../views/components/MainView";
 import LoginView from "../views/components/LoginView";
-import EditTransaction from "../views/components/EditTransaction";
+import EditTransaction from "../views/components/EditTransactionView";
 import SettingsView from "../views/components/SettingsView";
 import * as routes from "./routes";
 import TransactionsView from "../views/components/TransactionsView";

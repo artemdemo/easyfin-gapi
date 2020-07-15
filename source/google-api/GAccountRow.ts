@@ -9,7 +9,7 @@ enum EAccountType {
     bank = 'bank',
 }
 
-type TAccountRowValues = {
+export type TAccountRowValues = {
     id: string;
     name: string;
     type: EAccountType;
