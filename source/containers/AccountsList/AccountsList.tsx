@@ -21,7 +21,7 @@ const AccountsList = (props: TProps) => {
                 accessor: 'type',
             },
             {
-                Header: t('accounts.table.startAmount'),
+                Header: t('accounts.table.start_amount'),
                 accessor: 'startAmount',
             },
         ],
@@ -34,7 +34,7 @@ const AccountsList = (props: TProps) => {
                 columns={columns}
                 data={data.map(item => item.getValues())}
             />
-            {data.length === 0 && !loading ? t('accounts.table.no_transactions') : null}
+            {data.length === 0 && !loading ? t('accounts.table.no_accounts') : null}
         </>
     );
 };

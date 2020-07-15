@@ -5,6 +5,7 @@ import { TUserState } from "../../model/user/userReducer";
 import Navbar from "../../components/Navbar/Navbar";
 import NavbarLink from "../../components/Navbar/NavbarLink";
 import * as routes from "../../routing/routes";
+import {t} from "../../services/i18n";
 
 type TProps = {
     className: string;
@@ -27,10 +28,10 @@ class MainMenu extends React.PureComponent<TProps, TState> {
         if (user.basicProfile) {
             return (
                 <div>
-                    <NavbarLink to={routes.main()} exact>Main</NavbarLink>
-                    <NavbarLink to={routes.transactions()}>Transactions</NavbarLink>
-                    <NavbarLink to={routes.accounts()}>Accounts</NavbarLink>
-                    <NavbarLink to={routes.settings()}>Settings</NavbarLink>
+                    <NavbarLink to={routes.main()} exact>{t('menu.main')}</NavbarLink>
+                    <NavbarLink to={routes.transactions()}>{t('menu.transactions')}</NavbarLink>
+                    <NavbarLink to={routes.accounts()}>{t('menu.accounts')}</NavbarLink>
+                    <NavbarLink to={routes.settings()}>{t('menu.settings')}</NavbarLink>
                 </div>
             );
         }
@@ -42,7 +43,7 @@ class MainMenu extends React.PureComponent<TProps, TState> {
         if (user.basicProfile) {
             return (
                 <div>
-                    <NavbarLink onClick={this.signOut}>Log out</NavbarLink>
+                    <NavbarLink onClick={this.signOut}>{t('menu.log_out')}</NavbarLink>
                 </div>
             );
         }
