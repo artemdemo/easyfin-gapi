@@ -3,6 +3,7 @@ import {Column, useSortBy, useTable} from "react-table";
 import classnames from "classnames";
 import {TTransactionRowValues} from "../../google-api/services/transactionArrToData";
 import TransactionRowMenu from "./TransactionRowMenu";
+import { getTableClass, getTableThClass, getTableTdClass } from "../../styles/table";
 
 type TProps = {
     columns: Column[];
@@ -27,17 +28,15 @@ const TransactionsTable = (props: TProps) => {
 
     // Render the UI for your table
     return (
-        <table className="table-auto w-full" {...getTableProps()}>
+        <table className={getTableClass()} {...getTableProps()}>
             <thead>
             {headerGroups.map(headerGroup => (
                 <tr {...headerGroup.getHeaderGroupProps()}>
                     {headerGroup.headers.map((column, idx) => (
                         <th
-                            className={classnames({
-                                'px-4 py-2 bg-gray-200 border-gray-300 border-b-2 text-left': true,
-                                'rounded-tl': idx === 0,
+                            className={getTableThClass({
+                                roundedTl: idx === 0,
                             })}
-
                             {...column.getHeaderProps(
                                 // @ts-ignore
                                 column.getSortByToggleProps()
@@ -47,7 +46,9 @@ const TransactionsTable = (props: TProps) => {
                         </th>
                     ))}
                     <th
-                        className="px-4 py-2 bg-gray-200 border-gray-300 border-b-2 text-left rounded-tr"
+                        className={getTableThClass({
+                            roundedTr: true,
+                        })}
                     >
                         &nbsp;
                     </th>
@@ -61,9 +62,8 @@ const TransactionsTable = (props: TProps) => {
                     <tr {...row.getRowProps()}>
                         {row.cells.map((cell, idxCell) => (
                             <td
-                                className={classnames({
-                                    'px-4 py-2 border-gray-300 border-b': true,
-                                    'border-l': idxCell === 0,
+                                className={getTableTdClass({
+                                    borderL: idxCell === 0,
                                 })}
                                 {...cell.getCellProps()}
                             >
@@ -71,7 +71,9 @@ const TransactionsTable = (props: TProps) => {
                             </td>
                         ))}
                         <td
-                            className="px-4 border-gray-300 border-b border-r"
+                            className={getTableTdClass({
+                                borderR: true,
+                            })}
                         >
                             <TransactionRowMenu data={row.original as TTransactionRowValues} />
                         </td>
