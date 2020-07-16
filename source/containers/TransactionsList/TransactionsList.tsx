@@ -1,9 +1,10 @@
 import React from "react";
 import format from "date-fns/format";
 import {formatMoney} from "../../services/numbers";
-import TransactionsTable from "./TransactionsTable";
+import GeneralTable from "../../components/GeneralTable/GeneralTable";
 import GTransactionRow from "../../google-api/GTransactionRow";
 import { t } from "../../services/i18n";
+import RowMenu from "../../components/GeneralTable/RowMenu";
 
 type TProps = {
     data: GTransactionRow[];
@@ -43,9 +44,17 @@ const TransactionsList = (props: TProps) => {
 
     return (
         <>
-            <TransactionsTable
+            <GeneralTable
                 columns={columns}
                 data={data.map(item => item.getValues())}
+                menu={() => (
+                    <RowMenu
+                        menu={[
+                            { text: 'Edit', className: '', },
+                            { text: 'Delete', className: 'text-red-600', },
+                        ]}
+                    />
+                )}
             />
             {data.length === 0 && !loading ? t('transactions.table.no_transactions') : null}
         </>

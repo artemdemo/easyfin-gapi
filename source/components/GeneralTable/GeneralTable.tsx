@@ -1,16 +1,16 @@
 import React from "react";
 import {Column, useSortBy, useTable} from "react-table";
 import {TTransactionRowValues} from "../../google-api/services/transactionArrToData";
-import TransactionRowMenu from "./TransactionRowMenu";
 import { getTableClass, getTableThClass, getTableTdClass } from "../../styles/table";
 
 type TProps = {
     columns: Column[];
     data: TTransactionRowValues[];
+    menu?: () => any;
 };
 
-const TransactionsTable = (props: TProps) => {
-    const { columns, data } = props;
+const GeneralTable = (props: TProps) => {
+    const { columns, data, menu } = props;
     const {
         getTableProps,
         getTableBodyProps,
@@ -47,6 +47,7 @@ const TransactionsTable = (props: TProps) => {
                     <th
                         className={getTableThClass({
                             roundedTr: true,
+                            hidden: !menu,
                         })}
                     >
                         &nbsp;
@@ -63,6 +64,7 @@ const TransactionsTable = (props: TProps) => {
                             <td
                                 className={getTableTdClass({
                                     borderL: idxCell === 0,
+                                    withPadding: true,
                                 })}
                                 {...cell.getCellProps()}
                             >
@@ -72,9 +74,10 @@ const TransactionsTable = (props: TProps) => {
                         <td
                             className={getTableTdClass({
                                 borderR: true,
+                                hidden: !menu,
                             })}
                         >
-                            <TransactionRowMenu data={row.original as TTransactionRowValues} />
+                            {menu && menu()}
                         </td>
                     </tr>
                 )
@@ -84,4 +87,4 @@ const TransactionsTable = (props: TProps) => {
     )
 };
 
-export default TransactionsTable;
+export default GeneralTable;
