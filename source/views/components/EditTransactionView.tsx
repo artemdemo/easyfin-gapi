@@ -49,8 +49,8 @@ class EditTransactionView extends React.PureComponent<TProps, TState> {
     }
 
     handleSubmit = (values: TValues, { setSubmitting }) => {
-        const { user } = this.props;
         setSubmitting(false);
+        const { user } = this.props;
         addTransaction(new GTransactionRow({
             id: generateId(),
             date: parseISO(values.date),
@@ -171,16 +171,18 @@ class EditTransactionView extends React.PureComponent<TProps, TState> {
     };
 
     render() {
+        const initValues: TValues = {
+            amount: '',
+            accountFrom: '',
+            category: '',
+            date: '',
+            comment: '',
+        };
+
         return (
             <>
                 <Formik
-                    initialValues={{
-                        amount: '',
-                        accountFrom: '',
-                        category: '',
-                        date: '',
-                        comment: '',
-                    }}
+                    initialValues={initValues}
                     validate={this.handleValidation}
                     onSubmit={this.handleSubmit}
                 >
