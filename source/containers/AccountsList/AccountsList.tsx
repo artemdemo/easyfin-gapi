@@ -1,7 +1,8 @@
 import React from "react";
-import AccountsTable from "./AccountsTable";
 import { t } from "../../services/i18n";
 import GAccountRow from "../../google-api/GAccountRow";
+import RowMenu from "../../components/GeneralTable/RowMenu";
+import GeneralTable from "../../components/GeneralTable/GeneralTable";
 
 type TProps = {
     data: GAccountRow[];
@@ -30,9 +31,17 @@ const AccountsList = (props: TProps) => {
 
     return (
         <>
-            <AccountsTable
+            <GeneralTable
                 columns={columns}
                 data={data.map(item => item.getValues())}
+                menu={() => (
+                    <RowMenu
+                        menu={[
+                            { text: t('common.edit'), className: '', },
+                            { text: t('common.delete'), className: 'text-red-600', },
+                        ]}
+                    />
+                )}
             />
             {data.length === 0 && !loading ? t('accounts.table.no_accounts') : null}
         </>

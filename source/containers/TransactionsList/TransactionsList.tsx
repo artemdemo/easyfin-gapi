@@ -50,8 +50,8 @@ const TransactionsList = (props: TProps) => {
                 menu={() => (
                     <RowMenu
                         menu={[
-                            { text: 'Edit', className: '', },
-                            { text: 'Delete', className: 'text-red-600', },
+                            { text: t('common.edit'), className: '', },
+                            { text: t('common.delete'), className: 'text-red-600', },
                         ]}
                     />
                 )}

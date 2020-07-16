@@ -1,11 +1,10 @@
 import React from "react";
 import {Column, useSortBy, useTable} from "react-table";
-import {TTransactionRowValues} from "../../google-api/services/transactionArrToData";
 import { getTableClass, getTableThClass, getTableTdClass } from "../../styles/table";
 
 type TProps = {
     columns: Column[];
-    data: TTransactionRowValues[];
+    data: {}[];
     menu?: () => any;
 };
 

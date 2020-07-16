@@ -15,5 +15,7 @@
     "accounts.table.name": "Name",
     "accounts.table.type": "Type",
     "accounts.table.start_amount": "Start Amount",
-    "accounts.table.no_accounts": "No accounts loaded"
+    "accounts.table.no_accounts": "No accounts loaded",
+    "common.delete": "Delete",
+    "common.edit": "Edit"
 }
