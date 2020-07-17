@@ -51,6 +51,19 @@ class EditAccountForm extends React.PureComponent<TProps, TState> {
         return isSubmitting;
     }
 
+    renderError(key: string) {
+        const {
+            errors,
+            touched,
+        } = this.props.formProps;
+
+        return (
+            <InputError show={errors[key] && touched[key]}>
+                {errors[key]}
+            </InputError>
+        );
+    }
+
     renderName() {
         const {
             values,
@@ -73,9 +86,7 @@ class EditAccountForm extends React.PureComponent<TProps, TState> {
                     value={values.name}
                     disabled={this.isDisabled()}
                 />
-                <InputError show={errors.name && touched.name}>
-                    {errors.name}
-                </InputError>
+                {this.renderError('name')}
             </>
         );
     }
@@ -93,7 +104,7 @@ class EditAccountForm extends React.PureComponent<TProps, TState> {
             <>
                 <Select
                     className={getInputClass({
-                        error: errors.name && touched.name,
+                        error: errors.type && touched.type,
                     })}
                     name="type"
                     onChange={handleChange}
@@ -101,7 +112,7 @@ class EditAccountForm extends React.PureComponent<TProps, TState> {
                     value={values.type}
                     disabled={this.isDisabled()}
                 >
-                    <option disabled>
+                    <option value='' disabled>
                         {t('accounts.account_type')}
                     </option>
                     {Object.keys(EAccountTypes).map(key => (
@@ -113,9 +124,7 @@ class EditAccountForm extends React.PureComponent<TProps, TState> {
                         </option>
                     ))}
                 </Select>
-                <InputError show={errors.type && touched.type}>
-                    {errors.type}
-                </InputError>
+                {this.renderError('type')}
             </>
         );
     }
@@ -134,7 +143,7 @@ class EditAccountForm extends React.PureComponent<TProps, TState> {
                 <input
                     type="number"
                     className={getInputClass({
-                        error: errors.name && touched.name,
+                        error: errors.startAmount && touched.startAmount,
                     })}
                     placeholder={t('accounts.start_amount')}
                     name="startAmount"
@@ -143,9 +152,7 @@ class EditAccountForm extends React.PureComponent<TProps, TState> {
                     value={values.startAmount}
                     disabled={this.isDisabled()}
                 />
-                <InputError show={errors.startAmount && touched.startAmount}>
-                    {errors.startAmount}
-                </InputError>
+                {this.renderError('startAmount')}
             </>
         );
     }
