@@ -4,8 +4,13 @@ interface IGeneralControlProps {
     disabled?: boolean;
 }
 
-export const getInputClass = (props?: IGeneralControlProps) => classnames({
+export interface IInputProps extends IGeneralControlProps {
+    error?: boolean,
+}
+
+export const getInputClass = (props?: IInputProps) => classnames({
     'appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white': true,
+    'border-red-600': props?.error || false,
     'cursor-not-allowed': props?.disabled || false,
 });
 
