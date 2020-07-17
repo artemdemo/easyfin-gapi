@@ -31,6 +31,7 @@
     "@types/react": "^16.9.34",
     "@types/react-table": "^7.0.19",
     "@types/styled-components": "^5.1.0",
+    "@types/yup": "^0.29.3",
     "axios": "^0.19.2",
     "classnames": "^2.2.5",
     "clean-webpack-plugin": "^3.0.0",
@@ -73,6 +74,7 @@
     "webpack-bundle-analyzer": "^3.7.0",
     "webpack-chunk-hash": "^0.6.0",
     "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.11.0"
+    "webpack-dev-server": "^3.11.0",
+    "yup": "^0.29.1"
   }
 }

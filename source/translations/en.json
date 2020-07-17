@@ -23,6 +23,7 @@
     "accounts.name": "Name",
     "accounts.account_type": "Account type",
     "accounts.start_amount": "Start amount",
+    "common.required": "Required",
     "common.delete": "Delete",
     "common.submit": "Submit",
     "common.edit": "Edit"

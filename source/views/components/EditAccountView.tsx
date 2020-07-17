@@ -1,5 +1,6 @@
 import React from "react";
 import { Formik } from "formik";
+import * as Yup from "yup";
 import {IFormProps} from "../../types/formik";
 import {getInputClass} from "../../styles/elements";
 import Select from "../../components/Select/Select";
@@ -23,12 +24,19 @@ interface IEditAccountForm extends IFormProps {
     values: TValues;
 }
 
+const accountValidationSchema = Yup.object().shape({
+    name: Yup.string()
+        .required(t('common.required')),
+    type: Yup.string()
+        .required(t('common.required')),
+    startAmount: Yup.number()
+        .required(t('common.required')),
+});
+
 type TProps = {};
 type TState = {};
 
 class EditAccountView extends React.PureComponent<TProps, TState> {
-    handleValidation = () => {};
-
     handleSubmit = (values: TValues, { setSubmitting }) => {
         setSubmitting(false);
     };
@@ -60,6 +68,7 @@ class EditAccountView extends React.PureComponent<TProps, TState> {
                             value={values.name}
                             disabled={formDisabled}
                         />
+                        {errors.name && touched.name ? <div>{errors.name}</div> : null}
                     </div>
                     <div className="w-1/2 px-2">
                         <Select
@@ -116,7 +125,7 @@ class EditAccountView extends React.PureComponent<TProps, TState> {
             <>
                 <Formik
                     initialValues={initValues}
-                    validate={this.handleValidation}
+                    validationSchema={accountValidationSchema}
                     onSubmit={this.handleSubmit}
                 >
                     {this.renderForm}

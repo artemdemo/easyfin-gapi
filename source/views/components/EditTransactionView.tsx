@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Formik } from "formik";
 import parseISO from "date-fns/parseISO";
+import * as Yup from "yup";
 import Button from "../../components/Button/Button";
 import Select from "../../components/Select/Select";
 import { addTransaction } from "../../model/transactions/transactionsReq";
@@ -13,6 +14,7 @@ import {IFormProps} from "../../types/formik";
 import { sendNotification } from "../../model/notifications/notificationsActions";
 import {EButtonAppearance} from "../../styles/elements";
 import { generateId } from "../../services/id";
+import {t} from "../../services/i18n";
 
 type TValues = {
     date: string;
@@ -25,6 +27,18 @@ type TValues = {
 interface IEditTransactionForm extends IFormProps {
     values: TValues;
 }
+
+const transactionValidationSchema = Yup.object().shape({
+    date: Yup.string()
+        .required(t('common.required')),
+    amount: Yup.number()
+        .required(t('common.required')),
+    accountFrom: Yup.string()
+        .required(t('common.required')),
+    category: Yup.string()
+        .required(t('common.required')),
+    comment: Yup.string(),
+});
 
 type TProps = {
     user: TUserState;
@@ -68,8 +82,6 @@ class EditTransactionView extends React.PureComponent<TProps, TState> {
         const { sendNotification } = this.props;
         sendNotification('Transaction added');
     };
-
-    handleValidation = (values: TValues) => {}
 
     renderForm = (formProps: IEditTransactionForm) => {
         const {
@@ -183,7 +195,7 @@ class EditTransactionView extends React.PureComponent<TProps, TState> {
             <>
                 <Formik
                     initialValues={initValues}
-                    validate={this.handleValidation}
+                    validationSchema={transactionValidationSchema}
                     onSubmit={this.handleSubmit}
                 >
                     {this.renderForm}
