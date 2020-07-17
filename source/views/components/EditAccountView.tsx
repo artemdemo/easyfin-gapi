@@ -4,6 +4,14 @@ import {IFormProps} from "../../types/formik";
 import {getInputClass} from "../../styles/elements";
 import Select from "../../components/Select/Select";
 import Button from "../../components/Button/Button";
+import {t} from "../../services/i18n";
+
+enum EAccountTypes {
+    credit = 'credit',
+    saving = 'saving',
+    wallet = 'wallet',
+    bank = 'bank',
+}
 
 type TValues = {
     name: string;
@@ -45,7 +53,7 @@ class EditAccountView extends React.PureComponent<TProps, TState> {
                         <input
                             type="text"
                             className={getInputClass()}
-                            placeholder="Name"
+                            placeholder={t('accounts.name')}
                             name="name"
                             onChange={handleChange}
                             onBlur={handleBlur}
@@ -56,15 +64,23 @@ class EditAccountView extends React.PureComponent<TProps, TState> {
                     <div className="w-1/2 px-2">
                         <Select
                             className={getInputClass()}
-                            placeholder="Account type"
                             name="type"
                             onChange={handleChange}
                             onBlur={handleBlur}
                             value={values.type}
                             disabled={formDisabled}
                         >
-                            <option>type one</option>
-                            <option>type two</option>
+                            <option disabled>
+                                {t('accounts.account_type')}
+                            </option>
+                            {Object.keys(EAccountTypes).map(key => (
+                                <option
+                                    value={key}
+                                    key={key}
+                                >
+                                    {t(`accounts.type.${key}`)}
+                                </option>
+                            ))}
                         </Select>
                     </div>
                 </div>
@@ -73,7 +89,7 @@ class EditAccountView extends React.PureComponent<TProps, TState> {
                         <input
                             type="number"
                             className={getInputClass()}
-                            placeholder="Start amount"
+                            placeholder={t('accounts.start_amount')}
                             name="startAmount"
                             onChange={handleChange}
                             onBlur={handleBlur}
@@ -83,7 +99,7 @@ class EditAccountView extends React.PureComponent<TProps, TState> {
                     </div>
                 </div>
                 <Button type="submit" disabled={formDisabled}>
-                    Submit
+                    {t('common.submit')}
                 </Button>
             </form>
         );
