@@ -59,6 +59,7 @@ class AccountsView extends React.PureComponent<TProps, TState> {
                     data={this.state.accounts}
                     loading={this.state.loading}
                 />
+                {this.state.loading ? t('common.loading') : ''}
             </>
         );
     }

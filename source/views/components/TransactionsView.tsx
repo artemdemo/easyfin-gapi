@@ -79,6 +79,7 @@ class TransactionsView extends React.PureComponent<TProps, TState> {
                     data={this.state.transactions}
                     loading={this.state.loading}
                 />
+                {this.state.loading ? t('common.loading') : ''}
             </>
         );
     }
