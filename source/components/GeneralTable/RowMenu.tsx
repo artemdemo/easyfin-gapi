@@ -1,15 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import classnames from "classnames";
+import enhanceWithClickOutside from "react-click-outside";
 import {EButtonAppearance} from "../../styles/elements";
 import Button from "../../components/Button/Button";
+import RowMenuItem, { TRowMenuItem } from "./RowMenuItem";
 
 type TProps = {
-    menu: {
-        text: string;
-        className?: string;
-        onClick?: (e: any) => void;
-    }[];
+    menu: TRowMenuItem[];
 };
 
 type TState = {
@@ -36,6 +33,19 @@ class RowMenu extends React.PureComponent<TProps, TState> {
         menuOpen: false,
     };
 
+    handleClickOutside = () => {
+        this.setState({
+            menuOpen: false,
+        });
+    };
+
+    handleMenuItemClick = (item) => {
+        this.setState({
+            menuOpen: false,
+        });
+        item.onClick && item.onClick(item);
+    };
+
     menuDotsClick = () => {
         this.setState(prevState => ({
             menuOpen: !prevState.menuOpen,
@@ -57,16 +67,11 @@ class RowMenu extends React.PureComponent<TProps, TState> {
                     visible={this.state.menuOpen}
                 >
                     {menu.map(menuItem => (
-                        <div
-                            className={classnames(
-                                'px-4 py-2 border-b cursor-pointer hover:bg-gray-100',
-                                menuItem.className,
-                            )}
-                            onClick={menuItem.onClick}
+                        <RowMenuItem
+                            item={menuItem}
+                            onClick={this.handleMenuItemClick}
                             key={menuItem.text}
-                        >
-                            {menuItem.text}
-                        </div>
+                        />
                     ))}
                 </MenuContainer>
             </Wrapper>
@@ -74,4 +79,4 @@ class RowMenu extends React.PureComponent<TProps, TState> {
     }
 }
 
-export default RowMenu;
+export default enhanceWithClickOutside(RowMenu);
