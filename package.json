@@ -42,7 +42,6 @@
     "formik": "^2.1.4",
     "history": "^4.10.1",
     "html-webpack-plugin": "^4.2.0",
-    "http-server": "^0.12.3",
     "jest-cli": "^25.3.0",
     "less": "^3.11.1",
     "less-loader": "^6.1.0",

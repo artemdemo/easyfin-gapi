@@ -80,7 +80,7 @@ class EditTransactionView extends React.PureComponent<TProps, TState> {
 
     handleAddedTransaction = () => {
         const { sendNotification } = this.props;
-        sendNotification('Transaction added');
+        sendNotification(t('transactions.added'));
     };
 
     renderForm = (formProps: IEditTransactionForm) => {

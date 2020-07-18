@@ -58,7 +58,8 @@ export const appendRow = (row: GRow, sheetName: string) => new Promise<GRow>((re
 
     // Splitting range definition into components
     // '2020'!A5:O5
-    const rangeRegex = /^'([^']+)'!([^:]+):(\S+)$/;
+    // accounts!A6:D6
+    const rangeRegex = /^(.+)!([^:]+):(\S+)$/;
     // Getting index from cell definition
     // A5
     const idxRegex = /^[^\d\s]+(\d+)$/;

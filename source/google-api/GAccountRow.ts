@@ -2,7 +2,7 @@ import _cloneDeep from "lodash/cloneDeep";
 import GRow from "./GRow";
 import { TParserMapItem, convertArrToData, convertDataToArr } from "./services/converter";
 
-enum EAccountType {
+export enum EAccountType {
     credit = 'credit',
     saving = 'saving',
     wallet = 'wallet',
