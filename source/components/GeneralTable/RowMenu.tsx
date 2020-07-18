@@ -58,7 +58,11 @@ class RowMenu extends React.PureComponent<TProps, TState> {
                 >
                     {menu.map(menuItem => (
                         <div
-                            className={classnames('px-4 py-2 border-b cursor-pointer hover:bg-gray-100', menuItem.className)}
+                            className={classnames(
+                                'px-4 py-2 border-b cursor-pointer hover:bg-gray-100',
+                                menuItem.className,
+                            )}
+                            onClick={menuItem.onClick}
                             key={menuItem.text}
                         >
                             {menuItem.text}
