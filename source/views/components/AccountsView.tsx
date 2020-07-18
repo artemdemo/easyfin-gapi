@@ -6,6 +6,7 @@ import ButtonLink from "../../components/ButtonLink/ButtonLink";
 import * as routes from "../../routing/routes";
 import {EButtonAppearance} from "../../styles/elements";
 import {t} from "../../services/i18n";
+import logger from "../../services/logger";
 
 type TProps = {};
 type TState = {
@@ -36,7 +37,7 @@ class AccountsView extends React.PureComponent<TProps, TState> {
                 })
             })
             .catch((err) => {
-                console.error(err);
+                logger.error(err);
                 this.setState({
                     loading: false,
                 });

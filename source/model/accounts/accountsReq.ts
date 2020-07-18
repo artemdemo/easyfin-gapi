@@ -1,6 +1,7 @@
 import * as googleSheets from '../../google-api/google-sheets';
 import GAccountRow from '../../google-api/GAccountRow';
 import {EDataSheetTitles} from "../../services/sheets";
+import logger from "../../services/logger";
 
 export const loadAccounts = (): Promise<GAccountRow[]> => {
     return googleSheets.getAllRows(EDataSheetTitles.ACCOUNTS)
@@ -13,8 +14,8 @@ export const loadAccounts = (): Promise<GAccountRow[]> => {
                 try {
                     result.push(GAccountRow.fromArr(dataArr, idx))
                 } catch (e) {
-                    console.error('dataArr can\'t be converted into GAccountRow');
-                    console.error(e);
+                    logger.error('dataArr can\'t be converted into GAccountRow');
+                    logger.error(e);
                 }
             });
             return result;

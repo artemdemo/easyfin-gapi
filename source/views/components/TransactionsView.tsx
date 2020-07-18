@@ -1,9 +1,9 @@
-import React from 'react';
-import {connect} from 'react-redux';
-import {TUserState} from '../../model/user/userReducer';
-import {loadTransactions} from '../../model/transactions/transactionsReq';
-import GTransactionRow from '../../google-api/GTransactionRow';
-import TransactionsList from '../../containers/TransactionsList/TransactionsList';
+import React from "react";
+import {connect} from "react-redux";
+import {TUserState} from "../../model/user/userReducer";
+import {loadTransactions} from "../../model/transactions/transactionsReq";
+import GTransactionRow from "../../google-api/GTransactionRow";
+import TransactionsList from "../../containers/TransactionsList/TransactionsList";
 import {loadSheets} from "../../model/sheets/sheetsReq";
 import {getLastTransactionsSheetTitle} from "../../services/sheets";
 import {TSheetsState} from "../../model/sheets/sheetsReducer";
@@ -13,6 +13,7 @@ import ButtonLink from "../../components/ButtonLink/ButtonLink";
 import * as routes from "../../routing/routes";
 import {EButtonAppearance} from "../../styles/elements";
 import {t} from "../../services/i18n";
+import logger from "../../services/logger";
 
 type TProps = {
     user: TUserState;
@@ -56,7 +57,7 @@ class TransactionsView extends React.PureComponent<TProps, TState> {
                 });
             })
             .catch((err) => {
-                console.error(err);
+                logger.error(err);
                 this.setState({
                     loading: false,
                 });

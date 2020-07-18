@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { connect } from "react-redux";
 import history from "../../history";
 import Container from "../../components/Container/Container";
@@ -7,6 +7,7 @@ import * as googleApi from "../../google-api/google-api";
 import { signedIn, signedOut } from "../../model/user/userActions";
 import Notifications from "../../containers/Notifications/Notifications";
 import BasicProfile = gapi.auth2.BasicProfile;
+import logger from "../../services/logger";
 
 type TProps = {
     signedIn: (user: BasicProfile) => void;
@@ -36,7 +37,7 @@ class AppView extends React.PureComponent<TProps, TState> {
 
     handleClientInitializingErr = (err) => {
         const { signedOut } = this.props;
-        console.error(err);
+        logger.error(err);
         signedOut();
     };
 

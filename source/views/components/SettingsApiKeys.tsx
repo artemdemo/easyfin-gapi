@@ -6,6 +6,7 @@ import {Formik} from "formik";
 import Button from "../../components/Button/Button";
 import {sendNotification} from "../../model/notifications/notificationsActions";
 import store from "../../store";
+import logger from "../../services/logger";
 
 type TValues = {
     apiKey: string;
@@ -96,7 +97,7 @@ class SettingsApiKeys extends React.PureComponent<TProps, TState> {
             _apiKey = apiKey.get();
             _clientId = clientId.get();
         } catch (e) {
-            console.error(e);
+            logger.error(e);
         }
         return (
             <Formik

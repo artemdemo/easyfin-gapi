@@ -16,7 +16,7 @@ export enum EDataSheetTitles {
  * Name that this sheet should have, it is possible that there is no sheet with this name at all.
  */
 export const generateCurrentTransactionsSheetTitle = (): string => {
-    return format(new Date(), "yyyy");
+    return format(new Date(), 'yyyy');
 };
 
 export const getLastTransactionsSheetTitle = (sheets: GSheet[]): string => {

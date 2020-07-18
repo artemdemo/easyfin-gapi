@@ -2,6 +2,7 @@ import * as googleApi from './google-api';
 import {ESortOrder, IHttpResponse} from './TSpreadsheetsApi';
 import GRow from './GRow';
 import { spreadsheetID } from '../services/settingsStorage';
+import logger from "../services/logger";
 
 type TUpdateRowResult = {
     spreadsheetId: string;
@@ -26,7 +27,7 @@ const generalFulfillHandler = (resolve: (result: any) => any, reject: (err: any)
 };
 
 const generalRejectHandler = (reject: () => any) => (errData) => {
-    console.error(new Error(getMsgFromErr(errData)));
+    logger.error(new Error(getMsgFromErr(errData)));
     reject();
 };
 
@@ -87,7 +88,7 @@ export const appendRow = (row: GRow, sheetName: string) => new Promise<GRow>((re
                         reject(resultData);
                     }
                 }, (errData) => {
-                    console.error(new Error(getMsgFromErr(errData)));
+                    logger.error(new Error(getMsgFromErr(errData)));
                     reject();
                 });
         });

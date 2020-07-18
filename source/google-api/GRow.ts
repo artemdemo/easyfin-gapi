@@ -1,3 +1,5 @@
+import logger from "../services/logger";
+
 class GRow {
     private _rowIdx: number|undefined;
 
@@ -10,7 +12,7 @@ class GRow {
     }
 
     toJSON(): any[] {
-        console.error('toJSON() is not implemented yet');
+        logger.error('toJSON() is not implemented yet');
         return [];
     }
 

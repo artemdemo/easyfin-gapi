@@ -6,6 +6,7 @@ import {IFormProps} from "../../types/formik";
 import Button from "../../components/Button/Button";
 import {sendNotification} from "../../model/notifications/notificationsActions";
 import store from "../../store";
+import logger from "../../services/logger";
 
 type TValues = {
     spreadsheetId: string;
@@ -76,7 +77,7 @@ class SettingsMainView extends React.PureComponent<TProps, TState> {
         try {
             spreadsheetId = spreadsheetID.get();
         } catch (e) {
-            console.error(e);
+            logger.error(e);
         }
         return (
             <Formik
