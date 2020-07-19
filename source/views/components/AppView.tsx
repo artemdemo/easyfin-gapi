@@ -27,8 +27,6 @@ class AppView extends React.PureComponent<TProps, TState> {
     }
 
     handleClientInitialized = () => {
-        this.setState({ initialized: true });
-
         googleApi.listenIsSignedIn(this.updateSigninStatus);
 
         googleApi.getIsSignedIn()
