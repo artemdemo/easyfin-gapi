@@ -111,6 +111,21 @@ export const getAllRows = (sheetTitle: string) => new Promise((resolve, reject) 
         });
 });
 
+export const deleteRowByLineIdx = (lineIdx: number) => {
+    // https://stackoverflow.com/a/39543202
+    // https://developers.google.com/sheets/api/samples/rowcolumn#delete_rows_or_columns
+    // https://stackoverflow.com/questions/40430927/deleting-rows-in-a-google-sheet-using-api-and-batchupdaterequest
+
+    const params = {
+        spreadsheetId: spreadsheetID.get(),
+        requests: [
+
+        ],
+    };
+
+    return batchUpdateSpreadsheet(params);
+};
+
 export const createSpreadsheet = (title: string) => new Promise((resolve, reject) => {
     const params = {
         properties: {

@@ -24,7 +24,6 @@ const GeneralTable = (props: TProps) => {
         useSortBy,
     )
 
-    // Render the UI for your table
     return (
         <table className={getTableClass()} {...getTableProps()}>
             <thead>
@@ -63,7 +62,6 @@ const GeneralTable = (props: TProps) => {
                             <td
                                 className={getTableTdClass({
                                     borderL: idxCell === 0,
-                                    withPadding: true,
                                 })}
                                 {...cell.getCellProps()}
                             >
@@ -74,6 +72,10 @@ const GeneralTable = (props: TProps) => {
                             className={getTableTdClass({
                                 borderR: true,
                                 hidden: !menu,
+                                // Here I'm not adding padding, since this cell is dedicated for the menu button.
+                                // Padding should be defined by the button or buttons wrapper.
+                                // I just don't have a way of knowing what size of the button here will be.
+                                withPadding: false,
                             })}
                         >
                             {menu && menu()}
