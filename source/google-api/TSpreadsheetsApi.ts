@@ -3,6 +3,12 @@ export enum ESortOrder {
     desc = 'DESCENDING',
 }
 
+export enum EDimension {
+    dimensionUnspecified = 'DIMENSION_UNSPECIFIED',
+    rows = 'ROWS',
+    columns = 'COLUMNS',
+}
+
 type TValuesAppendParams = {
     spreadsheetId: string;
     range: string;
@@ -62,6 +68,16 @@ type TBatchUpdateReq = {
             endColumnIndex: number;
         },
         sortSpecs: TSortSpec[],
+    },
+    // Deletes the dimensions from the sheet
+    // https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets/request#DeleteDimensionRequest
+    deleteDimension?: {
+        range: {
+            sheetId: number;
+            dimension: EDimension,
+            startIndex: number;
+            endIndex: number;
+        },
     },
 };
 

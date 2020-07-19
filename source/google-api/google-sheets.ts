@@ -1,5 +1,5 @@
 import * as googleApi from './google-api';
-import {ESortOrder, IHttpResponse} from './TSpreadsheetsApi';
+import {EDimension, ESortOrder, IHttpResponse} from './TSpreadsheetsApi';
 import GRow from './GRow';
 import { spreadsheetID } from '../services/settingsStorage';
 import logger from "../services/logger";
@@ -111,16 +111,20 @@ export const getAllRows = (sheetTitle: string) => new Promise((resolve, reject) 
         });
 });
 
-export const deleteRowByLineIdx = (lineIdx: number) => {
-    // https://stackoverflow.com/a/39543202
-    // https://developers.google.com/sheets/api/samples/rowcolumn#delete_rows_or_columns
-    // https://stackoverflow.com/questions/40430927/deleting-rows-in-a-google-sheet-using-api-and-batchupdaterequest
-
+export const deleteRowByLineIdx = (sheetId: number, lineIdx: number) => {
+    const startIndex = lineIdx - 1;
     const params = {
         spreadsheetId: spreadsheetID.get(),
-        requests: [
-
-        ],
+        requests: [{
+            deleteDimension: {
+                range: {
+                    sheetId,
+                    dimension: EDimension.rows,
+                    startIndex: startIndex < 0 ? 0 : startIndex,
+                    endIndex: lineIdx + 1,
+                },
+            },
+        }],
     };
 
     return batchUpdateSpreadsheet(params);
@@ -172,13 +176,13 @@ export const getAllSheets = () => new Promise((resolve, reject) => {
         });
 });
 
-export const sortByDate = () => {
+export const sortByDate = (sheetId: number) => {
     const params = {
         spreadsheetId: spreadsheetID.get(),
         requests: [{
             sortRange: {
                 range: {
-                    sheetId: 0,
+                    sheetId,
                     startRowIndex: 1, // title shouldn't be included in sort
                     endRowIndex: 2000,
                     startColumnIndex: 0,
