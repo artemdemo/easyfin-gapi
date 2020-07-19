@@ -77,7 +77,7 @@ export const appendRow = (row: GRow, sheetName: string) => new Promise<GRow>((re
                             const startCell = rangeMatch[2];
                             const idxMatch = idxRegex.exec(startCell);
                             if (idxMatch) {
-                                row.setRowIdx(parseInt(idxMatch[1], 10) - 1)
+                                row.setLineIdx(parseInt(idxMatch[1], 10) - 1)
                                 resolve(row);
                                 reject(new Error('Index can\'t be parsed from range'));
                             }

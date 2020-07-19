@@ -29,12 +29,12 @@ const accountArrToData = (rowArr: string[]): TAccountRowValues => {
 class GAccountRow extends GRow {
     private readonly _values: TAccountRowValues;
 
-    static fromArr(rowArr: string[], rowIdx?: number): GAccountRow {
-        return new GAccountRow(accountArrToData(rowArr), rowIdx);
+    static fromArr(rowArr: string[], lineIdx?: number): GAccountRow {
+        return new GAccountRow(accountArrToData(rowArr), lineIdx);
     }
 
-    constructor(values: TAccountRowValues, rowIdx?:number) {
-        super(rowIdx);
+    constructor(values: TAccountRowValues, lineIdx?:number) {
+        super(lineIdx);
         this._values = values;
     }
 

@@ -6,12 +6,12 @@ import dataToTransactionArr from "./services/dataToTransactionArr";
 class GTransactionRow extends GRow {
     private readonly _values: TTransactionRowValues;
 
-    static fromArr(rowArr: string[], rowIdx?: number): GTransactionRow {
-        return new GTransactionRow(transactionArrToData(rowArr), rowIdx);
+    static fromArr(rowArr: string[], lineIdx?: number): GTransactionRow {
+        return new GTransactionRow(transactionArrToData(rowArr), lineIdx);
     }
 
-    constructor(values: TTransactionRowValues, rowIdx?:number) {
-        super(rowIdx);
+    constructor(values: TTransactionRowValues, lineIdx?:number) {
+        super(lineIdx);
         this._values = values;
     }
 

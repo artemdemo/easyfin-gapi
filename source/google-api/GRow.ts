@@ -1,14 +1,14 @@
 import logger from "../services/logger";
 
 class GRow {
-    private _rowIdx: number|undefined;
+    private _lineIdx: number|undefined;
 
-    static fromArr(rowArr: string[], rowIdx?: number): GRow {
+    static fromArr(rowArr: string[], lineIdx?: number): GRow {
         throw new Error('"fromArr" is not implemented yet');
     }
 
-    constructor(rowIdx?:number) {
-        this._rowIdx = rowIdx;
+    constructor(lineIdx?:number) {
+        this._lineIdx = lineIdx;
     }
 
     toJSON(): any[] {
@@ -16,12 +16,12 @@ class GRow {
         return [];
     }
 
-    setRowIdx(idx: number): void {
-        this._rowIdx = idx;
+    setLineIdx(idx: number): void {
+        this._lineIdx = idx;
     }
 
-    getRowIdx(): number|undefined {
-        return this._rowIdx;
+    getLineIdx(): number|undefined {
+        return this._lineIdx;
     }
 
     getValues(): any {
