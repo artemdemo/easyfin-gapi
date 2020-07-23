@@ -5,7 +5,7 @@ import { getTableClass, getTableThClass, getTableTdClass } from "../../styles/ta
 type TProps = {
     columns: Column[];
     data: {}[];
-    menu?: () => any;
+    menu?: (row: any) => any;
 };
 
 const GeneralTable = (props: TProps) => {
@@ -78,7 +78,7 @@ const GeneralTable = (props: TProps) => {
                                 withPadding: false,
                             })}
                         >
-                            {menu && menu()}
+                            {menu && menu(row)}
                         </td>
                     </tr>
                 )

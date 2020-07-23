@@ -7,6 +7,7 @@ import RowMenuItem, { TRowMenuItem } from "./RowMenuItem";
 
 type TProps = {
     menu: TRowMenuItem[];
+    row: any;
 };
 
 type TState = {
@@ -43,7 +44,7 @@ class RowMenu extends React.PureComponent<TProps, TState> {
         this.setState({
             menuOpen: false,
         });
-        item.onClick && item.onClick(item);
+        item.onClick && item.onClick(this.props.row);
     };
 
     menuDotsClick = () => {

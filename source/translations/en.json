@@ -14,6 +14,7 @@
     "transactions.table.no_transactions": "No transactions loaded",
     "accounts.new": "New account",
     "accounts.added": "Account added",
+    "accounts.deleted": "Account deleted",
     "accounts.table.name": "Name",
     "accounts.table.type": "Type",
     "accounts.table.start_amount": "Start Amount",
