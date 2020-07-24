@@ -1,22 +1,26 @@
-import { handleActions } from 'redux-actions';
-import * as actions from './userActions';
+import { handleActions } from "redux-actions";
+import * as actions from "./userActions";
+import {TAction, TActionHandlers} from "../../types/actions";
+import {TSignedInPayload} from "./userActions";
 import BasicProfile = gapi.auth2.BasicProfile;
 
 export type TUserState = {
-    basicProfile: BasicProfile|null;
+    basicProfile: BasicProfile|undefined;
 };
 
 const initState: TUserState = {
-    basicProfile: null,
+    basicProfile: undefined,
 };
 
-export default handleActions({
-    [actions.signedIn]: (state: TUserState, action) => ({
+const actionHandlers: TActionHandlers<TUserState> = {
+    [actions.signedIn]: (state: TUserState, action: TAction<TSignedInPayload>) => ({
         ...state,
         basicProfile: action.payload,
     }),
-    [actions.signedOut]: (state: TUserState, action) => ({
+    [actions.signedOut]: (state: TUserState) => ({
         ...state,
-        basicProfile: null,
+        basicProfile: undefined,
     }),
-}, initState);
+};
+
+export default handleActions(actionHandlers, initState);

@@ -4,7 +4,11 @@ import history from "../../history";
 import Container from "../../components/Container/Container";
 import MainMenu from "../../containers/MainMenu/MainMenu";
 import * as googleApi from "../../google-api/google-api";
-import { signedIn, signedOut } from "../../model/user/userActions";
+import {
+    TSignedIn,
+    signedIn,
+    signedOut,
+} from "../../model/user/userActions";
 import Notifications from "../../containers/Notifications/Notifications";
 import logger from "../../services/logger";
 import {loadSheets} from "../../model/sheets/sheetsActions";
@@ -13,10 +17,9 @@ import {
     loadAccounts,
 } from "../../model/accounts/accountsActions";
 import * as routes from "../../routing/routes";
-import BasicProfile = gapi.auth2.BasicProfile;
 
 type TProps = {
-    signedIn: (user: BasicProfile) => void;
+    signedIn: TSignedIn;
     signedOut: () => void;
     loadSheets: () => void;
     loadAccounts: TLoadAccounts,
