@@ -1,18 +1,15 @@
 import React from "react";
-import { connect } from "react-redux";
 import { t } from "../../services/i18n";
 import GAccountRow from "../../google-api/GAccountRow";
 import RowMenu from "../../components/GeneralTable/RowMenu";
 import GeneralTable from "../../components/GeneralTable/GeneralTable";
-import {EDataSheetTitles} from "../../services/sheets";
-import { loadSheets } from "../../model/sheets/sheetsReq";
-import { deleteAccount } from "../../model/accounts/accountsReq";
-import { sendNotification } from "../../model/notifications/notificationsActions";
+
 
 type TProps = {
     data: GAccountRow[];
     loading: boolean;
-    sendNotification: (data: any) => void;
+    onDelete: (account:GAccountRow) => void;
+    onEdit: (account:GAccountRow) => void;
 };
 
 class AccountsList extends React.PureComponent<TProps> {
@@ -31,24 +28,24 @@ class AccountsList extends React.PureComponent<TProps> {
         },
     ];
 
+    getAccountById(accountId: string):GAccountRow {
+        const account = this.props.data.find(item => item.getId() === accountId);
+        if (!account) {
+            throw new Error(`Account for the given id is not found. id was ${accountId}`);
+        }
+        return account;
+    }
+
     handleDelete = (item) => {
-        loadSheets()
-            .then((sheets) => {
-                const sheet = sheets.find(item => item.getTitle() === EDataSheetTitles.ACCOUNTS);
-                if (!sheet) {
-                    throw new Error('Accounts sheet is not found');
-                }
-                const accountId = item.original.id;
-                const account = this.props.data.find(item => item.getId() === accountId);
-                if (!account) {
-                    throw new Error(`Account for the given id is not found. id was ${accountId}`);
-                }
-                return deleteAccount(sheet.getId(), account);
-            })
-            .then(() => {
-                const { sendNotification } = this.props;
-                sendNotification(t('accounts.deleted'));
-            });
+        const { onDelete } = this.props;
+        const account = this.getAccountById(item.original.id);
+        onDelete(account);
+    };
+
+    handleEdit = (item) => {
+        const { onEdit } = this.props;
+        const account = this.getAccountById(item.original.id);
+        onEdit(account);
     };
 
     render() {
@@ -64,6 +61,7 @@ class AccountsList extends React.PureComponent<TProps> {
                             menu={[
                                 {
                                     text: t('common.edit'),
+                                    onClick: this.handleEdit,
                                     className: '',
                                 },
                                 {
@@ -82,9 +80,4 @@ class AccountsList extends React.PureComponent<TProps> {
     }
 }
 
-export default connect(
-    () => ({}),
-    {
-        sendNotification,
-    },
-)(AccountsList);
+export default AccountsList;

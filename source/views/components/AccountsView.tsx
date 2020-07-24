@@ -1,5 +1,6 @@
 import React from "react";
-import {loadAccounts} from "../../model/accounts/accountsReq";
+import { connect } from "react-redux";
+import {deleteAccount, loadAccounts} from "../../model/accounts/accountsReq";
 import GAccountRow from "../../google-api/GAccountRow";
 import AccountsList from "../../containers/AccountsList/AccountsList";
 import ButtonLink from "../../components/ButtonLink/ButtonLink";
@@ -7,8 +8,13 @@ import * as routes from "../../routing/routes";
 import {EButtonAppearance} from "../../styles/elements";
 import {t} from "../../services/i18n";
 import logger from "../../services/logger";
+import {loadSheets} from "../../model/sheets/sheetsReq";
+import {EDataSheetTitles} from "../../services/sheets";
+import { sendNotification } from "../../model/notifications/notificationsActions";
 
-type TProps = {};
+type TProps = {
+    sendNotification: (data: any) => void;
+};
 type TState = {
     accounts: GAccountRow[];
     loading: boolean;
@@ -44,6 +50,26 @@ class AccountsView extends React.PureComponent<TProps, TState> {
             });
     }
 
+    handleDelete = (account: GAccountRow) => {
+        loadSheets()
+            .then((sheets) => {
+                const sheet = sheets.find(item => item.getTitle() === EDataSheetTitles.ACCOUNTS);
+                if (!sheet) {
+                    throw new Error('Accounts sheet is not found');
+                }
+                return deleteAccount(sheet.getId(), account);
+            })
+            .then(() => {
+                const { sendNotification } = this.props;
+                sendNotification(t('accounts.deleted'));
+                this.setState(prevState => ({
+                    accounts: prevState.accounts.filter(item => item !== account),
+                }));
+            });
+    };
+
+    handleEdit = (account: GAccountRow) => {};
+
     render() {
         return (
             <>
@@ -58,6 +84,8 @@ class AccountsView extends React.PureComponent<TProps, TState> {
                 <AccountsList
                     data={this.state.accounts}
                     loading={this.state.loading}
+                    onDelete={this.handleDelete}
+                    onEdit={this.handleEdit}
                 />
                 {this.state.loading ? t('common.loading') : ''}
             </>
@@ -65,4 +93,9 @@ class AccountsView extends React.PureComponent<TProps, TState> {
     }
 }
 
-export default AccountsView;
+export default connect(
+    () => ({}),
+    {
+        sendNotification,
+    },
+)(AccountsView);
