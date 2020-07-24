@@ -39,12 +39,20 @@ export default handleActions({
         ...state,
         deleting: true,
     }),
-    [actions.accountDeleted]: (state: TAccountsState, action) => ({
-        ...state,
-        data: state.data.filter(item => item !== action.payload),
-        deleting: false,
-        deletingError: null,
-    }),
+    [actions.accountDeleted]: (state: TAccountsState, action) => {
+        const data = state.data.filter(item => item !== action.payload);
+        data.forEach((item, idx) => {
+            // After removing the indexes will change.
+            // And since I don't want to reload the whole list, then I need to update those indexes.
+            item.setLineIdx(idx);
+        });
+        return {
+            ...state,
+            data,
+            deleting: false,
+            deletingError: null,
+        };
+    },
     [actions.accountDeletingError]: (state: TAccountsState, action) => ({
         ...state,
         deleting: false,

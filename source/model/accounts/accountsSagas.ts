@@ -20,9 +20,9 @@ function* deleteAccountSaga() {
         const data = yield take(actions.deleteAccount);
         const {sheet, account} = data.payload;
         try {
-            const result = yield req.deleteAccount(sheet, account);
+            yield req.deleteAccount(sheet, account);
 
-            yield put(actions.accountDeleted(result));
+            yield put(actions.accountDeleted(account));
         } catch (err) {
             yield put(actions.accountDeletingError(err));
         }
