@@ -1,9 +1,5 @@
-import _isString from 'lodash/isString';
-import * as storage from './storage';
-
-const SPREADSHEET_ID = 'spreadsheetId';
-const API_KEY = 'apiKey';
-const CLIENT_ID = 'clientId';
+import _isString from "lodash/isString";
+import * as storage from "./storage";
 
 class SettingStorage {
     private readonly key: string;
@@ -32,8 +28,6 @@ class SettingStorage {
     }
 }
 
-export const spreadsheetID = new SettingStorage(SPREADSHEET_ID);
-
-export const apiKey = new SettingStorage(API_KEY);
-
-export const clientId = new SettingStorage(CLIENT_ID);
+export const spreadsheetID = new SettingStorage('spreadsheetId');
+export const apiKey = new SettingStorage('apiKey');
+export const clientId = new SettingStorage('clientId');
