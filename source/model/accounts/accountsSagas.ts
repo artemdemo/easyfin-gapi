@@ -36,7 +36,7 @@ function* createAccountSaga() {
         try {
             yield req.addAccount(data.payload);
 
-            yield put(actions.accountCreated());
+            yield put(actions.accountCreated(data.payload));
         } catch (err) {
             yield put(actions.accountCreatingError(err));
         }

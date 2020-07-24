@@ -74,6 +74,9 @@ const actionHandlers: TActionHandlers<TAccountsState> = {
     [actions.accountCreated]: (state, action: TAction<GAccountRow>) => {
         const data = [...state.data];
         if (action.payload) {
+            // Since I don't want to reload accounts on each manipulation,
+            // I need to send line index by hand.
+            action.payload.setLineIdx(data.length);
             data.push(action.payload);
         }
         return {
