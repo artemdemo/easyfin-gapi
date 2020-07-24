@@ -1,5 +1,6 @@
 import React from "react";
 import { Formik } from "formik";
+import { connect } from "react-redux";
 import EditAccountForm, {
     IEditAccountForm,
     TValues,
@@ -7,29 +8,25 @@ import EditAccountForm, {
     initValues,
 } from "../../containers/forms/EditAccountForm";
 import GAccountRow, { EAccountType } from "../../google-api/GAccountRow";
-import { addAccount } from "../../model/accounts/accountsReq";
-import { sendNotification } from "../../model/notifications/notificationsActions";
-import store from "../../store";
+import { createAccount } from "../../model/accounts/accountsActions";
 import { generateId } from "../../services/id";
-import {t} from "../../services/i18n";
 
-type TProps = {};
+type TProps = {
+    createAccount: (account: GAccountRow) => void;
+};
 type TState = {};
 
 class EditAccountView extends React.PureComponent<TProps, TState> {
     handleSubmit = (values: TValues, { setSubmitting }) => {
         setSubmitting(false);
-        addAccount(new GAccountRow({
+        const { createAccount } = this.props;
+        createAccount(new GAccountRow({
             id: generateId(),
             name: values.name,
             type: EAccountType[values.type],
             startAmount: Number(values.startAmount),
-        })).then(this.handleAddedAccount);
+        }))
     };
-
-    handleAddedAccount = () => {
-        store.dispatch(sendNotification(t('accounts.added')));
-    }
 
     renderForm = (formProps: IEditAccountForm) => {
         return (
@@ -52,4 +49,9 @@ class EditAccountView extends React.PureComponent<TProps, TState> {
     }
 }
 
-export default EditAccountView;
+export default connect(
+    () => ({}),
+    {
+        createAccount,
+    },
+)(EditAccountView);

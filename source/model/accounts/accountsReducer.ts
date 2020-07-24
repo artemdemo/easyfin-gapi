@@ -8,6 +8,8 @@ export type TAccountsState = {
     loadingError: Error|null;
     deleting: boolean;
     deletingError: Error|null;
+    creating: boolean;
+    creatingError: Error|null;
 };
 
 const initState: TAccountsState = {
@@ -16,9 +18,12 @@ const initState: TAccountsState = {
     loadingError: null,
     deleting: false,
     deletingError: null,
+    creating: false,
+    creatingError: null,
 };
 
 export default handleActions({
+    // Load
     [actions.loadAccounts]: (state: TAccountsState) => ({
         ...state,
         data: [],
@@ -35,6 +40,7 @@ export default handleActions({
         loading: false,
         loadingError: action.payload,
     }),
+    // Delete
     [actions.deleteAccount]: (state: TAccountsState) => ({
         ...state,
         deleting: true,
@@ -57,5 +63,23 @@ export default handleActions({
         ...state,
         deleting: false,
         deletingError: action.payload,
+    }),
+    // Create
+    [actions.createAccount]: (state: TAccountsState) => ({
+        ...state,
+        creating: true,
+    }),
+    [actions.accountCreated]: (state: TAccountsState, action) => ({
+        ...state,
+        data: [
+            ...state.data,
+            action.payload,
+        ],
+        creating: false,
+    }),
+    [actions.accountCreatingError]: (state: TAccountsState, action) => ({
+        ...state,
+        creating: false,
+        creatingError: action.payload,
     }),
 }, initState);
