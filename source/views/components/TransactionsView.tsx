@@ -4,10 +4,8 @@ import {TUserState} from "../../model/user/userReducer";
 import {loadTransactions} from "../../model/transactions/transactionsReq";
 import GTransactionRow from "../../google-api/GTransactionRow";
 import TransactionsList from "../../containers/TransactionsList/TransactionsList";
-import {loadSheets} from "../../model/sheets/sheetsReq";
 import {getLastTransactionsSheetTitle} from "../../services/sheets";
 import {TSheetsState} from "../../model/sheets/sheetsReducer";
-import {setSheets} from "../../model/sheets/sheetsActions";
 import GSheet from "../../google-api/GSheet";
 import ButtonLink from "../../components/ButtonLink/ButtonLink";
 import * as routes from "../../routing/routes";
@@ -33,18 +31,12 @@ class TransactionsView extends React.PureComponent<TProps, TState> {
     };
 
     componentDidMount() {
-        const { sheets, setSheets } = this.props;
+        const { sheets } = this.props;
 
         this.setState({ loading: true });
 
-        if (sheets.list.length > 0) {
-            this.handleTransactionsLoading(sheets.list);
-        } else {
-            loadSheets()
-                .then((loadedSheets) => {
-                    setSheets(loadedSheets);
-                    this.handleTransactionsLoading(loadedSheets);
-                });
+        if (sheets.data.length > 0) {
+            this.handleTransactionsLoading(sheets.data);
         }
     }
 
@@ -90,7 +82,5 @@ export default connect(
         user: state.user,
         sheets: state.sheets,
     }),
-    {
-        setSheets,
-    },
+    {},
 )(TransactionsView);

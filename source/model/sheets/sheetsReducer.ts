@@ -3,16 +3,32 @@ import * as actions from './sheetsActions';
 import GSheet from "../../google-api/GSheet";
 
 export type TSheetsState = {
-    list: GSheet[];
+    data: GSheet[];
+    loading: boolean;
+    loadingError: Error|null;
 };
 
 const initState: TSheetsState = {
-    list: [],
+    data: [],
+    loading: false,
+    loadingError: null,
 };
 
 export default handleActions({
-    [actions.setSheets]: (state: TSheetsState, action) => ({
+    [actions.loadSheets]: (state: TSheetsState) => ({
         ...state,
-        list: action.payload,
+        data: [],
+        loading: true,
+    }),
+    [actions.sheetsLoaded]: (state: TSheetsState, action) => ({
+        ...state,
+        data: action.payload,
+        loading: false,
+        loadingError: null,
+    }),
+    [actions.sheetsLoadingError]: (state: TSheetsState, action) => ({
+        ...state,
+        loading: false,
+        loadingError: action.payload,
     }),
 }, initState);
