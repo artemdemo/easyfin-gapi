@@ -12,6 +12,7 @@ import {
     TLoadAccounts,
     loadAccounts,
 } from "../../model/accounts/accountsActions";
+import * as routes from "../../routing/routes";
 import BasicProfile = gapi.auth2.BasicProfile;
 
 type TProps = {
@@ -22,8 +23,6 @@ type TProps = {
 };
 
 type TState = {};
-
-const LOGIN_PATH = '/login';
 
 class AppView extends React.PureComponent<TProps, TState> {
     componentDidMount() {
@@ -48,15 +47,15 @@ class AppView extends React.PureComponent<TProps, TState> {
     updateSigninStatus = (isSignedIn: boolean) => {
         const { signedIn, signedOut, loadSheets, loadAccounts } = this.props;
         if (isSignedIn) {
-            if (history.location.pathname === LOGIN_PATH) {
-                history.push('/');
+            if (history.location.pathname === routes.login()) {
+                history.push(routes.main());
             }
             loadSheets();
             loadAccounts();
             googleApi.getBasicProfile()
                 .then(status => signedIn(status));
         } else {
-            history.push(LOGIN_PATH);
+            history.push(routes.login());
             signedOut()
         }
     }
