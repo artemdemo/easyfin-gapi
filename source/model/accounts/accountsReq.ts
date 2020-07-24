@@ -2,6 +2,7 @@ import * as googleSheets from "../../google-api/google-sheets";
 import GAccountRow from "../../google-api/GAccountRow";
 import {EDataSheetTitles} from "../../services/sheets";
 import logger from "../../services/logger";
+import GSheet from "../../google-api/GSheet";
 
 export const loadAccounts = (): Promise<GAccountRow[]> => {
     return googleSheets.getAllRows(EDataSheetTitles.ACCOUNTS)
@@ -29,13 +30,13 @@ export const addAccount = (account: GAccountRow): Promise<GAccountRow> => {
         });
 };
 
-export const deleteAccount = (sheetId: number, account: GAccountRow) => {
+export const deleteAccount = (sheet: GSheet, account: GAccountRow) => {
     const lineIdx = account.getLineIdx();
     if (lineIdx == undefined) {
         logger.error(account);
         throw new Error('There is no lineIdx in the given account');
     }
-    return googleSheets.deleteRowByLineIdx(sheetId, lineIdx);
+    return googleSheets.deleteRowByLineIdx(sheet.getId(), lineIdx);
 };
 
 export const creatAccountsSheet = (): Promise<any> => {

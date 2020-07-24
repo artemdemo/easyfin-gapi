@@ -29,3 +29,11 @@ export const getLastTransactionsSheetTitle = (sheets: GSheet[]): string => {
     }
     return names[names.length - 1];
 }
+
+export const getAccountsSheet = (sheets: GSheet[]): GSheet => {
+    const sheet = sheets.find(item => item.getTitle() === EDataSheetTitles.ACCOUNTS);
+    if (!sheet) {
+        throw new Error('There is no "accounts" sheet in the given list');
+    }
+    return sheet;
+}

@@ -1,20 +1,17 @@
 import React from "react";
 import { connect } from "react-redux";
-import GAccountRow from "../../google-api/GAccountRow";
 import AccountsList from "../../containers/AccountsList/AccountsList";
 import ButtonLink from "../../components/ButtonLink/ButtonLink";
 import * as routes from "../../routing/routes";
 import {EButtonAppearance} from "../../styles/elements";
 import {t} from "../../services/i18n";
-import {loadSheets} from "../../model/sheets/sheetsReq";
 import {loadAccounts, deleteAccount} from "../../model/accounts/accountsActions";
-import {EDataSheetTitles} from "../../services/sheets";
 import { sendNotification } from "../../model/notifications/notificationsActions";
 import {TGlobalState} from "../../reducers";
-import {TAccountsState} from "../../model/accounts/accountsReducer";
+import {TSheetsState} from "../../model/sheets/sheetsReducer";
 
 type TProps = {
-    accounts: TAccountsState;
+    sheets: TSheetsState;
     sendNotification: (data: any) => void;
     loadAccounts: () => void;
 };
@@ -23,35 +20,17 @@ type TState = {};
 class AccountsView extends React.PureComponent<TProps, TState> {
     state = {};
 
-    componentDidMount() {
-        const {loadAccounts, accounts} = this.props;
-        if (accounts.data.length === 0) {
-            loadAccounts();
+    renderAccountList() {
+        const {sheets} = this.props;
+        if (sheets.data.length > 0) {
+            return (
+                <AccountsList />
+            );
         }
+        return t('sheets.loading');
     }
 
-    handleDelete = (account: GAccountRow) => {
-        // loadSheets()
-        //     .then((sheets) => {
-        //         const sheet = sheets.find(item => item.getTitle() === EDataSheetTitles.ACCOUNTS);
-        //         if (!sheet) {
-        //             throw new Error('Accounts sheet is not found');
-        //         }
-        //         return deleteAccount(sheet.getId(), account);
-        //     })
-        //     .then(() => {
-        //         const { sendNotification } = this.props;
-        //         sendNotification(t('accounts.deleted'));
-        //         this.setState(prevState => ({
-        //             accounts: prevState.accounts.filter(item => item !== account),
-        //         }));
-        //     });
-    };
-
-    handleEdit = (account: GAccountRow) => {};
-
     render() {
-        const { accounts } = this.props;
         return (
             <>
                 <div className="mb-3">
@@ -62,13 +41,7 @@ class AccountsView extends React.PureComponent<TProps, TState> {
                         {t('accounts.new')}
                     </ButtonLink>
                 </div>
-                <AccountsList
-                    data={accounts.data}
-                    loading={accounts.loading}
-                    onDelete={this.handleDelete}
-                    onEdit={this.handleEdit}
-                />
-                {accounts.loading ? t('common.loading') : ''}
+                {this.renderAccountList()}
             </>
         );
     }
@@ -77,6 +50,7 @@ class AccountsView extends React.PureComponent<TProps, TState> {
 export default connect(
     (state: TGlobalState) => ({
         accounts: state.accounts,
+        sheets: state.sheets,
     }),
     {
         loadAccounts,

@@ -1,15 +1,23 @@
 import React from "react";
+import { connect } from "react-redux";
 import { t } from "../../services/i18n";
 import GAccountRow from "../../google-api/GAccountRow";
 import RowMenu from "../../components/GeneralTable/RowMenu";
 import GeneralTable from "../../components/GeneralTable/GeneralTable";
+import {TGlobalState} from "../../reducers";
+import {deleteAccount, loadAccounts} from "../../model/accounts/accountsActions";
+import {TAccountsState} from "../../model/accounts/accountsReducer";
+import {TSheetsState} from "../../model/sheets/sheetsReducer";
+import {getAccountsSheet} from "../../services/sheets";
+import GSheet from "../../google-api/GSheet";
 
 
 type TProps = {
-    data: GAccountRow[];
+    accounts: TAccountsState;
+    sheets: TSheetsState;
     loading: boolean;
-    onDelete: (account:GAccountRow) => void;
-    onEdit: (account:GAccountRow) => void;
+    loadAccounts: () => void;
+    deleteAccount: (payload: {sheet: GSheet, account: GAccountRow}) => void;
 };
 
 class AccountsList extends React.PureComponent<TProps> {
@@ -28,8 +36,15 @@ class AccountsList extends React.PureComponent<TProps> {
         },
     ];
 
+    componentDidMount() {
+        const {loadAccounts, accounts} = this.props;
+        if (accounts.data.length === 0) {
+            loadAccounts();
+        }
+    }
+
     getAccountById(accountId: string):GAccountRow {
-        const account = this.props.data.find(item => item.getId() === accountId);
+        const account = this.props.accounts.data.find(item => item.getId() === accountId);
         if (!account) {
             throw new Error(`Account for the given id is not found. id was ${accountId}`);
         }
@@ -37,25 +52,25 @@ class AccountsList extends React.PureComponent<TProps> {
     }
 
     handleDelete = (item) => {
-        const { onDelete } = this.props;
-        const account = this.getAccountById(item.original.id);
-        onDelete(account);
+        const { deleteAccount, sheets } = this.props;
+        deleteAccount({
+            sheet: getAccountsSheet(sheets.data),
+            account: this.getAccountById(item.original.id),
+        });
     };
 
     handleEdit = (item) => {
-        const { onEdit } = this.props;
-        const account = this.getAccountById(item.original.id);
-        onEdit(account);
+
     };
 
     render() {
-        const { data, loading } = this.props;
+        const { accounts } = this.props;
 
         return (
             <>
                 <GeneralTable
                     columns={this.COLUMNS}
-                    data={data.map(item => item.getValues())}
+                    data={accounts.data.map(item => item.getValues())}
                     menu={(row) => (
                         <RowMenu
                             menu={[
@@ -74,10 +89,20 @@ class AccountsList extends React.PureComponent<TProps> {
                         />
                     )}
                 />
-                {data.length === 0 && !loading ? t('accounts.table.no_accounts') : null}
+                {accounts.data.length === 0 && !accounts.loading ? t('accounts.table.no_accounts') : null}
+                {accounts.loading ? t('common.loading') : ''}
             </>
         );
     }
 }
 
-export default AccountsList;
+export default connect(
+    (state: TGlobalState) => ({
+        accounts: state.accounts,
+        sheets: state.sheets,
+    }),
+    {
+        loadAccounts,
+        deleteAccount,
+    },
+)(AccountsList);

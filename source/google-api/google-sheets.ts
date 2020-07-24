@@ -112,7 +112,6 @@ export const getAllRows = (sheetTitle: string) => new Promise((resolve, reject) 
 });
 
 export const deleteRowByLineIdx = (sheetId: number, lineIdx: number) => {
-    const startIndex = lineIdx - 1;
     const params = {
         spreadsheetId: spreadsheetID.get(),
         requests: [{
@@ -120,7 +119,7 @@ export const deleteRowByLineIdx = (sheetId: number, lineIdx: number) => {
                 range: {
                     sheetId,
                     dimension: EDimension.rows,
-                    startIndex: startIndex < 0 ? 0 : startIndex,
+                    startIndex: lineIdx,
                     endIndex: lineIdx + 1,
                 },
             },

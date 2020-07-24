@@ -26,6 +26,7 @@
     "accounts.name": "Name",
     "accounts.account_type": "Account type",
     "accounts.start_amount": "Start amount",
+    "sheets.loading": "Loading spreadsheet data",
     "common.loading": "Loading",
     "common.required": "Required",
     "common.delete": "Delete",
