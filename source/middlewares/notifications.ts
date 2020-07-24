@@ -1,12 +1,8 @@
 import { sendNotification } from "../model/notifications/notificationsActions";
 import { ENotificationAppearance, TNotificationProps } from "../model/notifications/Notification";
+import { TAction } from "../types/actions";
 
-type TAction = {
-    type: string;
-    payload?: any;
-};
-
-const notifications = (store) => (next) => (action: TAction) => {
+const notifications = (store) => (next) => (action: TAction<any>) => {
     const actionType = action.type.toLowerCase();
     if (actionType.includes('deleted') ||
         actionType.includes('created') ||
