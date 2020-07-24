@@ -1,7 +1,7 @@
 import { handleActions } from 'redux-actions';
 import * as actions from './accountsActions';
 import GAccountRow from "../../google-api/GAccountRow";
-import { TAction } from "../../types/actions";
+import {TAction, TActionHandlers} from "../../types/actions";
 
 export type TAccountsState = {
     data: GAccountRow[];
@@ -23,32 +23,30 @@ const initState: TAccountsState = {
     creatingError: undefined,
 };
 
-
-
-export default handleActions({
+const actionHandlers: TActionHandlers<TAccountsState> = {
     // Load
-    [actions.loadAccounts]: (state: TAccountsState): TAccountsState => ({
+    [actions.loadAccounts]: (state) => ({
         ...state,
         data: [],
         loading: true,
     }),
-    [actions.accountsLoaded]: (state: TAccountsState, action: TAction<GAccountRow[]>): TAccountsState => ({
+    [actions.accountsLoaded]: (state, action: TAction<GAccountRow[]>) => ({
         ...state,
         data: action.payload || [],
         loading: false,
         loadingError: undefined,
     }),
-    [actions.accountsLoadingError]: (state: TAccountsState, action: TAction<Error>): TAccountsState => ({
+    [actions.accountsLoadingError]: (state, action: TAction<Error>) => ({
         ...state,
         loading: false,
         loadingError: action.payload,
     }),
     // Delete
-    [actions.deleteAccount]: (state: TAccountsState): TAccountsState => ({
+    [actions.deleteAccount]: (state) => ({
         ...state,
         deleting: true,
     }),
-    [actions.accountDeleted]: (state: TAccountsState, action: TAction<GAccountRow>): TAccountsState => {
+    [actions.accountDeleted]: (state, action: TAction<GAccountRow>) => {
         const data = state.data.filter(item => item !== action.payload);
         data.forEach((item, idx) => {
             // After removing the indexes will change.
@@ -62,17 +60,17 @@ export default handleActions({
             deletingError: undefined,
         };
     },
-    [actions.accountDeletingError]: (state: TAccountsState, action: TAction<Error>): TAccountsState => ({
+    [actions.accountDeletingError]: (state, action: TAction<Error>) => ({
         ...state,
         deleting: false,
         deletingError: action.payload,
     }),
     // Create
-    [actions.createAccount]: (state: TAccountsState): TAccountsState => ({
+    [actions.createAccount]: (state) => ({
         ...state,
         creating: true,
     }),
-    [actions.accountCreated]: (state: TAccountsState, action: TAction<GAccountRow>): TAccountsState => {
+    [actions.accountCreated]: (state, action: TAction<GAccountRow>) => {
         const data = [...state.data];
         if (action.payload) {
             data.push(action.payload);
@@ -83,9 +81,11 @@ export default handleActions({
             creating: false,
         };
     },
-    [actions.accountCreatingError]: (state: TAccountsState, action: TAction<Error>): TAccountsState => ({
+    [actions.accountCreatingError]: (state, action: TAction<Error>) => ({
         ...state,
         creating: false,
         creatingError: action.payload,
     }),
-}, initState);
+};
+
+export default handleActions(actionHandlers, initState);

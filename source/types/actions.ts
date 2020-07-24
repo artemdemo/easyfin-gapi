@@ -3,6 +3,6 @@ export type TAction<T> = {
     payload?: T;
 };
 
-export type TActionHandlers<T, U> = {
-    [key: string]: (state: T, action: TAction<U>) => T
+export type TActionHandlers<T> = {
+    [key: string]: (state: T, action: TAction<any>) => T
 };
