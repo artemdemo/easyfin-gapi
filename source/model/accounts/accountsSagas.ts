@@ -1,6 +1,7 @@
 import { take, put, all } from "redux-saga/effects";
 import * as req from "./accountsReq";
 import * as actions from "./accountsActions";
+import {TCreateAccountPayload} from "./accountsActions";
 
 function* loadAccountsSaga() {
     while (true) {
@@ -17,7 +18,7 @@ function* loadAccountsSaga() {
 
 function* deleteAccountSaga() {
     while (true) {
-        const data = yield take(actions.deleteAccount);
+        const data: { payload: actions.TDeleteAccountPayload } = yield take(actions.deleteAccount);
         const {sheet, account} = data.payload;
         try {
             yield req.deleteAccount(sheet, account);
@@ -31,7 +32,7 @@ function* deleteAccountSaga() {
 
 function* createAccountSaga() {
     while (true) {
-        const data = yield take(actions.createAccount);
+        const data: { payload: TCreateAccountPayload } = yield take(actions.createAccount);
         try {
             yield req.addAccount(data.payload);
 

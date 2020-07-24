@@ -2,6 +2,7 @@ import { handleActions } from 'redux-actions';
 import * as actions from './accountsActions';
 import GAccountRow from "../../google-api/GAccountRow";
 import {TAction, TActionHandlers} from "../../types/actions";
+import {TLoadAccountsPayload} from "./accountsActions";
 
 export type TAccountsState = {
     data: GAccountRow[];
@@ -25,7 +26,7 @@ const initState: TAccountsState = {
 
 const actionHandlers: TActionHandlers<TAccountsState> = {
     // Load
-    [actions.loadAccounts]: (state) => ({
+    [actions.loadAccounts]: (state, action: TAction<TLoadAccountsPayload>) => ({
         ...state,
         data: [],
         loading: true,

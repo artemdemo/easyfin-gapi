@@ -5,19 +5,23 @@ import GAccountRow from "../../google-api/GAccountRow";
 import RowMenu from "../../components/GeneralTable/RowMenu";
 import GeneralTable from "../../components/GeneralTable/GeneralTable";
 import {TGlobalState} from "../../reducers";
-import {deleteAccount, loadAccounts} from "../../model/accounts/accountsActions";
+import {
+    TDeleteAccount,
+    deleteAccount,
+    TLoadAccounts,
+    loadAccounts,
+} from "../../model/accounts/accountsActions";
 import {TAccountsState} from "../../model/accounts/accountsReducer";
 import {TSheetsState} from "../../model/sheets/sheetsReducer";
 import {getAccountsSheet} from "../../services/sheets";
-import GSheet from "../../google-api/GSheet";
 
 
 type TProps = {
     accounts: TAccountsState;
     sheets: TSheetsState;
     loading: boolean;
-    loadAccounts: () => void;
-    deleteAccount: (payload: {sheet: GSheet, account: GAccountRow}) => void;
+    loadAccounts: TLoadAccounts;
+    deleteAccount: TDeleteAccount;
 };
 
 class AccountsList extends React.PureComponent<TProps> {

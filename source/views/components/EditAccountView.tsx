@@ -8,11 +8,14 @@ import EditAccountForm, {
     initValues,
 } from "../../containers/forms/EditAccountForm";
 import GAccountRow, { EAccountType } from "../../google-api/GAccountRow";
-import { createAccount } from "../../model/accounts/accountsActions";
+import {
+    TCreateAccount,
+    createAccount,
+} from "../../model/accounts/accountsActions";
 import { generateId } from "../../services/id";
 
 type TProps = {
-    createAccount: (account: GAccountRow) => void;
+    createAccount: TCreateAccount;
 };
 type TState = {};
 
