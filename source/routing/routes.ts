@@ -1,26 +1,39 @@
-interface IMainRoute { (): string; }
-export const main = <IMainRoute>function () {
+interface IGeneralRoute {
+    (): string;
+}
+
+interface IEditableResourceRoute extends IGeneralRoute {
+    new: () => string;
+    view: (id: string) => string;
+    edit: (id: string) => string;
+}
+
+interface ISettingsRoute extends IGeneralRoute {
+    apiKeys: () => string;
+}
+
+export const main = <IGeneralRoute>function () {
     return '/';
 };
 
-interface ILoginRoute { (): string; }
-export const login = <ILoginRoute>function () {
+export const login = <IGeneralRoute>function () {
     return `${main()}login`;
 }
 
-interface ITransactionsRoute { (): string; new: () => string; }
-export const transactions = <ITransactionsRoute>function () {
+export const transactions = <IEditableResourceRoute>function () {
     return `${main()}transactions`;
 };
 transactions.new = () => `${transactions()}/new`;
+transactions.view = (id) => `${transactions()}/${id}`;
+transactions.edit = (id) => `${transactions()}/${id}/edit`;
 
-interface IAccountsRoute { (): string; new: () => string; }
-export const accounts = <IAccountsRoute>function () {
+export const accounts = <IEditableResourceRoute>function () {
     return `${main()}accounts`;
 }
 accounts.new = () => `${accounts()}/new`;
+accounts.view = (id) => `${accounts()}/${id}`;
+accounts.edit = (id) => `${accounts()}/${id}/edit`;
 
-interface ISettingsRoute { (): string; apiKeys: () => string; }
 export const settings = <ISettingsRoute>function () {
     return `${main()}settings`;
 }
