@@ -8,13 +8,17 @@ import { signedIn, signedOut } from "../../model/user/userActions";
 import Notifications from "../../containers/Notifications/Notifications";
 import logger from "../../services/logger";
 import {loadSheets} from "../../model/sheets/sheetsActions";
+import {
+    TLoadAccounts,
+    loadAccounts,
+} from "../../model/accounts/accountsActions";
 import BasicProfile = gapi.auth2.BasicProfile;
 
 type TProps = {
     signedIn: (user: BasicProfile) => void;
     signedOut: () => void;
     loadSheets: () => void;
-    sendNotification: (props: any) => void;
+    loadAccounts: TLoadAccounts,
 };
 
 type TState = {};
@@ -42,12 +46,13 @@ class AppView extends React.PureComponent<TProps, TState> {
     };
 
     updateSigninStatus = (isSignedIn: boolean) => {
-        const { signedIn, signedOut, loadSheets } = this.props;
+        const { signedIn, signedOut, loadSheets, loadAccounts } = this.props;
         if (isSignedIn) {
             if (history.location.pathname === LOGIN_PATH) {
                 history.push('/');
             }
             loadSheets();
+            loadAccounts();
             googleApi.getBasicProfile()
                 .then(status => signedIn(status));
         } else {
@@ -71,6 +76,7 @@ export default connect(
     () => ({}),
     {
         loadSheets,
+        loadAccounts,
         signedIn,
         signedOut,
     },
