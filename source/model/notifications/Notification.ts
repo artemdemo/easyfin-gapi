@@ -5,7 +5,7 @@ export enum ENotificationAppearance {
     ERROR = 'error',
 }
 
-type TNotificationProps = {
+export type TNotificationProps = {
     msg: string;
     appearance?: ENotificationAppearance;
 };
