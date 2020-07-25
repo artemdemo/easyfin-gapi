@@ -23,8 +23,15 @@ export const loadAccounts = (): Promise<GAccountRow[]> => {
         });
 };
 
-export const addAccount = (account: GAccountRow): Promise<GAccountRow> => {
+export const createAccount = (account: GAccountRow): Promise<GAccountRow> => {
     return googleSheets.appendRow(account, EDataSheetTitles.ACCOUNTS)
+        .then((result) => {
+            return <GAccountRow>result;
+        });
+};
+
+export const updateAccount = (account: GAccountRow): Promise<GAccountRow> => {
+    return googleSheets.updateRow(account, EDataSheetTitles.ACCOUNTS)
         .then((result) => {
             return <GAccountRow>result;
         });

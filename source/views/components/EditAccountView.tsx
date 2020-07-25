@@ -11,11 +11,14 @@ import GAccountRow, { EAccountType } from "../../google-api/GAccountRow";
 import {
     TCreateAccount,
     createAccount,
+    TUpdateAccount,
+    updateAccount,
 } from "../../model/accounts/accountsActions";
 import { generateId } from "../../services/id";
 
 type TProps = {
     createAccount: TCreateAccount;
+    updateAccount: TUpdateAccount;
 };
 type TState = {};
 
@@ -56,5 +59,6 @@ export default connect(
     () => ({}),
     {
         createAccount,
+        updateAccount,
     },
 )(EditAccountView);
