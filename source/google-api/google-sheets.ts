@@ -1,8 +1,9 @@
-import * as googleApi from './google-api';
-import {EDimension, ESortOrder, IHttpResponse} from './TSpreadsheetsApi';
-import GRow from './GRow';
-import { spreadsheetID } from '../services/settingsStorage';
+import * as googleApi from "./google-api";
+import {EDimension, ESortOrder, IHttpResponse} from "./TSpreadsheetsApi";
+import GRow from "./GRow";
+import { spreadsheetID } from "../services/settingsStorage";
 import logger from "../services/logger";
+import {getLineIdxFromRange} from "./services/utils";
 
 type TUpdateRowResult = {
     spreadsheetId: string;
@@ -48,7 +49,7 @@ export const appendRow = (row: GRow, sheetName: string) => new Promise<GRow>((re
         // Here `A1` is default value, data will be added one after another.
         // Without `A1` data wouldn't be added starting from A column.
         range: `${sheetName}!A1`,
-        valueInputOption: 'RAW',
+        valueInputOption: 'RAW', // USER_ENTERED
         insertDataOption: 'INSERT_ROWS',
     };
 
@@ -57,14 +58,6 @@ export const appendRow = (row: GRow, sheetName: string) => new Promise<GRow>((re
         values: [row.toJSON()],
     };
 
-    // Splitting range definition into components
-    // '2020'!A5:O5
-    // accounts!A6:D6
-    const rangeRegex = /^(.+)!([^:]+):(\S+)$/;
-    // Getting index from cell definition
-    // A5
-    const idxRegex = /^[^\d\s]+(\d+)$/;
-
     googleApi.getSpreadsheetsInstance()
         .then((spreadsheets) => {
             spreadsheets.values
@@ -72,18 +65,39 @@ export const appendRow = (row: GRow, sheetName: string) => new Promise<GRow>((re
                 .then((resultData) => {
                     if (resultData.status === 200) {
                         const result: TUpdateRowResult = resultData.result;
-                        const rangeMatch = rangeRegex.exec(result.updates.updatedRange);
-                        if (rangeMatch) {
-                            const startCell = rangeMatch[2];
-                            const idxMatch = idxRegex.exec(startCell);
-                            if (idxMatch) {
-                                row.setLineIdx(parseInt(idxMatch[1], 10) - 1)
-                                resolve(row);
-                                reject(new Error('Index can\'t be parsed from range'));
-                            }
-                        } else {
-                            reject(new Error('Range can\'t be parsed'));
-                        }
+                        row.setLineIdx(getLineIdxFromRange(result.updates.updatedRange));
+                        resolve(row);
+                    } else {
+                        reject(resultData);
+                    }
+                }, (errData) => {
+                    logger.error(new Error(getMsgFromErr(errData)));
+                    reject();
+                });
+        });
+});
+
+export const updateRow = (row: GRow, sheetName: string) => new Promise((resolve, reject) => {
+    const lineIdx = row.getLineIdx();
+    if (lineIdx == undefined) {
+        logger.error(row);
+        throw new Error('Line idx is not defined in the given row');
+    }
+    const params = {
+        spreadsheetId: spreadsheetID.get(),
+        range: `${sheetName}!A${lineIdx + 1}`,
+        valueInputOption: 'RAW', // USER_ENTERED
+        values: row.getValues(),
+    };
+    googleApi.getSpreadsheetsInstance()
+        .then((spreadsheets) => {
+            spreadsheets.values
+                .update(params)
+                .then((resultData) => {
+                    if (resultData.status === 200) {
+                        const result: TUpdateRowResult = resultData.result;
+                        row.setLineIdx(getLineIdxFromRange(result.updates.updatedRange));
+                        resolve(row);
                     } else {
                         reject(resultData);
                     }

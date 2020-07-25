@@ -9,17 +9,20 @@ export enum EDimension {
     columns = 'COLUMNS',
 }
 
-type TValuesAppendParams = {
+interface IValuesGetParams {
     spreadsheetId: string;
     range: string;
+}
+
+interface IValuesAppendParams extends IValuesGetParams {
     valueInputOption: string;
     insertDataOption: string;
-};
+}
 
-type TValuesGetParams = {
-    spreadsheetId: string;
-    range: string;
-};
+interface IValuesUpdateParams extends IValuesGetParams {
+    valueInputOption: string;
+    values: any[];
+}
 
 type TCreateParams = {
     properties: {
@@ -120,8 +123,9 @@ interface IGetResponse extends IHttpResponse {
 
 export type TSpreadsheetsApi = {
     values: {
-        append: (params: TValuesAppendParams, valueRangeBody: any) => Promise<IHttpResponse>;
-        get: (params: TValuesGetParams) => Promise<IHttpResponse>;
+        append: (params: IValuesAppendParams, valueRangeBody: any) => Promise<IHttpResponse>;
+        get: (params: IValuesGetParams) => Promise<IHttpResponse>;
+        update: (params: IValuesUpdateParams) => Promise<IHttpResponse>;
     };
     create: (params: TCreateParams) => Promise<IHttpResponse>;
     batchUpdate: (params: TBatchUpdateParams) => Promise<IHttpResponse>;
