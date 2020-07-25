@@ -24,8 +24,10 @@ const MainRoutes = (props: TProps) => (
                 <Route path={routes.login()} component={LoginView} />
                 <Route path={routes.transactions()} component={TransactionsView} exact />
                 <Route path={routes.transactions.new()} component={EditTransaction} />
+                <Route path={routes.transactions.edit()} component={EditTransaction} />
                 <Route path={routes.accounts()} component={AccountsView} exact />
                 <Route path={routes.accounts.new()} component={EditAccountView} />
+                <Route path={routes.accounts.edit()} component={EditAccountView} />
                 <Route path={routes.settings()} component={SettingsView} />
             </AppView>
         </Router>

@@ -5,7 +5,7 @@ interface IGeneralRoute {
 interface IEditableResourceRoute extends IGeneralRoute {
     new: () => string;
     view: (id: string) => string;
-    edit: (id: string) => string;
+    edit: (id?: string) => string;
 }
 
 interface ISettingsRoute extends IGeneralRoute {
@@ -25,14 +25,24 @@ export const transactions = <IEditableResourceRoute>function () {
 };
 transactions.new = () => `${transactions()}/new`;
 transactions.view = (id) => `${transactions()}/${id}`;
-transactions.edit = (id) => `${transactions()}/${id}/edit`;
+transactions.edit = (id) => {
+    if (id == undefined) {
+        return `${transactions()}/:transactionId/edit`
+    }
+    return `${transactions()}/${id}/edit`;
+};
 
 export const accounts = <IEditableResourceRoute>function () {
     return `${main()}accounts`;
 }
 accounts.new = () => `${accounts()}/new`;
 accounts.view = (id) => `${accounts()}/${id}`;
-accounts.edit = (id) => `${accounts()}/${id}/edit`;
+accounts.edit = (id) => {
+    if (id == undefined) {
+        return `${accounts()}/:accountId/edit`
+    }
+    return `${accounts()}/${id}/edit`;
+};
 
 export const settings = <ISettingsRoute>function () {
     return `${main()}settings`;

@@ -14,6 +14,8 @@ import {
 import {TAccountsState} from "../../model/accounts/accountsReducer";
 import {TSheetsState} from "../../model/sheets/sheetsReducer";
 import {getAccountsSheet} from "../../services/sheets";
+import history from "../../history";
+import * as routes from "../../routing/routes";
 
 
 type TProps = {
@@ -64,7 +66,7 @@ class AccountsList extends React.PureComponent<TProps> {
     };
 
     handleEdit = (item) => {
-
+        history.push(routes.accounts.edit(item.original.id));
     };
 
     render() {
