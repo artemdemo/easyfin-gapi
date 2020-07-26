@@ -16,7 +16,6 @@ import {
     TLoadAccounts,
     loadAccounts,
 } from "../../model/accounts/accountsActions";
-import { generateId } from "../../services/id";
 import {TRouterMatch} from "../../types/react-router-dom";
 import {TGlobalState} from "../../reducers";
 import {TAccountsState} from "../../model/accounts/accountsReducer";

@@ -13,6 +13,8 @@ export type TAccountsState = {
     deletingError: Error|undefined;
     creating: boolean;
     creatingError: Error|undefined;
+    updating: boolean;
+    updatingError: Error|undefined;
 };
 
 const initState: TAccountsState = {
@@ -23,6 +25,8 @@ const initState: TAccountsState = {
     deletingError: undefined,
     creating: false,
     creatingError: undefined,
+    updating: false,
+    updatingError: undefined,
 };
 
 const actionHandlers: TActionHandlers<TAccountsState> = {
@@ -100,6 +104,29 @@ const actionHandlers: TActionHandlers<TAccountsState> = {
         ...state,
         creating: false,
         creatingError: action.payload,
+    }),
+    // Update
+    [actions.updateAccount]: (state, action: TAction<TCreateAccountPayload>) => {
+        // Optimistic UI.
+        return {
+            ...state,
+            data: state.data.map((item) => {
+                if (item.getId() === action.payload?.getId()) {
+                    return action.payload;
+                }
+                return item;
+            }),
+            updating: true,
+        }
+    },
+    [actions.accountUpdated]: (state) => ({
+        ...state,
+        updating: false,
+    }),
+    [actions.accountUpdatingError]: (state, action: TAction<Error>) => ({
+        ...state,
+        updating: false,
+        updatingError: action.payload,
     }),
 };
 
