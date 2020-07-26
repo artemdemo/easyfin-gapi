@@ -27,6 +27,10 @@ class GRow {
     getValues(): any {
         throw new Error('"getValues" is not implemented yet');
     }
+
+    clone(): GRow {
+        return new GRow(this.getLineIdx());
+    }
 }
 
 export default GRow;

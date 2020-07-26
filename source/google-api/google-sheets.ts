@@ -5,16 +5,18 @@ import { spreadsheetID } from "../services/settingsStorage";
 import logger from "../services/logger";
 import {getLineIdxFromRange} from "./services/utils";
 
-type TUpdateRowResult = {
+type TUpdatesResult = {
+    spreadsheetId: string;
+    updatedCells: number;
+    updatedColumns: number;
+    updatedRange: string; // '2020'!A5:O5
+    updatedRows: number;
+};
+
+type TAppendRowResult = {
     spreadsheetId: string;
     tableRange: string;
-    updates: {
-        spreadsheetId: string;
-        updatedCells: number;
-        updatedColumns: number;
-        updatedRange: string; // '2020'!A5:O5
-        updatedRows: number;
-    };
+    updates: TUpdatesResult;
 };
 
 const getMsgFromErr = errData => errData?.result?.error?.message || JSON.stringify(errData);
@@ -27,9 +29,8 @@ const generalFulfillHandler = (resolve: (result: any) => any, reject: (err: any)
     }
 };
 
-const generalRejectHandler = (reject: () => any) => (errData) => {
-    logger.error(new Error(getMsgFromErr(errData)));
-    reject();
+const generalRejectHandler = (reject: (err: Error) => any) => (errData) => {
+    reject(new Error(getMsgFromErr(errData)));
 };
 
 const batchUpdateSpreadsheet = (params) => new Promise((resolve, reject) => {
@@ -64,15 +65,14 @@ export const appendRow = (row: GRow, sheetName: string) => new Promise<GRow>((re
                 .append(params, valueRangeBody)
                 .then((resultData) => {
                     if (resultData.status === 200) {
-                        const result: TUpdateRowResult = resultData.result;
+                        const result: TAppendRowResult = resultData.result;
                         row.setLineIdx(getLineIdxFromRange(result.updates.updatedRange));
                         resolve(row);
                     } else {
                         reject(resultData);
                     }
                 }, (errData) => {
-                    logger.error(new Error(getMsgFromErr(errData)));
-                    reject();
+                    reject(new Error(getMsgFromErr(errData)));
                 });
         });
 });
@@ -87,7 +87,7 @@ export const updateRow = (row: GRow, sheetName: string) => new Promise((resolve,
         spreadsheetId: spreadsheetID.get(),
         range: `${sheetName}!A${lineIdx + 1}`,
         valueInputOption: 'RAW', // USER_ENTERED
-        values: row.getValues(),
+        values: [row.toJSON()],
     };
     googleApi.getSpreadsheetsInstance()
         .then((spreadsheets) => {
@@ -95,15 +95,14 @@ export const updateRow = (row: GRow, sheetName: string) => new Promise((resolve,
                 .update(params)
                 .then((resultData) => {
                     if (resultData.status === 200) {
-                        const result: TUpdateRowResult = resultData.result;
-                        row.setLineIdx(getLineIdxFromRange(result.updates.updatedRange));
+                        const result: TUpdatesResult = resultData.result;
+                        row.setLineIdx(getLineIdxFromRange(result.updatedRange));
                         resolve(row);
                     } else {
                         reject(resultData);
                     }
                 }, (errData) => {
-                    logger.error(new Error(getMsgFromErr(errData)));
-                    reject();
+                    reject(new Error(getMsgFromErr(errData)));
                 });
         });
 });

@@ -55,6 +55,16 @@ class GAccountRow extends GRow {
     getId(): string {
         return this._values.id;
     }
+
+    clone(values?: TAccountRowValues): GAccountRow {
+        return new GAccountRow(
+            {
+                ...this.getValues(),
+                ...values,
+            },
+            this.getLineIdx(),
+        )
+    }
 }
 
 export default GAccountRow;
