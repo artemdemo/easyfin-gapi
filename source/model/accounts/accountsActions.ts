@@ -22,6 +22,6 @@ export const accountCreatingError = createAction('ACCOUNT_CREATING_ERROR');
 
 export type TUpdateAccountPayload = GAccountRow;
 export type TUpdateAccount = (payload: TUpdateAccountPayload) => void;
-export const updateAccount = createAction('UPDATED_ACCOUNT');
+export const updateAccount = createAction('UPDATE_ACCOUNT');
 export const accountUpdated = createAction('ACCOUNT_UPDATED');
 export const accountUpdatingError = createAction('ACCOUNT_UPDATING_ERROR');

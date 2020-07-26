@@ -13,16 +13,20 @@ import {
     createAccount,
     TUpdateAccount,
     updateAccount,
+    TLoadAccounts,
+    loadAccounts,
 } from "../../model/accounts/accountsActions";
 import { generateId } from "../../services/id";
 import {TRouterMatch} from "../../types/react-router-dom";
 import {TGlobalState} from "../../reducers";
 import {TAccountsState} from "../../model/accounts/accountsReducer";
+import {t} from "../../services/i18n";
 
 type TProps = {
     accounts: TAccountsState;
     createAccount: TCreateAccount;
     updateAccount: TUpdateAccount;
+    loadAccounts: TLoadAccounts;
     match: TRouterMatch<{
         accountId: string;
     }>;
@@ -37,52 +41,70 @@ class EditAccountView extends React.PureComponent<TProps, TState> {
     };
 
     componentDidMount() {
-        const { accountId } = this.props.match.params
-        if (accountId) {
-            const { accounts } = this.props;
-            const account = accounts.data.find(item => item.getId() === accountId);
-            if (account) {
-                const values = account.getValues();
-                this.setState({
-                    initValues: {
-                        name: values.name,
-                        type: values.type,
-                        startAmount: String(values.startAmount),
-                    },
-                })
-            } else {
-                throw new Error(`Can't find account for the given id: ${accountId}`);
-            }
+        const {loadAccounts, accounts} = this.props;
+        if (accounts.data.length === 0 && !accounts.loading) {
+            loadAccounts();
         }
     }
 
     handleSubmit = (values: TValues, { setSubmitting }) => {
         setSubmitting(false);
-        const { createAccount } = this.props;
-        createAccount(new GAccountRow({
-            id: generateId(),
-            name: values.name,
-            type: EAccountType[values.type],
-            startAmount: Number(values.startAmount),
-        }))
+        const { createAccount, updateAccount } = this.props;
+        const {accountId} = this.props.match.params;
+        if (accountId) {
+            updateAccount(new GAccountRow({
+                id: accountId,
+                name: values.name,
+                type: EAccountType[values.type],
+                startAmount: Number(values.startAmount),
+            }));
+        } else {
+            createAccount(new GAccountRow({
+                id: generateId(),
+                name: values.name,
+                type: EAccountType[values.type],
+                startAmount: Number(values.startAmount),
+            }))
+        }
     };
 
-    renderForm = (formProps: IEditAccountForm) => {
+    renderFormContent = (formProps: IEditAccountForm) => {
         return (
             <EditAccountForm formProps={formProps} />
         );
     };
 
-    render() {
-        return (
-            <>
+    renderForm() {
+        const {accounts} = this.props;
+        const {accountId} = this.props.match.params;
+        const isEditingAccount = accounts.data.length > 0 && accountId;
+        if (isEditingAccount || !accountId) {
+            const account = accounts.data.find(item => item.getId() === accountId);
+            const values = account?.getValues();
+            const _initValues = isEditingAccount ? {
+                name: values?.name,
+                type: values?.type,
+                startAmount: String(values?.startAmount),
+            } : initValues;
+            return (
                 <Formik
-                    initialValues={this.state.initValues}
+                    initialValues={_initValues}
                     validationSchema={accountValidationSchema}
                     onSubmit={this.handleSubmit}
                 >
-                    {this.renderForm}
+                    {this.renderFormContent}
                 </Formik>
+            );
+        }
+        return null;
+    }
+
+    render() {
+        const { accounts } = this.props;
+        return (
+            <>
+                {this.renderForm()}
+                {accounts.loading ? t('common.loading') : ''}
             </>
         );
     }
@@ -93,6 +115,7 @@ export default connect(
         accounts: state.accounts,
     }),
     {
+        loadAccounts,
         createAccount,
         updateAccount,
     },

@@ -44,7 +44,7 @@ class AccountsList extends React.PureComponent<TProps> {
 
     componentDidMount() {
         const {loadAccounts, accounts} = this.props;
-        if (accounts.data.length === 0) {
+        if (accounts.data.length === 0 && !accounts.loading) {
             loadAccounts();
         }
     }
