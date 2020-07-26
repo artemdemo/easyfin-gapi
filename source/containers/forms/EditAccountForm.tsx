@@ -6,13 +6,7 @@ import {getInputClass} from "../../styles/elements";
 import Select from "../../components/Select/Select";
 import Button from "../../components/Button/Button";
 import InputError from "../../components/InputError/InputError";
-
-enum EAccountTypes {
-    credit = 'credit',
-    saving = 'saving',
-    wallet = 'wallet',
-    bank = 'bank',
-}
+import {EAccountType} from "../../google-api/GAccountRow";
 
 export type TValues = {
     name: string;
@@ -115,7 +109,7 @@ class EditAccountForm extends React.PureComponent<TProps, TState> {
                     <option value='' disabled>
                         {t('accounts.account_type')}
                     </option>
-                    {Object.keys(EAccountTypes).map(key => (
+                    {Object.keys(EAccountType).map(key => (
                         <option
                             value={key}
                             key={key}

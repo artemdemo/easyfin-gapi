@@ -1,6 +1,7 @@
 import _cloneDeep from "lodash/cloneDeep";
 import GRow from "./GRow";
 import { TParserMapItem, convertArrToData, convertDataToArr } from "./services/converter";
+import {generateId} from "../services/id";
 
 export enum EAccountType {
     credit = 'credit',
@@ -9,33 +10,40 @@ export enum EAccountType {
     bank = 'bank',
 }
 
-export type TAccountRowValues = {
-    id: string;
+interface ICreateAccountValues {
+    id?: string;
     name: string;
     type: EAccountType;
     startAmount: number;
 }
 
-const accountArrToData = (rowArr: string[]): TAccountRowValues => {
+interface IAccountRowValues extends ICreateAccountValues {
+    id: string;
+}
+
+const accountArrToData = (rowArr: string[]): IAccountRowValues => {
     const parserMap: TParserMapItem[] = [
         {key: 'id'},
         {key: 'name'},
         {key: 'type', converter: value => EAccountType[value]},
         {key: 'startAmount', converter: parseFloat},
     ];
-    return <TAccountRowValues> convertArrToData(rowArr, parserMap);
+    return <IAccountRowValues> convertArrToData(rowArr, parserMap);
 };
 
 class GAccountRow extends GRow {
-    private readonly _values: TAccountRowValues;
+    private readonly _values: IAccountRowValues;
 
     static fromArr(rowArr: string[], lineIdx?: number): GAccountRow {
         return new GAccountRow(accountArrToData(rowArr), lineIdx);
     }
 
-    constructor(values: TAccountRowValues, lineIdx?:number) {
+    constructor(values: ICreateAccountValues, lineIdx?:number) {
         super(lineIdx);
-        this._values = values;
+        this._values = {
+            ...values,
+            id: values.id || generateId(),
+        };
     }
 
     toJSON(): any[] {
@@ -48,7 +56,7 @@ class GAccountRow extends GRow {
         return convertDataToArr(this._values, parserMap);
     }
 
-    getValues(): TAccountRowValues {
+    getValues(): IAccountRowValues {
         return _cloneDeep(this._values);
     }
 
@@ -56,7 +64,7 @@ class GAccountRow extends GRow {
         return this._values.id;
     }
 
-    clone(values?: TAccountRowValues): GAccountRow {
+    clone(values?: ICreateAccountValues): GAccountRow {
         return new GAccountRow(
             {
                 ...this.getValues(),

@@ -57,14 +57,12 @@ class EditAccountView extends React.PureComponent<TProps, TState> {
                 throw new Error(`Account with given id not found. ID was: ${accountId}`);
             }
             updateAccount(account.clone({
-                id: accountId,
                 name: values.name,
                 type: EAccountType[values.type],
                 startAmount: Number(values.startAmount),
             }));
         } else {
             createAccount(new GAccountRow({
-                id: generateId(),
                 name: values.name,
                 type: EAccountType[values.type],
                 startAmount: Number(values.startAmount),
