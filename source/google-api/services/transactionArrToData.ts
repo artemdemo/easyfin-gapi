@@ -34,8 +34,8 @@ const getTags = (valueStr: string): string[] => {
     return valueStr !== '' ? valueStr.split(',') : [];
 };
 
-export type TTransactionRowValues = {
-    id: string;
+export interface ICreateTransactionValues {
+    id?: string;
     date: Date;
     accountFrom: string;
     accountTo?: string;
@@ -62,9 +62,13 @@ export type TTransactionRowValues = {
     // In order to distinguish between entries I'm using `userId`,
     // which most likely will be an email.
     userId: string;
-};
+}
 
-const transactionArrToData = (rowArr: string[]): TTransactionRowValues => {
+export interface ITransactionRowValues extends ICreateTransactionValues {
+    id: string;
+}
+
+const transactionArrToData = (rowArr: string[]): ITransactionRowValues => {
     const parserMap: TParserMapItem[] = [
         {key: 'id'},
         {key: 'date', converter: parseISO},
@@ -84,7 +88,7 @@ const transactionArrToData = (rowArr: string[]): TTransactionRowValues => {
         {key: 'rootCategory'},
         {key: 'userId'},
     ];
-    return <TTransactionRowValues> convertArrToData(rowArr, parserMap);
+    return <ITransactionRowValues> convertArrToData(rowArr, parserMap);
 };
 
 export default transactionArrToData;

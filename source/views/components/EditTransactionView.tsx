@@ -7,7 +7,6 @@ import GTransactionRow from "../../google-api/GTransactionRow";
 import { ECoin, ETransactionType } from "../../google-api/services/transactionArrToData";
 import {TUserState} from "../../model/user/userReducer";
 import { sendNotification } from "../../model/notifications/notificationsActions";
-import { generateId } from "../../services/id";
 import {t} from "../../services/i18n";
 import EditTransactionForm, {
     transactionValidationSchema,
@@ -26,7 +25,6 @@ class EditTransactionView extends React.PureComponent<TProps, TState> {
     mockSubmit = () => {
         const { user } = this.props;
         const transaction = new GTransactionRow({
-            id: generateId(),
             date: new Date(),
             accountFrom: 'account',
             transactionType: ETransactionType.expense,
@@ -42,8 +40,7 @@ class EditTransactionView extends React.PureComponent<TProps, TState> {
     handleSubmit = (values: TValues, { setSubmitting }) => {
         setSubmitting(false);
         const { user } = this.props;
-        addTransaction(new GTransactionRow({
-            id: generateId(),
+        const transaction = new GTransactionRow({
             date: parseISO(values.date),
             accountFrom: values.accountFrom,
             transactionType: ETransactionType.expense,
@@ -52,7 +49,8 @@ class EditTransactionView extends React.PureComponent<TProps, TState> {
             rootCategory: values.category,
             comment: values.comment,
             userId: user.basicProfile?.getId() || '',
-        })).then(this.handleAddedTransaction);
+        });
+        addTransaction(transaction).then(this.handleAddedTransaction);
     }
 
     handleAddedTransaction = () => {

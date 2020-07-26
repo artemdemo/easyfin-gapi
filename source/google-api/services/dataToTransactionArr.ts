@@ -1,5 +1,5 @@
 import formatISO from "date-fns/formatISO";
-import { TTransactionRowValues } from "./transactionArrToData";
+import { ITransactionRowValues } from "./transactionArrToData";
 import { TParserMapItem, convertDataToArr } from "./converter";
 
 const parserMap: TParserMapItem[] = [
@@ -23,7 +23,7 @@ const parserMap: TParserMapItem[] = [
     { key: 'userId' },
 ];
 
-const dataToTransactionArr = (values: TTransactionRowValues): any[] => {
+const dataToTransactionArr = (values: ITransactionRowValues): any[] => {
     return convertDataToArr(values, parserMap);
 };
 

@@ -13,8 +13,6 @@ import {
     createAccount,
     TUpdateAccount,
     updateAccount,
-    TLoadAccounts,
-    loadAccounts,
 } from "../../model/accounts/accountsActions";
 import {TRouterMatch} from "../../types/react-router-dom";
 import {TGlobalState} from "../../reducers";
@@ -25,7 +23,6 @@ type TProps = {
     accounts: TAccountsState;
     createAccount: TCreateAccount;
     updateAccount: TUpdateAccount;
-    loadAccounts: TLoadAccounts;
     match: TRouterMatch<{
         accountId: string;
     }>;
@@ -38,13 +35,6 @@ class EditAccountView extends React.PureComponent<TProps, TState> {
     state = {
         initValues,
     };
-
-    componentDidMount() {
-        const {loadAccounts, accounts} = this.props;
-        if (accounts.data.length === 0 && !accounts.loading) {
-            loadAccounts();
-        }
-    }
 
     handleSubmit = (values: TValues, { setSubmitting }) => {
         setSubmitting(false);
@@ -116,7 +106,6 @@ export default connect(
         accounts: state.accounts,
     }),
     {
-        loadAccounts,
         createAccount,
         updateAccount,
     },
