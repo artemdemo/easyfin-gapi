@@ -34,7 +34,6 @@ export const convertDataToArr = (data: TData, parserMap: TParserMapItem[]): any[
         if (data.hasOwnProperty(parseItem.key)) {
             return parseItem.converter ? parseItem.converter(data[parseItem.key]) : data[parseItem.key];
         }
-        logger.error(`Given data object doesn't have expected key. Key was "${parseItem.key}"`);
         return;
     });
 };

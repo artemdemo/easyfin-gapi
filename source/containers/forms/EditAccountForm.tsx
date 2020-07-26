@@ -41,7 +41,6 @@ type TState = {};
 class EditAccountForm extends React.PureComponent<TProps, TState> {
     isDisabled() {
         const { isSubmitting } = this.props.formProps;
-
         return isSubmitting;
     }
 
