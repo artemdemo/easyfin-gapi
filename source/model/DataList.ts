@@ -1,9 +1,6 @@
 type TForeachCB<T> = (item: T, idx: number) => void;
-
-type TUpdateComparison<T> = (item: T, idx: number) => boolean;
-
+type TUpdateComparisonCb<T> = (item: T, idx: number) => boolean;
 type TFindCb<T> = (item: T, idx: number) => boolean;
-
 type TMapCb<T> = (item: T, idx: number) => any;
 
 class DataList<T> {
@@ -30,12 +27,9 @@ class DataList<T> {
         ])
     }
 
-    update(shouldUpdateCb: TUpdateComparison<T>, newItem: T): DataList<T> {
-        return new DataList<T>(this._data.map((item: T, idx: number) => {
-            if (shouldUpdateCb(item, idx)) {
-                return newItem;
-            }
-            return item;
+    update(shouldUpdateCb: TUpdateComparisonCb<T>, newItem: T): DataList<T> {
+        return new DataList<T>(this.map((item: T, idx: number) => {
+            return shouldUpdateCb(item, idx) ? newItem : item;
         }));
     }
 

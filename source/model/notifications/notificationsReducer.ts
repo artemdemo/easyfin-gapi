@@ -3,13 +3,14 @@ import _isString from "lodash/isString";
 import * as actions from "./notificationsActions";
 import Notification from "./Notification";
 import store from "../../store";
+import DataList from "../DataList";
 
 export type TNotificationsState = {
-    list: Notification[];
+    list: DataList<Notification>;
 };
 
 const initState: TNotificationsState = {
-    list: [],
+    list: new DataList<Notification>(),
 };
 
 export default handleActions({
@@ -23,17 +24,14 @@ export default handleActions({
         });
         return {
             ...state,
-            list: [
-                ...state.list,
-                notification,
-            ],
+            list: state.list.add(notification),
         };
     },
     [actions.deleteNotification]: (state: TNotificationsState, action) => {
         action.payload.beforeDelete();
         return {
             ...state,
-            list: state.list.filter(item => item !== action.payload),
+            list: state.list.remove(action.payload),
         };
     },
 }, initState);

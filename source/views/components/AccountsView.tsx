@@ -22,7 +22,7 @@ class AccountsView extends React.PureComponent<TProps, TState> {
 
     renderAccountList() {
         const {sheets} = this.props;
-        if (sheets.data.length > 0) {
+        if (sheets.data.length() > 0) {
             return (
                 <AccountsList />
             );

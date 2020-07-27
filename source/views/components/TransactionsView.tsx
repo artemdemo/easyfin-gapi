@@ -12,6 +12,7 @@ import * as routes from "../../routing/routes";
 import {EButtonAppearance} from "../../styles/elements";
 import {t} from "../../services/i18n";
 import logger from "../../services/logger";
+import DataList from "../../model/DataList";
 
 type TProps = {
     user: TUserState;
@@ -35,12 +36,12 @@ class TransactionsView extends React.PureComponent<TProps, TState> {
 
         this.setState({ loading: true });
 
-        if (sheets.data.length > 0) {
+        if (sheets.data.length() > 0) {
             this.handleTransactionsLoading(sheets.data);
         }
     }
 
-    handleTransactionsLoading = (sheets: GSheet[]) => {
+    handleTransactionsLoading = (sheets: DataList<GSheet>) => {
         loadTransactions(getLastTransactionsSheetTitle(sheets))
             .then((transactions) => {
                 this.setState({

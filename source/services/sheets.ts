@@ -1,5 +1,6 @@
 import format from "date-fns/format";
 import GSheet from "../google-api/GSheet";
+import DataList from "../model/DataList";
 
 const transactionSheetNameRegex = /^\d{4}$/;
 
@@ -19,7 +20,7 @@ export const generateCurrentTransactionsSheetTitle = (): string => {
     return format(new Date(), 'yyyy');
 };
 
-export const getLastTransactionsSheetTitle = (sheets: GSheet[]): string => {
+export const getLastTransactionsSheetTitle = (sheets: DataList<GSheet>): string => {
     const names = sheets
         .map(sheet => sheet.getTitle())
         .filter(title => transactionSheetNameRegex.test(title))
@@ -30,7 +31,7 @@ export const getLastTransactionsSheetTitle = (sheets: GSheet[]): string => {
     return names[names.length - 1];
 }
 
-export const getAccountsSheet = (sheets: GSheet[]): GSheet => {
+export const getAccountsSheet = (sheets: DataList<GSheet>): GSheet => {
     const sheet = sheets.find(item => item.getTitle() === EDataSheetTitles.ACCOUNTS);
     if (!sheet) {
         throw new Error('There is no "accounts" sheet in the given list');
