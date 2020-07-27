@@ -7,7 +7,7 @@ import logger from "../../services/logger";
 import DataList from "../DataList";
 
 export type TAccountsState = {
-    data: GAccountRow[];
+    data: DataList<GAccountRow>;
     loading: boolean;
     loadingError: Error|undefined;
     deleting: boolean;
@@ -19,7 +19,7 @@ export type TAccountsState = {
 };
 
 const initState: TAccountsState = {
-    data: [],
+    data: new DataList<GAccountRow>(),
     loading: false,
     loadingError: undefined,
     deleting: false,
@@ -34,12 +34,11 @@ const actionHandlers: TActionHandlers<TAccountsState> = {
     // Load
     [actions.loadAccounts]: (state, action: TAction<TLoadAccountsPayload>) => ({
         ...state,
-        data: [],
         loading: true,
     }),
     [actions.accountsLoaded]: (state, action: TAction<GAccountRow[]>) => ({
         ...state,
-        data: action.payload || [],
+        data: new DataList<GAccountRow>(action.payload),
         loading: false,
         loadingError: undefined,
     }),
@@ -54,18 +53,17 @@ const actionHandlers: TActionHandlers<TAccountsState> = {
         if (!account) {
             logger.error(`"account" is not defined in the payload of ${actions.deleteAccount}`);
         }
-        // At this point I will update accounts data,
-        // even though server request hasn't been finished yet.
-        // Optimistic UI.
-        const data = state.data.filter(item => item !== account);
-        data.forEach((item, idx) => {
-            // After removing the indexes will change.
-            // And since I don't want to reload the whole list, then I need to update those indexes.
-            item.setLineIdx(idx);
-        });
         return {
             ...state,
-            data,
+            // At this point I will update accounts data,
+            // even though server request hasn't been finished yet.
+            // Optimistic UI.
+            data: state.data.remove(account)
+                .forEach((item, idx) => {
+                    // After removing the indexes will change.
+                    // And since I don't want to reload the whole list, then I need to update those indexes.
+                    item.setLineIdx(idx);
+                }),
             deleting: true,
         }
     },
@@ -82,18 +80,15 @@ const actionHandlers: TActionHandlers<TAccountsState> = {
     // Create
     [actions.createAccount]: (state, action: TAction<TCreateAccountPayload>) => {
         // Optimistic UI.
-        const data = [...state.data];
-        if (action.payload) {
-            // Since I don't want to reload accounts on each manipulation,
-            // I need to send line index by hand.
-            action.payload.setLineIdx(data.length);
-            data.push(action.payload);
-        } else {
-            logger.error(`"account" is not defined in the payload of ${actions.createAccount}`);
+        if (!action.payload) {
+            throw new Error(`"account" is not defined in the payload of ${actions.createAccount}`);
         }
+        // Since I don't want to reload accounts on each manipulation,
+        // I need to send line index by hand.
+        action.payload.setLineIdx(state.data.length());
         return {
             ...state,
-            data,
+            data: state.data.add(action.payload),
             creating: true,
         }
     },
@@ -109,14 +104,17 @@ const actionHandlers: TActionHandlers<TAccountsState> = {
     // Update
     [actions.updateAccount]: (state, action: TAction<TCreateAccountPayload>) => {
         // Optimistic UI.
+        if (!action.payload) {
+            throw new Error(`"account" is not defined in the payload of ${actions.updateAccount}`);
+        }
         return {
             ...state,
-            data: state.data.map((item) => {
-                if (item.getId() === action.payload?.getId()) {
-                    return action.payload;
-                }
-                return item;
-            }),
+            data: state.data.update(
+                (item) => {
+                    return item.getId() === action.payload?.getId();
+                },
+                action.payload,
+            ),
             updating: true,
         }
     },

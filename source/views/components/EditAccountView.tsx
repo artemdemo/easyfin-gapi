@@ -68,7 +68,7 @@ class EditAccountView extends React.PureComponent<TProps, TState> {
     renderForm() {
         const {accounts} = this.props;
         const {accountId} = this.props.match.params;
-        const isEditingAccount = accounts.data.length > 0 && accountId;
+        const isEditingAccount = accounts.data.length() > 0 && accountId;
         if (isEditingAccount || !accountId) {
             const account = accounts.data.find(item => item.getId() === accountId);
             const values = account?.getValues();

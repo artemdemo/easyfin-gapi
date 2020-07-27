@@ -44,7 +44,7 @@ class AccountsList extends React.PureComponent<TProps> {
 
     componentDidMount() {
         const {loadAccounts, accounts} = this.props;
-        if (accounts.data.length === 0 && !accounts.loading) {
+        if (accounts.data.length() === 0 && !accounts.loading) {
             loadAccounts();
         }
     }
@@ -95,7 +95,7 @@ class AccountsList extends React.PureComponent<TProps> {
                         />
                     )}
                 />
-                {accounts.data.length === 0 && !accounts.loading ? t('accounts.table.no_accounts') : null}
+                {accounts.data.length() === 0 && !accounts.loading ? t('accounts.table.no_accounts') : null}
                 {accounts.loading ? t('common.loading') : ''}
             </>
         );
