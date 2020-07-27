@@ -2,6 +2,7 @@ import { handleActions } from 'redux-actions';
 import * as actions from './sheetsActions';
 import GSheet from "../../google-api/GSheet";
 import DataList from "../DataList";
+import {TActionHandlers} from "../../types/actions";
 
 export type TSheetsState = {
     data: DataList<GSheet>;
@@ -15,7 +16,7 @@ const initState: TSheetsState = {
     loadingError: null,
 };
 
-export default handleActions({
+const actionHandlers: TActionHandlers<TSheetsState> = {
     [actions.loadSheets]: (state: TSheetsState) => ({
         ...state,
         loading: true,
@@ -31,4 +32,6 @@ export default handleActions({
         loading: false,
         loadingError: action.payload,
     }),
-}, initState);
+};
+
+export default handleActions(actionHandlers, initState);

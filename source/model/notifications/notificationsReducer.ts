@@ -4,6 +4,7 @@ import * as actions from "./notificationsActions";
 import Notification from "./Notification";
 import store from "../../store";
 import DataList from "../DataList";
+import {TActionHandlers} from "../../types/actions";
 
 export type TNotificationsState = {
     list: DataList<Notification>;
@@ -13,7 +14,7 @@ const initState: TNotificationsState = {
     list: new DataList<Notification>(),
 };
 
-export default handleActions({
+const actionHandlers: TActionHandlers<TNotificationsState> = {
     [actions.sendNotification]: (state: TNotificationsState, action) => {
         const notificationProps = _isString(action.payload) ? {
             msg: action.payload
@@ -34,4 +35,6 @@ export default handleActions({
             list: state.list.remove(action.payload),
         };
     },
-}, initState);
+};
+
+export default handleActions(actionHandlers, initState);
