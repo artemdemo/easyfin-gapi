@@ -4,7 +4,7 @@ import * as actions from "./notificationsActions";
 import Notification from "./Notification";
 import store from "../../store";
 import DataList from "../DataList";
-import {TActionHandlers} from "../../types/actions";
+import {TActionHandlers} from "../../types/redux-actions";
 import {IDataStateItem} from "../../types/reducer";
 
 export interface INotificationsState extends IDataStateItem<Notification>{}

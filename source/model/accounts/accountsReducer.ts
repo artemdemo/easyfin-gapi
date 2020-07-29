@@ -1,7 +1,7 @@
 import { handleActions } from "redux-actions";
 import * as actions from "./accountsActions";
 import GAccountRow from "../../google-api/GAccountRow";
-import {TAction, TActionHandlers} from "../../types/actions";
+import {TAction, TActionHandlers} from "../../types/redux-actions";
 import {TCreateAccountPayload, TDeleteAccountPayload, TLoadAccountsPayload} from "./accountsActions";
 import logger from "../../services/logger";
 import DataList from "../DataList";

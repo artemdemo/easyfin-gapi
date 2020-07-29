@@ -1,5 +1,5 @@
 import {createAccount, updateAccount} from "../model/accounts/accountsActions";
-import { TAction } from "../types/actions";
+import { TAction } from "../types/redux-actions";
 import history from "../history";
 import * as routes from "../routing/routes";
 
