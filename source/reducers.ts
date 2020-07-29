@@ -1,13 +1,13 @@
 import { combineReducers } from "redux";
-import accounts, {TAccountsState} from "./model/accounts/accountsReducer";
-import notifications, {TNotificationsState} from "./model/notifications/notificationsReducer";
-import sheets, {TSheetsState} from "./model/sheets/sheetsReducer";
+import accounts, {IAccountsState} from "./model/accounts/accountsReducer";
+import notifications, {INotificationsState} from "./model/notifications/notificationsReducer";
+import sheets, {ISheetsState} from "./model/sheets/sheetsReducer";
 import user, {TUserState} from "./model/user/userReducer";
 
 export type TGlobalState = {
-    accounts: TAccountsState;
-    notifications: TNotificationsState;
-    sheets: TSheetsState;
+    accounts: IAccountsState;
+    notifications: INotificationsState;
+    sheets: ISheetsState;
     user: TUserState;
 };
 

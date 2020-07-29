@@ -5,17 +5,16 @@ import Notification from "./Notification";
 import store from "../../store";
 import DataList from "../DataList";
 import {TActionHandlers} from "../../types/actions";
+import {IDataStateItem} from "../../types/reducer";
 
-export type TNotificationsState = {
-    list: DataList<Notification>;
+export interface INotificationsState extends IDataStateItem<Notification>{}
+
+const initState: INotificationsState = {
+    data: new DataList<Notification>(),
 };
 
-const initState: TNotificationsState = {
-    list: new DataList<Notification>(),
-};
-
-const actionHandlers: TActionHandlers<TNotificationsState> = {
-    [actions.sendNotification]: (state: TNotificationsState, action) => {
+const actionHandlers: TActionHandlers<INotificationsState> = {
+    [actions.sendNotification]: (state: INotificationsState, action) => {
         const notificationProps = _isString(action.payload) ? {
             msg: action.payload
         } : action.payload;
@@ -25,14 +24,14 @@ const actionHandlers: TActionHandlers<TNotificationsState> = {
         });
         return {
             ...state,
-            list: state.list.add(notification),
+            data: state.data.add(notification),
         };
     },
-    [actions.deleteNotification]: (state: TNotificationsState, action) => {
+    [actions.deleteNotification]: (state: INotificationsState, action) => {
         action.payload.beforeDelete();
         return {
             ...state,
-            list: state.list.remove(action.payload),
+            data: state.data.remove(action.payload),
         };
     },
 };

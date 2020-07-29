@@ -5,7 +5,7 @@ import {loadTransactions} from "../../model/transactions/transactionsReq";
 import GTransactionRow from "../../google-api/GTransactionRow";
 import TransactionsList from "../../containers/TransactionsList/TransactionsList";
 import {getLastTransactionsSheetTitle} from "../../services/sheets";
-import {TSheetsState} from "../../model/sheets/sheetsReducer";
+import {ISheetsState} from "../../model/sheets/sheetsReducer";
 import GSheet from "../../google-api/GSheet";
 import ButtonLink from "../../components/ButtonLink/ButtonLink";
 import * as routes from "../../routing/routes";
@@ -16,7 +16,7 @@ import DataList from "../../model/DataList";
 
 type TProps = {
     user: TUserState;
-    sheets: TSheetsState;
+    sheets: ISheetsState;
     setSheets: (sheets: GSheet[]) => void;
 };
 

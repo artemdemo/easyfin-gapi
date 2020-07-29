@@ -11,16 +11,16 @@ import {
     TLoadAccounts,
     loadAccounts,
 } from "../../model/accounts/accountsActions";
-import {TAccountsState} from "../../model/accounts/accountsReducer";
-import {TSheetsState} from "../../model/sheets/sheetsReducer";
+import {IAccountsState} from "../../model/accounts/accountsReducer";
+import {ISheetsState} from "../../model/sheets/sheetsReducer";
 import {getAccountsSheet} from "../../services/sheets";
 import history from "../../history";
 import * as routes from "../../routing/routes";
 
 
 type TProps = {
-    accounts: TAccountsState;
-    sheets: TSheetsState;
+    accounts: IAccountsState;
+    sheets: ISheetsState;
     loading: boolean;
     loadAccounts: TLoadAccounts;
     deleteAccount: TDeleteAccount;

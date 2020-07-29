@@ -16,11 +16,11 @@ import {
 } from "../../model/accounts/accountsActions";
 import {TRouterMatch} from "../../types/react-router-dom";
 import {TGlobalState} from "../../reducers";
-import {TAccountsState} from "../../model/accounts/accountsReducer";
+import {IAccountsState} from "../../model/accounts/accountsReducer";
 import {t} from "../../services/i18n";
 
 type TProps = {
-    accounts: TAccountsState;
+    accounts: IAccountsState;
     createAccount: TCreateAccount;
     updateAccount: TUpdateAccount;
     match: TRouterMatch<{

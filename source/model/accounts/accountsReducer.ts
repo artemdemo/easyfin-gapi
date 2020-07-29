@@ -5,9 +5,9 @@ import {TAction, TActionHandlers} from "../../types/actions";
 import {TCreateAccountPayload, TDeleteAccountPayload, TLoadAccountsPayload} from "./accountsActions";
 import logger from "../../services/logger";
 import DataList from "../DataList";
+import {IDataStateItem} from "../../types/reducer";
 
-export type TAccountsState = {
-    data: DataList<GAccountRow>;
+export interface IAccountsState extends IDataStateItem<GAccountRow> {
     loading: boolean;
     loadingError: Error|undefined;
     deleting: boolean;
@@ -16,9 +16,9 @@ export type TAccountsState = {
     creatingError: Error|undefined;
     updating: boolean;
     updatingError: Error|undefined;
-};
+}
 
-const initState: TAccountsState = {
+const initState: IAccountsState = {
     data: new DataList<GAccountRow>(),
     loading: false,
     loadingError: undefined,
@@ -30,7 +30,7 @@ const initState: TAccountsState = {
     updatingError: undefined,
 };
 
-const actionHandlers: TActionHandlers<TAccountsState> = {
+const actionHandlers: TActionHandlers<IAccountsState> = {
     // Load
     [actions.loadAccounts]: (state, action: TAction<TLoadAccountsPayload>) => ({
         ...state,

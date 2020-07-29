@@ -3,31 +3,31 @@ import * as actions from './sheetsActions';
 import GSheet from "../../google-api/GSheet";
 import DataList from "../DataList";
 import {TActionHandlers} from "../../types/actions";
+import {IDataStateItem} from "../../types/reducer";
 
-export type TSheetsState = {
-    data: DataList<GSheet>;
+export interface ISheetsState extends IDataStateItem<GSheet> {
     loading: boolean;
     loadingError: Error|null;
-};
+}
 
-const initState: TSheetsState = {
+const initState: ISheetsState = {
     data: new DataList<GSheet>(),
     loading: false,
     loadingError: null,
 };
 
-const actionHandlers: TActionHandlers<TSheetsState> = {
-    [actions.loadSheets]: (state: TSheetsState) => ({
+const actionHandlers: TActionHandlers<ISheetsState> = {
+    [actions.loadSheets]: (state: ISheetsState) => ({
         ...state,
         loading: true,
     }),
-    [actions.sheetsLoaded]: (state: TSheetsState, action) => ({
+    [actions.sheetsLoaded]: (state: ISheetsState, action) => ({
         ...state,
         data: new DataList(action.payload),
         loading: false,
         loadingError: null,
     }),
-    [actions.sheetsLoadingError]: (state: TSheetsState, action) => ({
+    [actions.sheetsLoadingError]: (state: ISheetsState, action) => ({
         ...state,
         loading: false,
         loadingError: action.payload,

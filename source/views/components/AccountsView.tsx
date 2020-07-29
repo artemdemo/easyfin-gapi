@@ -8,10 +8,10 @@ import {t} from "../../services/i18n";
 import {loadAccounts, deleteAccount} from "../../model/accounts/accountsActions";
 import { sendNotification } from "../../model/notifications/notificationsActions";
 import {TGlobalState} from "../../reducers";
-import {TSheetsState} from "../../model/sheets/sheetsReducer";
+import {ISheetsState} from "../../model/sheets/sheetsReducer";
 
 type TProps = {
-    sheets: TSheetsState;
+    sheets: ISheetsState;
     sendNotification: (data: any) => void;
     loadAccounts: () => void;
 };

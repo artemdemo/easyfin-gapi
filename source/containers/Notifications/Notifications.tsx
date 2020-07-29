@@ -1,11 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import { TNotificationsState } from "../../model/notifications/notificationsReducer";
+import { INotificationsState } from "../../model/notifications/notificationsReducer";
 import NotificationBalloon from "./NotificationBalloon";
 
 type TProps = {
-    notifications: TNotificationsState,
+    notifications: INotificationsState,
 };
 type TState = {};
 
@@ -20,7 +20,7 @@ class Notifications extends React.PureComponent<TProps, TState> {
         const { notifications } = this.props;
         return (
             <NotificationWrapper>
-                {notifications.list.map(item => (
+                {notifications.data.map(item => (
                     <NotificationBalloon
                         key={item.id}
                         data={item}
