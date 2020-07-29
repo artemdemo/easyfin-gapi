@@ -58,7 +58,8 @@ const actionHandlers: TActionHandlers<TAccountsState> = {
             // At this point I will update accounts data,
             // even though server request hasn't been finished yet.
             // Optimistic UI.
-            data: state.data.remove(account)
+            data: state.data
+                .remove(account)
                 .forEach((item, idx) => {
                     // After removing the indexes will change.
                     // And since I don't want to reload the whole list, then I need to update those indexes.

@@ -1,4 +1,4 @@
-type TForeachCB<T> = (item: T, idx: number) => void;
+type TForEachCB<T> = (item: T, idx: number) => void;
 type TUpdateComparisonCb<T> = (item: T, idx: number) => boolean;
 type TFindCb<T> = (item: T, idx: number) => boolean;
 type TMapCb<T> = (item: T, idx: number) => any;
@@ -15,7 +15,7 @@ class DataList<T> {
         return this;
     }
 
-    forEach(cb: TForeachCB<T>): DataList<T> {
+    forEach(cb: TForEachCB<T>): DataList<T> {
         this._data.forEach(cb);
         return this;
     }
