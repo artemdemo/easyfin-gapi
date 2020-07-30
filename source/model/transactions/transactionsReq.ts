@@ -1,6 +1,8 @@
 import * as googleSheets from "../../google-api/google-sheets";
 import GTransactionRow from "../../google-api/GTransactionRow";
 import logger from "../../services/logger";
+import GSheet from "../../google-api/GSheet";
+import GAccountRow from "../../google-api/GAccountRow";
 
 export const loadTransactions = (sheetTitle: string): Promise<GTransactionRow[]> => {
     return googleSheets.getAllRows(sheetTitle)
@@ -26,4 +28,20 @@ export const createTransaction = (transaction: GTransactionRow): Promise<GTransa
         .then((result) => {
             return <GTransactionRow>result;
         });
+};
+
+export const updateTransaction = (transaction: GTransactionRow, sheetTitle: string): Promise<GAccountRow> => {
+    return googleSheets.updateRow(transaction, sheetTitle)
+        .then((result) => {
+            return <GAccountRow>result;
+        });
+};
+
+export const deleteTransaction = (sheet: GSheet, transaction: GTransactionRow) => {
+    const lineIdx = transaction.getLineIdx();
+    if (lineIdx == undefined) {
+        logger.error(transaction);
+        throw new Error('There is no lineIdx in the given transaction');
+    }
+    return googleSheets.deleteRowByLineIdx(sheet.getId(), lineIdx);
 };
