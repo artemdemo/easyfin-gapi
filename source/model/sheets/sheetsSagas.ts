@@ -15,7 +15,7 @@ function* loadSheetsSaga() {
     }
 }
 
-export default function* accountsSagas() {
+export default function* sheetsSagas() {
     yield all([
         loadSheetsSaga(),
     ]);
