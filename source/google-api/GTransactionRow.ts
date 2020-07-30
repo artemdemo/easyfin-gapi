@@ -29,6 +29,10 @@ class GTransactionRow extends GRow {
     getValues(): ITransactionRowValues {
         return _cloneDeep(this._values);
     }
+
+    getId(): string {
+        return this._values.id;
+    }
 }
 
 export default GTransactionRow;

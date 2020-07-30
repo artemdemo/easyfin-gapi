@@ -38,46 +38,11 @@ const actionHandlers: TActionHandlers<IAccountsState> = {
         loading: false,
         loadingError: action.payload,
     }),
-    // Delete
-    [actions.deleteAccount]: (state, action: TAction<TDeleteAccountPayload>) => {
-        const account = action.payload?.account;
-        if (!account) {
-            logger.error(`"account" is not defined in the payload of ${actions.deleteAccount}`);
-        }
-        return {
-            ...state,
-            // At this point I will update accounts data,
-            // even though server request hasn't been finished yet.
-            // Optimistic UI.
-            data: state.data
-                .remove(account)
-                .forEach((item, idx) => {
-                    // After removing the indexes will change.
-                    // And since I don't want to reload the whole list, then I need to update those indexes.
-                    item.setLineIdx(idx);
-                }),
-            deleting: true,
-        }
-    },
-    [actions.accountDeleted]: (state) => ({
-        ...state,
-        deleting: false,
-        deletingError: undefined,
-    }),
-    [actions.accountDeletingError]: (state, action: TAction<Error>) => ({
-        ...state,
-        deleting: false,
-        deletingError: action.payload,
-    }),
     // Create
     [actions.createAccount]: (state, action: TAction<TCreateAccountPayload>) => {
-        // Optimistic UI.
-        if (!action.payload) {
-            throw new Error(`"account" is not defined in the payload of ${actions.createAccount}`);
-        }
         // Since I don't want to reload accounts on each manipulation,
         // I need to send line index by hand.
-        action.payload.setLineIdx(state.data.length());
+        action.payload?.setLineIdx(state.data.length());
         return {
             ...state,
             data: state.data.add(action.payload),
@@ -94,22 +59,14 @@ const actionHandlers: TActionHandlers<IAccountsState> = {
         creatingError: action.payload,
     }),
     // Update
-    [actions.updateAccount]: (state, action: TAction<TCreateAccountPayload>) => {
-        // Optimistic UI.
-        if (!action.payload) {
-            throw new Error(`"account" is not defined in the payload of ${actions.updateAccount}`);
-        }
-        return {
-            ...state,
-            data: state.data.update(
-                (item) => {
-                    return item.getId() === action.payload?.getId();
-                },
-                action.payload,
-            ),
-            updating: true,
-        }
-    },
+    [actions.updateAccount]: (state, action: TAction<TCreateAccountPayload>) => ({
+        ...state,
+        data: state.data.update(
+            item => item.getId() === action.payload?.getId(),
+            action.payload,
+        ),
+        updating: true,
+    }),
     [actions.accountUpdated]: (state) => ({
         ...state,
         updating: false,
@@ -118,6 +75,31 @@ const actionHandlers: TActionHandlers<IAccountsState> = {
         ...state,
         updating: false,
         updatingError: action.payload,
+    }),
+    // Delete
+    [actions.deleteAccount]: (state, action: TAction<TDeleteAccountPayload>) => ({
+        ...state,
+        // At this point I will update accounts data,
+        // even though server request hasn't been finished yet.
+        // Optimistic UI.
+        data: state.data
+            .remove(action.payload?.account)
+            .forEach((item, idx) => {
+                // After removing the indexes will change.
+                // And since I don't want to reload the whole list, then I need to update those indexes.
+                item.setLineIdx(idx);
+            }),
+        deleting: true,
+    }),
+    [actions.accountDeleted]: (state) => ({
+        ...state,
+        deleting: false,
+        deletingError: undefined,
+    }),
+    [actions.accountDeletingError]: (state, action: TAction<Error>) => ({
+        ...state,
+        deleting: false,
+        deletingError: action.payload,
     }),
 };
 

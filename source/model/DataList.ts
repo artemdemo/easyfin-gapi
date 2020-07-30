@@ -11,6 +11,9 @@ class DataList<T> {
     }
 
     remove(itemToDelete?: T): DataList<T> {
+        if (!itemToDelete) {
+            throw new Error('itemToDelete is not provided');
+        }
         this._data = this._data.filter(item => item !== itemToDelete);
         return this;
     }
@@ -20,14 +23,20 @@ class DataList<T> {
         return this;
     }
 
-    add(item: T): DataList<T> {
+    add(item?: T): DataList<T> {
+        if (!item) {
+            throw new Error('item is not provided');
+        }
         return new DataList<T>([
             ...this._data,
             item,
         ])
     }
 
-    update(shouldUpdateCb: TUpdateComparisonCb<T>, newItem: T): DataList<T> {
+    update(shouldUpdateCb: TUpdateComparisonCb<T>, newItem?: T): DataList<T> {
+        if (!newItem) {
+            throw new Error('newItem is not provided');
+        }
         return new DataList<T>(this.map((item: T, idx: number) => {
             return shouldUpdateCb(item, idx) ? newItem : item;
         }));

@@ -1,5 +1,6 @@
 import { createAction } from "redux-actions";
 import GTransactionRow from "../../google-api/GTransactionRow";
+import GSheet from "../../google-api/GSheet";
 
 export type TLoadTransactionsPayload = string;
 export type TLoadTransactions = (payload: TLoadTransactionsPayload) => void;
@@ -19,7 +20,7 @@ export const updateTransaction = createAction('UPDATE_TRANSACTION');
 export const transactionUpdated = createAction('TRANSACTION_UPDATED');
 export const transactionUpdatingError = createAction('TRANSACTION_UPDATING_ERROR');
 
-export type TDeleteTransactionPayload = GTransactionRow;
+export type TDeleteTransactionPayload = {sheet: GSheet, transaction: GTransactionRow};
 export type TDeleteTransaction = (payload: TDeleteTransactionPayload) => void;
 export const deleteTransaction = createAction('DELETE_TRANSACTION');
 export const transactionDeleted = createAction('TRANSACTION_DELETED');

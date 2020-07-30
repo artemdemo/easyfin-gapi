@@ -8,12 +8,6 @@ export const loadAccounts = createAction('LOAD_ACCOUNTS');
 export const accountsLoaded = createAction('ACCOUNTS_LOADED');
 export const accountsLoadingError = createAction('ACCOUNTS_LOADING_ERROR');
 
-export type TDeleteAccountPayload = {sheet: GSheet, account: GAccountRow};
-export type TDeleteAccount = (payload: TDeleteAccountPayload) => void;
-export const deleteAccount = createAction('DELETE_ACCOUNT');
-export const accountDeleted = createAction('ACCOUNT_DELETED');
-export const accountDeletingError = createAction('ACCOUNT_DELETING_ERROR');
-
 export type TCreateAccountPayload = GAccountRow;
 export type TCreateAccount = (payload: TCreateAccountPayload) => void;
 export const createAccount = createAction('CREATE_ACCOUNT');
@@ -25,3 +19,9 @@ export type TUpdateAccount = (payload: TUpdateAccountPayload) => void;
 export const updateAccount = createAction('UPDATE_ACCOUNT');
 export const accountUpdated = createAction('ACCOUNT_UPDATED');
 export const accountUpdatingError = createAction('ACCOUNT_UPDATING_ERROR');
+
+export type TDeleteAccountPayload = {sheet: GSheet, account: GAccountRow};
+export type TDeleteAccount = (payload: TDeleteAccountPayload) => void;
+export const deleteAccount = createAction('DELETE_ACCOUNT');
+export const accountDeleted = createAction('ACCOUNT_DELETED');
+export const accountDeletingError = createAction('ACCOUNT_DELETING_ERROR');
