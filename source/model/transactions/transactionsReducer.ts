@@ -2,7 +2,7 @@ import { handleActions } from "redux-actions";
 import * as actions from "./transactionsActions";
 import {IDataRestStateItem} from "../../types/reducer";
 import GTransactionRow from "../../google-api/GTransactionRow";
-import DataList from "../DataList";
+import DataListGRow from "../DataListGRow";
 import {TAction, TActionHandlers} from "../../types/redux-actions";
 import {
     TCreateTransactionPayload,
@@ -11,10 +11,12 @@ import {
     TUpdateTransactionPayload
 } from "./transactionsActions";
 
-export interface ITransactionsState extends IDataRestStateItem<GTransactionRow> {}
+export interface ITransactionsState extends IDataRestStateItem<GTransactionRow> {
+    data: DataListGRow<GTransactionRow>;
+}
 
 const initState: ITransactionsState = {
-    data: new DataList<GTransactionRow>(),
+    data: new DataListGRow<GTransactionRow>(),
     loading: false,
     loadingError: undefined,
     deleting: false,
@@ -33,7 +35,7 @@ const actionHandlers: TActionHandlers<ITransactionsState> = {
     }),
     [actions.transactionsLoaded]: (state, action: TAction<GTransactionRow[]>) => ({
         ...state,
-        data: new DataList<GTransactionRow>(action.payload),
+        data: new DataListGRow<GTransactionRow>(action.payload),
         loading: false,
         loadingError: undefined,
     }),
@@ -43,16 +45,11 @@ const actionHandlers: TActionHandlers<ITransactionsState> = {
         loadingError: action.payload,
     }),
     // Create
-    [actions.createTransaction]: (state, action: TAction<TCreateTransactionPayload>) => {
-        // Since I don't want to reload accounts on each manipulation,
-        // I need to send line index by hand.
-        action.payload?.setLineIdx(state.data.length());
-        return {
-            ...state,
-            data: state.data.add(action.payload),
-            creating: true,
-        };
-    },
+    [actions.createTransaction]: (state, action: TAction<TCreateTransactionPayload>) => ({
+        ...state,
+        data: state.data.add(action.payload),
+        creating: true,
+    }),
     [actions.transactionCreated]: (state) => ({
         ...state,
         creating: false,
@@ -86,13 +83,7 @@ const actionHandlers: TActionHandlers<ITransactionsState> = {
         // At this point I will update accounts data,
         // even though server request hasn't been finished yet.
         // Optimistic UI.
-        data: state.data
-            .remove(action.payload?.transaction)
-            .forEach((item, idx) => {
-                // After removing the indexes will change.
-                // And since I don't want to reload the whole list, then I need to update those indexes.
-                item.setLineIdx(idx);
-            }),
+        data: state.data.remove(action.payload?.transaction),
         deleting: true,
     }),
     [actions.transactionDeleted]: (state) => ({

@@ -3,14 +3,15 @@ import * as actions from "./accountsActions";
 import GAccountRow from "../../google-api/GAccountRow";
 import {TAction, TActionHandlers} from "../../types/redux-actions";
 import {TCreateAccountPayload, TDeleteAccountPayload, TLoadAccountsPayload} from "./accountsActions";
-import logger from "../../services/logger";
-import DataList from "../DataList";
+import DataListGRow from "../DataListGRow";
 import {IDataRestStateItem} from "../../types/reducer";
 
-export interface IAccountsState extends IDataRestStateItem<GAccountRow> {}
+export interface IAccountsState extends IDataRestStateItem<GAccountRow> {
+    data: DataListGRow<GAccountRow>;
+}
 
 const initState: IAccountsState = {
-    data: new DataList<GAccountRow>(),
+    data: new DataListGRow<GAccountRow>(),
     loading: false,
     loadingError: undefined,
     deleting: false,
@@ -29,7 +30,7 @@ const actionHandlers: TActionHandlers<IAccountsState> = {
     }),
     [actions.accountsLoaded]: (state, action: TAction<GAccountRow[]>) => ({
         ...state,
-        data: new DataList<GAccountRow>(action.payload),
+        data: new DataListGRow<GAccountRow>(action.payload),
         loading: false,
         loadingError: undefined,
     }),
@@ -39,16 +40,11 @@ const actionHandlers: TActionHandlers<IAccountsState> = {
         loadingError: action.payload,
     }),
     // Create
-    [actions.createAccount]: (state, action: TAction<TCreateAccountPayload>) => {
-        // Since I don't want to reload accounts on each manipulation,
-        // I need to send line index by hand.
-        action.payload?.setLineIdx(state.data.length());
-        return {
-            ...state,
-            data: state.data.add(action.payload),
-            creating: true,
-        }
-    },
+    [actions.createAccount]: (state, action: TAction<TCreateAccountPayload>) => ({
+        ...state,
+        data: state.data.add(action.payload),
+        creating: true,
+    }),
     [actions.accountCreated]: (state) => ({
         ...state,
         creating: false,
@@ -82,13 +78,7 @@ const actionHandlers: TActionHandlers<IAccountsState> = {
         // At this point I will update accounts data,
         // even though server request hasn't been finished yet.
         // Optimistic UI.
-        data: state.data
-            .remove(action.payload?.account)
-            .forEach((item, idx) => {
-                // After removing the indexes will change.
-                // And since I don't want to reload the whole list, then I need to update those indexes.
-                item.setLineIdx(idx);
-            }),
+        data: state.data.remove(action.payload?.account),
         deleting: true,
     }),
     [actions.accountDeleted]: (state) => ({
