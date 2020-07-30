@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Formik } from "formik";
 import parseISO from "date-fns/parseISO";
-import { addTransaction } from "../../model/transactions/transactionsReq";
+import { createTransaction } from "../../model/transactions/transactionsReq";
 import GTransactionRow from "../../google-api/GTransactionRow";
 import { ECoin, ETransactionType } from "../../google-api/services/transactionArrToData";
 import {TUserState} from "../../model/user/userReducer";
@@ -34,7 +34,7 @@ class EditTransactionView extends React.PureComponent<TProps, TState> {
             comment: 'some comment',
             userId: user.basicProfile?.getEmail() || '',
         });
-        addTransaction(transaction).then(this.handleAddedTransaction);
+        createTransaction(transaction).then(this.handleAddedTransaction);
     }
 
     handleSubmit = (values: TValues, { setSubmitting }) => {
@@ -50,7 +50,7 @@ class EditTransactionView extends React.PureComponent<TProps, TState> {
             comment: values.comment,
             userId: user.basicProfile?.getId() || '',
         });
-        addTransaction(transaction).then(this.handleAddedTransaction);
+        createTransaction(transaction).then(this.handleAddedTransaction);
     }
 
     handleAddedTransaction = () => {

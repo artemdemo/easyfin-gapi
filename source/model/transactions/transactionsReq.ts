@@ -21,7 +21,7 @@ export const loadTransactions = (sheetTitle: string): Promise<GTransactionRow[]>
         });
 };
 
-export const addTransaction = (transaction: GTransactionRow): Promise<GTransactionRow> => {
+export const createTransaction = (transaction: GTransactionRow): Promise<GTransactionRow> => {
     return googleSheets.appendRow(transaction, '2020')
         .then((result) => {
             return <GTransactionRow>result;
