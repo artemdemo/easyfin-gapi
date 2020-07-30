@@ -17,7 +17,16 @@ function* loadTransactionsSaga() {
 }
 
 function* createTransactionSaga() {
+    while (true) {
+        const data: { payload: actions.TCreateTransactionPayload } = yield take(actions.createTransaction);
+        try {
+            const result = yield req.createTransaction(data.payload);
 
+            yield put(actions.transactionCreated(result));
+        } catch (err) {
+            yield put(actions.transactionCreatingError(err));
+        }
+    }
 }
 
 function* updateTransactionSaga() {
