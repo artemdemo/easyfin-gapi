@@ -4,7 +4,7 @@ import {TUserState} from "../../model/user/userReducer";
 import {loadTransactions} from "../../model/transactions/transactionsReq";
 import GTransactionRow from "../../google-api/GTransactionRow";
 import TransactionsList from "../../containers/TransactionsList/TransactionsList";
-import {getLastTransactionsSheetTitle} from "../../services/sheets";
+import {getLastTransactionsSheet} from "../../services/sheets";
 import {ISheetsState} from "../../model/sheets/sheetsReducer";
 import GSheet from "../../google-api/GSheet";
 import ButtonLink from "../../components/ButtonLink/ButtonLink";
@@ -42,7 +42,7 @@ class TransactionsView extends React.PureComponent<TProps, TState> {
     }
 
     handleTransactionsLoading = (sheets: DataList<GSheet>) => {
-        loadTransactions(getLastTransactionsSheetTitle(sheets))
+        loadTransactions(getLastTransactionsSheet(sheets))
             .then((transactions) => {
                 this.setState({
                     transactions,

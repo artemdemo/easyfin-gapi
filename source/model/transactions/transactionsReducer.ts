@@ -47,7 +47,7 @@ const actionHandlers: TActionHandlers<ITransactionsState> = {
     // Create
     [actions.createTransaction]: (state, action: TAction<TCreateTransactionPayload>) => ({
         ...state,
-        data: state.data.add(action.payload),
+        data: state.data.add(action.payload?.transaction),
         creating: true,
     }),
     [actions.transactionCreated]: (state) => ({
@@ -80,9 +80,6 @@ const actionHandlers: TActionHandlers<ITransactionsState> = {
     // Delete
     [actions.deleteTransaction]: (state, action: TAction<TDeleteTransactionPayload>) => ({
         ...state,
-        // At this point I will update accounts data,
-        // even though server request hasn't been finished yet.
-        // Optimistic UI.
         data: state.data.remove(action.payload?.transaction),
         deleting: true,
     }),

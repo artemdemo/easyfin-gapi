@@ -1,7 +1,9 @@
 export type TForEachCB<T> = (item: T, idx: number) => void;
 export type TUpdateComparisonCb<T> = (item: T, idx: number) => boolean;
 export type TFindCb<T> = (item: T, idx: number) => boolean;
+export type TFilterCb<T> = (item: T, idx: number) => boolean;
 export type TMapCb<T> = (item: T, idx: number) => any;
+export type TSortCb<T> = (itemA: T, itemB: T) => -1|1|0;
 
 class DataList<T> {
     private _data: T[];
@@ -33,12 +35,24 @@ class DataList<T> {
         return this;
     }
 
+    filter(filerCb: TFilterCb<T>): DataList<T> {
+        return new DataList<T>(this._data.filter(filerCb));
+    }
+
+    sort(sortCb: TSortCb<T>): DataList<T> {
+        return new DataList<T>(this._data.sort(sortCb));
+    }
+
     find(findCb: TFindCb<T>): T|undefined {
         return this._data.find(findCb);
     }
 
     length(): number {
         return this._data.length;
+    }
+
+    getByIdx(idx: number): T {
+        return this._data[idx];
     }
 
     map(mapCb: TMapCb<T>): any[] {

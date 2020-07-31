@@ -4,8 +4,8 @@ import logger from "../../services/logger";
 import GSheet from "../../google-api/GSheet";
 import GAccountRow from "../../google-api/GAccountRow";
 
-export const loadTransactions = (sheetTitle: string): Promise<GTransactionRow[]> => {
-    return googleSheets.getAllRows(sheetTitle)
+export const loadTransactions = (sheet: GSheet): Promise<GTransactionRow[]> => {
+    return googleSheets.getAllRows(sheet.getTitle())
         .then((data: any) => {
             return data.values || [];
         })
@@ -23,15 +23,15 @@ export const loadTransactions = (sheetTitle: string): Promise<GTransactionRow[]>
         });
 };
 
-export const createTransaction = (transaction: GTransactionRow): Promise<GTransactionRow> => {
-    return googleSheets.appendRow(transaction, '2020')
+export const createTransaction = (sheet: GSheet, transaction: GTransactionRow): Promise<GTransactionRow> => {
+    return googleSheets.appendRow(transaction, sheet.getTitle())
         .then((result) => {
             return <GTransactionRow>result;
         });
 };
 
-export const updateTransaction = (transaction: GTransactionRow, sheetTitle: string): Promise<GAccountRow> => {
-    return googleSheets.updateRow(transaction, sheetTitle)
+export const updateTransaction = (sheet: GSheet, transaction: GTransactionRow): Promise<GAccountRow> => {
+    return googleSheets.updateRow(transaction, sheet.getTitle())
         .then((result) => {
             return <GAccountRow>result;
         });

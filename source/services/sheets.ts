@@ -20,15 +20,22 @@ export const generateCurrentTransactionsSheetTitle = (): string => {
     return format(new Date(), 'yyyy');
 };
 
-export const getLastTransactionsSheetTitle = (sheets: DataList<GSheet>): string => {
+export const getLastTransactionsSheet = (sheets: DataList<GSheet>): GSheet => {
     const names = sheets
-        .map(sheet => sheet.getTitle())
-        .filter(title => transactionSheetNameRegex.test(title))
-        .sort();
-    if (names.length === 0) {
+        .filter(sheet => transactionSheetNameRegex.test(sheet.getTitle()))
+        .sort((itemA, itemB) => {
+            if (itemA.getTitle() < itemB.getTitle()) {
+                return -1;
+            }
+            if (itemA.getTitle() > itemB.getTitle()) {
+                return 1;
+            }
+            return 0;
+        });
+    if (names.length() === 0) {
         throw new Error('There is no available sheets');
     }
-    return names[names.length - 1];
+    return names.getByIdx(names.length() - 1);
 }
 
 export const getAccountsSheet = (sheets: DataList<GSheet>): GSheet => {

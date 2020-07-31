@@ -2,7 +2,10 @@ import React from "react";
 import { connect } from "react-redux";
 import { Formik } from "formik";
 import parseISO from "date-fns/parseISO";
-import { createTransaction } from "../../model/transactions/transactionsReq";
+import {
+    TCreateTransaction,
+    createTransaction,
+} from "../../model/transactions/transactionsActions";
 import GTransactionRow from "../../google-api/GTransactionRow";
 import { ECoin, ETransactionType } from "../../google-api/services/transactionArrToData";
 import {TUserState} from "../../model/user/userReducer";
@@ -14,16 +17,20 @@ import EditTransactionForm, {
     TValues,
     IEditTransactionForm,
 } from "../../containers/forms/EditTransactionForm";
+import {ISheetsState} from "../../model/sheets/sheetsReducer";
+import {getLastTransactionsSheet} from "../../services/sheets";
 
 type TProps = {
     user: TUserState;
+    sheet: ISheetsState;
     sendNotification: (data: any) => void;
+    createTransaction: TCreateTransaction
 };
 type TState = {};
 
 class EditTransactionView extends React.PureComponent<TProps, TState> {
     mockSubmit = () => {
-        const { user } = this.props;
+        const { user, sheet, createTransaction } = this.props;
         const transaction = new GTransactionRow({
             date: new Date(),
             accountFrom: 'account',
@@ -34,12 +41,15 @@ class EditTransactionView extends React.PureComponent<TProps, TState> {
             comment: 'some comment',
             userId: user.basicProfile?.getEmail() || '',
         });
-        createTransaction(transaction).then(this.handleAddedTransaction);
+        createTransaction({
+            transaction,
+            sheet: getLastTransactionsSheet(sheet.data),
+        });
     }
 
     handleSubmit = (values: TValues, { setSubmitting }) => {
         setSubmitting(false);
-        const { user } = this.props;
+        const { user, sheet, createTransaction } = this.props;
         const transaction = new GTransactionRow({
             date: parseISO(values.date),
             accountFrom: values.accountFrom,
@@ -50,13 +60,11 @@ class EditTransactionView extends React.PureComponent<TProps, TState> {
             comment: values.comment,
             userId: user.basicProfile?.getId() || '',
         });
-        createTransaction(transaction).then(this.handleAddedTransaction);
+        createTransaction({
+            transaction,
+            sheet: getLastTransactionsSheet(sheet.data),
+        });
     }
-
-    handleAddedTransaction = () => {
-        const { sendNotification } = this.props;
-        sendNotification(t('transactions.added'));
-    };
 
     renderForm = (formProps: IEditTransactionForm) => {
         return (
@@ -85,8 +93,10 @@ class EditTransactionView extends React.PureComponent<TProps, TState> {
 export default connect(
     state => ({
         user: state.user,
+        sheet: state.sheet,
     }),
     {
         sendNotification,
+        createTransaction,
     },
 )(EditTransactionView);

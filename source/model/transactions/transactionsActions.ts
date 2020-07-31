@@ -2,13 +2,13 @@ import { createAction } from "redux-actions";
 import GTransactionRow from "../../google-api/GTransactionRow";
 import GSheet from "../../google-api/GSheet";
 
-export type TLoadTransactionsPayload = string;
+export type TLoadTransactionsPayload = GSheet;
 export type TLoadTransactions = (payload: TLoadTransactionsPayload) => void;
 export const loadTransactions = createAction('LOAD_TRANSACTIONS');
 export const transactionsLoaded = createAction('TRANSACTIONS_LOADED');
 export const transactionsLoadingError = createAction('TRANSACTIONS_LOADING_ERROR');
 
-export type TCreateTransactionPayload = GTransactionRow;
+export type TCreateTransactionPayload = {sheet: GSheet, transaction: GTransactionRow};
 export type TCreateTransaction = (payload: TCreateTransactionPayload) => void;
 export const createTransaction = createAction('CREATE_TRANSACTION');
 export const transactionCreated = createAction('TRANSACTION_CREATED');
