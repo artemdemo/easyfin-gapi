@@ -17,7 +17,6 @@ import {getAccountsSheet} from "../../services/sheets";
 import history from "../../history";
 import * as routes from "../../routing/routes";
 
-
 type TProps = {
     accounts: IAccountsState;
     sheets: ISheetsState;
@@ -49,7 +48,7 @@ class AccountsList extends React.PureComponent<TProps> {
         }
     }
 
-    getAccountById(accountId: string):GAccountRow {
+    getAccountById(accountId: string): GAccountRow {
         const account = this.props.accounts.data.find(item => item.getId() === accountId);
         if (!account) {
             throw new Error(`Account for the given id is not found. id was ${accountId}`);

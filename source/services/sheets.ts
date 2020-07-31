@@ -1,6 +1,8 @@
 import format from "date-fns/format";
 import GSheet from "../google-api/GSheet";
 import DataList from "../model/DataList";
+import GTransactionRow from "../google-api/GTransactionRow";
+import logger from "./logger";
 
 const transactionSheetNameRegex = /^\d{4}$/;
 
@@ -18,6 +20,17 @@ export enum EDataSheetTitles {
  */
 export const generateCurrentTransactionsSheetTitle = (): string => {
     return format(new Date(), 'yyyy');
+};
+
+export const getSheetForTransaction = (sheets: DataList<GSheet>, transaction: GTransactionRow): GSheet => {
+    const sheetName = format(transaction.getDate(), 'yyyy');
+    const sheet = sheets
+        .find(item => item.getTitle() === sheetName);
+    if (!sheet) {
+        logger.warn(transaction);
+        throw new Error('There is no sheet assigned with given transaction');
+    }
+    return sheet;
 };
 
 export const getLastTransactionsSheet = (sheets: DataList<GSheet>): GSheet => {

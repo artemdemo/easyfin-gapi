@@ -33,6 +33,10 @@ class GTransactionRow extends GRow {
     getId(): string {
         return this._values.id;
     }
+
+    getDate(): Date {
+        return this._values.date;
+    }
 }
 
 export default GTransactionRow;
