@@ -1,9 +1,7 @@
-export type TForEachCB<T> = (item: T, idx: number) => void;
-export type TUpdateComparisonCb<T> = (item: T, idx: number) => boolean;
-export type TFindCb<T> = (item: T, idx: number) => boolean;
-export type TFilterCb<T> = (item: T, idx: number) => boolean;
-export type TMapCb<T> = (item: T, idx: number) => any;
-export type TSortCb<T> = (itemA: T, itemB: T) => -1|1|0;
+export type TListVoidCb<T> = (item: T, idx: number) => void;
+export type TListBoolCb<T> = (item: T, idx: number) => boolean;
+export type TListAnyCb<T> = (item: T, idx: number) => any;
+export type TListSortCb<T> = (itemA: T, itemB: T) => -1|1|0;
 
 class DataList<T> {
     private _data: T[];
@@ -12,7 +10,7 @@ class DataList<T> {
         this._data = data || [];
     }
 
-    forEach(cb: TForEachCB<T>): DataList<T> {
+    forEach(cb: TListVoidCb<T>): DataList<T> {
         this._data.forEach(cb);
         return this;
     }
@@ -24,7 +22,7 @@ class DataList<T> {
         ])
     }
 
-    update(shouldUpdateCb: TUpdateComparisonCb<T>, newItem: T): DataList<T> {
+    update(shouldUpdateCb: TListBoolCb<T>, newItem: T): DataList<T> {
         return new DataList<T>(this.map((item: T, idx: number) => {
             return shouldUpdateCb(item, idx) ? newItem : item;
         }));
@@ -35,15 +33,15 @@ class DataList<T> {
         return this;
     }
 
-    filter(filerCb: TFilterCb<T>): DataList<T> {
+    filter(filerCb: TListBoolCb<T>): DataList<T> {
         return new DataList<T>(this._data.filter(filerCb));
     }
 
-    sort(sortCb: TSortCb<T>): DataList<T> {
+    sort(sortCb: TListSortCb<T>): DataList<T> {
         return new DataList<T>(this._data.sort(sortCb));
     }
 
-    find(findCb: TFindCb<T>): T|undefined {
+    find(findCb: TListBoolCb<T>): T|undefined {
         return this._data.find(findCb);
     }
 
@@ -55,7 +53,7 @@ class DataList<T> {
         return this._data[idx];
     }
 
-    map(mapCb: TMapCb<T>): any[] {
+    map(mapCb: TListAnyCb<T>): any[] {
         return this._data.map(mapCb);
     }
 }

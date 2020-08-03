@@ -1,4 +1,4 @@
-import DataList, {TUpdateComparisonCb} from "./DataList";
+import DataList, {TListBoolCb} from "./DataList";
 import GRow from "../google-api/GRow";
 
 class DataListGRow<T> extends DataList<T> {
@@ -12,7 +12,7 @@ class DataListGRow<T> extends DataList<T> {
         return super.add(item);
     }
 
-    update(shouldUpdateCb: TUpdateComparisonCb<T>, newItem?: T): DataList<T> {
+    update(shouldUpdateCb: TListBoolCb<T>, newItem?: T): DataList<T> {
         if (!newItem) {
             throw new Error('newItem is not provided');
         }
