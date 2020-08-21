@@ -6,6 +6,7 @@ import {generateId} from "../services/id";
 interface ICreateCategoryValues {
     id?: string;
     name: string;
+    parentId?: string;
 }
 
 interface ICategoryRowValues extends ICreateCategoryValues {
@@ -16,6 +17,7 @@ const accountArrToData = (rowArr: string[]): ICategoryRowValues => {
     const parserMap: TParserMapItem[] = [
         {key: 'id'},
         {key: 'name'},
+        {key: 'parentId'},
     ];
     return <ICategoryRowValues> convertArrToData(rowArr, parserMap);
 };
@@ -39,6 +41,7 @@ class GCategoryRow extends GRow {
         const parserMap: TParserMapItem[] = [
             {key: 'id'},
             {key: 'name'},
+            {key: 'parentId'},
         ];
         return convertDataToArr(this._values, parserMap);
     }

@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import format from "date-fns/format";
+import { createSelector } from "reselect";
 import {formatMoney} from "../../services/numbers";
 import GeneralTable from "../../components/GeneralTable/GeneralTable";
 import { t } from "../../services/i18n";
@@ -18,13 +19,34 @@ import {getLastTransactionsSheet, getSheetForTransaction} from "../../services/s
 import history from "../../history";
 import * as routes from "../../routing/routes";
 import GTransactionRow from "../../google-api/GTransactionRow";
+import {IAccountsState} from "../../model/accounts/accountsReducer";
+import {enrichTransactions} from "../../services/mixins";
+import {ICategoriesState} from "../../model/categories/categoriesReducer";
 
 type TProps = {
     sheets: ISheetsState;
     transactions: ITransactionsState;
+    accounts: IAccountsState;
+    categories: ICategoriesState;
     loadTransactions: TLoadTransactions;
     deleteTransaction: TDeleteTransaction;
 };
+
+const enrichedTransactionsSelector = createSelector(
+    (props: TProps) => props.transactions,
+    (props: TProps) => props.accounts,
+    (props: TProps) => props.categories,
+    (transactions, accounts, categories) => {
+        return enrichTransactions(transactions.data, accounts.data, categories.data)
+            .map((transaction) => ({
+                ...transaction,
+                accountFrom: transaction.accountFrom?.getName(),
+                accountTo: transaction.accountTo?.getName(),
+                rootCategory: transaction.rootCategory?.getName(),
+                category: transaction.category?.getName(),
+            }));
+    },
+);
 
 class TransactionsList extends React.PureComponent<TProps> {
     COLUMNS = [
@@ -81,34 +103,41 @@ class TransactionsList extends React.PureComponent<TProps> {
         history.push(routes.transactions.edit(item.original.id));
     };
 
+    renderTable() {
+        return (
+            <GeneralTable
+                columns={this.COLUMNS}
+                data={enrichedTransactionsSelector(this.props)}
+                menu={(row) => (
+                    <RowMenu
+                        menu={[
+                            {
+                                text: t('common.edit'),
+                                onClick: this.handleEdit,
+                                className: '',
+                            },
+                            {
+                                text: t('common.delete'),
+                                onClick: this.handleDelete,
+                                className: 'text-red-600',
+                            },
+                        ]}
+                        row={row}
+                    />
+                )}
+            />
+        );
+    }
+
     render() {
-        const { transactions } = this.props;
+        const { transactions, accounts, categories } = this.props;
+        const isLoading = transactions.loading || accounts.loading || categories.loading;
 
         return (
             <>
-                <GeneralTable
-                    columns={this.COLUMNS}
-                    data={transactions.data.map(item => item.getValues())}
-                    menu={(row) => (
-                        <RowMenu
-                            menu={[
-                                {
-                                    text: t('common.edit'),
-                                    onClick: this.handleEdit,
-                                    className: '',
-                                },
-                                {
-                                    text: t('common.delete'),
-                                    onClick: this.handleDelete,
-                                    className: 'text-red-600',
-                                },
-                            ]}
-                            row={row}
-                        />
-                    )}
-                />
-                {transactions.data.length() === 0 && !transactions.loading ? t('transactions.table.no_transactions') : null}
-                {transactions.loading ? t('common.loading') : ''}
+                {!isLoading && this.renderTable()}
+                {transactions.data.length() === 0 && !isLoading ? t('transactions.table.no_transactions') : null}
+                {isLoading ? t('common.loading') : ''}
             </>
         );
     }
@@ -118,6 +147,8 @@ export default connect(
     (state: TGlobalState) => ({
         sheets: state.sheets,
         transactions: state.transactions,
+        accounts: state.accounts,
+        categories: state.categories,
     }),
     {
         loadTransactions,
