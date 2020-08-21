@@ -8,8 +8,6 @@ import {TGlobalState} from "../../reducers";
 import {
     TDeleteAccount,
     deleteAccount,
-    TLoadAccounts,
-    loadAccounts,
 } from "../../model/accounts/accountsActions";
 import {IAccountsState} from "../../model/accounts/accountsReducer";
 import {ISheetsState} from "../../model/sheets/sheetsReducer";
@@ -20,8 +18,6 @@ import * as routes from "../../routing/routes";
 type TProps = {
     accounts: IAccountsState;
     sheets: ISheetsState;
-    loading: boolean;
-    loadAccounts: TLoadAccounts;
     deleteAccount: TDeleteAccount;
 };
 
@@ -40,13 +36,6 @@ class AccountsList extends React.PureComponent<TProps> {
             accessor: 'startAmount',
         },
     ];
-
-    componentDidMount() {
-        const {loadAccounts, accounts} = this.props;
-        if (accounts.data.length() === 0 && !accounts.loading) {
-            loadAccounts();
-        }
-    }
 
     getAccountById(accountId: string): GAccountRow {
         const account = this.props.accounts.data.find(item => item.getId() === accountId);
@@ -107,7 +96,6 @@ export default connect(
         sheets: state.sheets,
     }),
     {
-        loadAccounts,
         deleteAccount,
     },
 )(AccountsList);

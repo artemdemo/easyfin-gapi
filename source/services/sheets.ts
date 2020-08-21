@@ -12,6 +12,7 @@ const transactionSheetNameRegex = /^\d{4}$/;
  */
 export enum EDataSheetTitles {
     ACCOUNTS = 'accounts',
+    CATEGORIES = 'categories',
 }
 
 /**
