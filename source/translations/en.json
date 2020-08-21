@@ -2,6 +2,7 @@
     "menu.main": "Main",
     "menu.transactions": "Transactions",
     "menu.accounts": "Accounts",
+    "menu.categories": "Categories",
     "menu.settings": "Settings",
     "menu.log_out": "Log Out",
     "transactions.new": "New transaction",

@@ -6,10 +6,11 @@ import AppView from "../views/components/AppView";
 import MainView from "../views/components/MainView";
 import LoginView from "../views/components/LoginView";
 import EditTransaction from "../views/components/EditTransactionView";
-import SettingsView from "../views/components/SettingsView";
 import TransactionsView from "../views/components/TransactionsView";
 import AccountsView from "../views/components/AccountsView";
 import EditAccountView from "../views/components/EditAccountView";
+import CategoriesView from "../views/components/CategoriesView";
+import SettingsView from "../views/components/SettingsView";
 
 type TProps = {
     store: any;
@@ -28,6 +29,7 @@ const MainRoutes = (props: TProps) => (
                 <Route path={routes.accounts()} component={AccountsView} exact />
                 <Route path={routes.accounts.new()} component={EditAccountView} />
                 <Route path={routes.accounts.edit()} component={EditAccountView} />
+                <Route path={routes.categories()} component={CategoriesView} />
                 <Route path={routes.settings()} component={SettingsView} />
             </AppView>
         </Router>

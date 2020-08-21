@@ -31,6 +31,7 @@ class MainMenu extends React.PureComponent<TProps, TState> {
                     <NavbarLink to={routes.main()} exact>{t('menu.main')}</NavbarLink>
                     <NavbarLink to={routes.transactions()}>{t('menu.transactions')}</NavbarLink>
                     <NavbarLink to={routes.accounts()}>{t('menu.accounts')}</NavbarLink>
+                    <NavbarLink to={routes.categories()}>{t('menu.categories')}</NavbarLink>
                     <NavbarLink to={routes.settings()}>{t('menu.settings')}</NavbarLink>
                 </div>
             );

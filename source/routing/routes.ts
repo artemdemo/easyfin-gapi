@@ -49,3 +49,14 @@ export const settings = <ISettingsRoute>function () {
 }
 settings.apiKeys = () => `${settings()}/api-keys`;
 
+export const categories = <IEditableResourceRoute>function () {
+    return `${main()}categories`;
+}
+categories.new = () => `${categories()}/new`;
+categories.view = (id) => `${categories()}/${id}`;
+categories.edit = (id) => {
+    if (id == undefined) {
+        return `${categories()}/:categoryId/edit`
+    }
+    return `${categories()}/${id}/edit`;
+};
