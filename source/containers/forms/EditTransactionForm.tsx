@@ -1,11 +1,14 @@
 import React from "react";
 import * as Yup from "yup";
+import {connect} from "react-redux";
 import {IFormProps} from "../../types/formik";
 import {t} from "../../services/i18n";
 import {EButtonAppearance, getInputClass} from "../../styles/elements";
 import Select from "../../components/Select/Select";
 import Button from "../../components/Button/Button";
 import InputError from "../../components/InputError/InputError";
+import {TGlobalState} from "../../reducers";
+import {IAccountsState} from "../../model/accounts/accountsReducer";
 
 export type TValues = {
     date: string;
@@ -42,6 +45,7 @@ export const initValues: TValues = {
 type TProps = {
     formProps: IEditTransactionForm;
     mockSubmit: () => void;
+    accounts: IAccountsState;
 };
 type TState = {};
 
@@ -61,6 +65,36 @@ class EditTransactionForm extends React.PureComponent<TProps, TState> {
             <InputError show={errors[key] && touched[key]}>
                 {errors[key]}
             </InputError>
+        );
+    }
+
+    renderSelectAccount() {
+        const {
+            values,
+            handleChange,
+            handleBlur,
+        } = this.props.formProps;
+        const { accounts } = this.props;
+        return (
+            <>
+                <Select
+                    className={getInputClass()}
+                    placeholder="Account From"
+                    name="accountFrom"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.accountFrom}
+                    disabled={this.isDisabled()}
+                >
+                    <option value='' disabled>
+                        {t('accounts.account_type')}
+                    </option>
+                    {accounts.data.map(accountRow => (
+                        <option key={accountRow.getId()}>{accountRow.getName()}</option>
+                    ))}
+                </Select>
+                {this.renderError('accountFrom')}
+            </>
         );
     }
 
@@ -89,19 +123,7 @@ class EditTransactionForm extends React.PureComponent<TProps, TState> {
                         {this.renderError('amount')}
                     </div>
                     <div className="w-1/2 px-2">
-                        <Select
-                            className={getInputClass()}
-                            placeholder="Account From"
-                            name="accountFrom"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.accountFrom}
-                            disabled={this.isDisabled()}
-                        >
-                            <option>account one</option>
-                            <option>account two</option>
-                        </Select>
-                        {this.renderError('accountFrom')}
+                        {this.renderSelectAccount()}
                     </div>
                 </div>
                 <div className='flex flex-wrap -mx-2 mb-4'>
@@ -164,4 +186,8 @@ class EditTransactionForm extends React.PureComponent<TProps, TState> {
     }
 }
 
-export default EditTransactionForm;
+export default connect(
+    (state: TGlobalState) => ({
+        accounts: state.accounts,
+    }),
+)(EditTransactionForm);

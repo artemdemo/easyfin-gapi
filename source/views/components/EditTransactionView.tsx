@@ -19,18 +19,25 @@ import EditTransactionForm, {
 } from "../../containers/forms/EditTransactionForm";
 import {ISheetsState} from "../../model/sheets/sheetsReducer";
 import {getLastTransactionsSheet} from "../../services/sheets";
+import {TGlobalState} from "../../reducers";
+import {IAccountsState} from "../../model/accounts/accountsReducer";
+import {TRouterMatch} from "../../types/react-router-dom";
 
 type TProps = {
     user: TUserState;
-    sheet: ISheetsState;
+    sheets: ISheetsState;
+    accounts: IAccountsState;
     sendNotification: (data: any) => void;
-    createTransaction: TCreateTransaction
+    createTransaction: TCreateTransaction;
+    match: TRouterMatch<{
+        transactionId: string;
+    }>;
 };
 type TState = {};
 
 class EditTransactionView extends React.PureComponent<TProps, TState> {
     mockSubmit = () => {
-        const { user, sheet, createTransaction } = this.props;
+        const { user, sheets, createTransaction } = this.props;
         const transaction = new GTransactionRow({
             date: new Date(),
             accountFrom: 'account',
@@ -43,13 +50,13 @@ class EditTransactionView extends React.PureComponent<TProps, TState> {
         });
         createTransaction({
             transaction,
-            sheet: getLastTransactionsSheet(sheet.data),
+            sheet: getLastTransactionsSheet(sheets.data),
         });
     }
 
     handleSubmit = (values: TValues, { setSubmitting }) => {
         setSubmitting(false);
-        const { user, sheet, createTransaction } = this.props;
+        const { user, sheets, createTransaction } = this.props;
         const transaction = new GTransactionRow({
             date: parseISO(values.date),
             accountFrom: values.accountFrom,
@@ -62,11 +69,11 @@ class EditTransactionView extends React.PureComponent<TProps, TState> {
         });
         createTransaction({
             transaction,
-            sheet: getLastTransactionsSheet(sheet.data),
+            sheet: getLastTransactionsSheet(sheets.data),
         });
     }
 
-    renderForm = (formProps: IEditTransactionForm) => {
+    renderFormContent = (formProps: IEditTransactionForm) => {
         return (
             <EditTransactionForm
                 formProps={formProps}
@@ -75,25 +82,40 @@ class EditTransactionView extends React.PureComponent<TProps, TState> {
         );
     };
 
-    render() {
-        return (
-            <>
+    renderForm() {
+        const {accounts} = this.props;
+        const {transactionId} = this.props.match.params;
+        const isEditingTransaction = accounts.data.length() > 0 && transactionId;
+        if (isEditingTransaction || !transactionId) {
+            return (
                 <Formik
                     initialValues={initValues}
                     validationSchema={transactionValidationSchema}
                     onSubmit={this.handleSubmit}
                 >
-                    {this.renderForm}
+                    {this.renderFormContent}
                 </Formik>
+            );
+        }
+        return null;
+    }
+
+    render() {
+        const {accounts} = this.props;
+        return (
+            <>
+                {this.renderForm()}
+                {accounts.loading ? t('common.loading') : ''}
             </>
         );
     }
 }
 
 export default connect(
-    state => ({
+    (state: TGlobalState) => ({
         user: state.user,
-        sheet: state.sheet,
+        sheets: state.sheets,
+        accounts: state.accounts,
     }),
     {
         sendNotification,

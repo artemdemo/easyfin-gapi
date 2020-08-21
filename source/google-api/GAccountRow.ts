@@ -64,6 +64,10 @@ class GAccountRow extends GRow {
         return this._values.id;
     }
 
+    getName(): string {
+        return this._values.name;
+    }
+
     clone(values?: ICreateAccountValues): GAccountRow {
         return new GAccountRow(
             {
