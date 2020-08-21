@@ -98,6 +98,31 @@ class EditTransactionForm extends React.PureComponent<TProps, TState> {
         );
     }
 
+    renderSelectCategories() {
+        const {
+            values,
+            handleChange,
+            handleBlur,
+        } = this.props.formProps;
+        return (
+            <>
+                <Select
+                    className={getInputClass()}
+                    placeholder="Category"
+                    name="category"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.accountFrom}
+                    disabled={this.isDisabled()}
+                >
+                    <option>category one</option>
+                    <option>category two</option>
+                </Select>
+                {this.renderError('category')}
+            </>
+        );
+    }
+
     render() {
         const {
             values,
@@ -141,19 +166,7 @@ class EditTransactionForm extends React.PureComponent<TProps, TState> {
                         {this.renderError('date')}
                     </div>
                     <div className="w-1/2 px-2">
-                        <Select
-                            className={getInputClass()}
-                            placeholder="Category"
-                            name="category"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.accountFrom}
-                            disabled={this.isDisabled()}
-                        >
-                            <option>category one</option>
-                            <option>category two</option>
-                        </Select>
-                        {this.renderError('category')}
+                        {this.renderSelectCategories()}
                     </div>
                 </div>
                 <div className="mb-4">
