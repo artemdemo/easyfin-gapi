@@ -1,5 +1,5 @@
 import React from "react";
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 import AccountsList from "../../containers/AccountsList/AccountsList";
 import ButtonLink from "../../components/ButtonLink/ButtonLink";
 import * as routes from "../../routing/routes";
@@ -14,14 +14,17 @@ type TProps = {
 type TState = {};
 
 class AccountsView extends React.PureComponent<TProps, TState> {
-    renderAccountList() {
+    renderList() {
         const {sheets} = this.props;
         if (sheets.data.length() > 0) {
             return (
                 <AccountsList />
             );
         }
-        return t('sheets.loading');
+        if (sheets.loading) {
+            return t('sheets.loading');
+        }
+        return null;
     }
 
     render() {
@@ -35,7 +38,7 @@ class AccountsView extends React.PureComponent<TProps, TState> {
                         {t('accounts.new')}
                     </ButtonLink>
                 </div>
-                {this.renderAccountList()}
+                {this.renderList()}
             </>
         );
     }

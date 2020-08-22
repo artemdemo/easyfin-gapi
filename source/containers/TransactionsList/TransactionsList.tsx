@@ -53,7 +53,7 @@ class TransactionsList extends React.PureComponent<TProps> {
         {
             Header: t('transactions.table.date'),
             accessor: 'date',
-            Cell: cellProps => format(cellProps.value, "yyyy-MM-dd HH:mm"),
+            Cell: cellProps => format(cellProps.value, 'yyyy-MM-dd HH:mm'),
         },
         {
             Header: t('transactions.table.category'),

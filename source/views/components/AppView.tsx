@@ -16,13 +16,18 @@ import {
     TLoadAccounts,
     loadAccounts,
 } from "../../model/accounts/accountsActions";
+import {
+    TLoadCategories,
+    loadCategories,
+} from "../../model/categories/categoriesActions";
 import * as routes from "../../routing/routes";
 
 type TProps = {
     signedIn: TSignedIn;
     signedOut: () => void;
     loadSheets: () => void;
-    loadAccounts: TLoadAccounts,
+    loadAccounts: TLoadAccounts;
+    loadCategories: TLoadAccounts;
 };
 
 type TState = {};
@@ -48,13 +53,14 @@ class AppView extends React.PureComponent<TProps, TState> {
     };
 
     updateSigninStatus = (isSignedIn: boolean) => {
-        const { signedIn, signedOut, loadSheets, loadAccounts } = this.props;
+        const { signedIn, signedOut, loadSheets, loadAccounts, loadCategories } = this.props;
         if (isSignedIn) {
             if (history.location.pathname === routes.login()) {
                 history.push(routes.main());
             }
             loadSheets();
             loadAccounts();
+            loadCategories();
             googleApi.getBasicProfile()
                 .then(status => signedIn(status));
         } else {
@@ -77,6 +83,7 @@ class AppView extends React.PureComponent<TProps, TState> {
 export default connect(
     () => ({}),
     {
+        loadCategories,
         loadSheets,
         loadAccounts,
         signedIn,
