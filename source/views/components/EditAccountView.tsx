@@ -1,6 +1,6 @@
 import React from "react";
-import { Formik } from "formik";
-import { connect } from "react-redux";
+import {connect} from "react-redux";
+import {Formik} from "formik";
 import EditAccountForm, {
     IEditAccountForm,
     TValues,
