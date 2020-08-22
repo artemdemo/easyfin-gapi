@@ -4,9 +4,9 @@ import * as routes from "../../routing/routes";
 import {EButtonAppearance} from "../../styles/elements";
 import {t} from "../../services/i18n";
 import WaitForSheets from "../../containers/WaitForSheets/WaitForSheets";
+import CategoriesList from "../../containers/CategoriesList/CategoriesList";
 
-type TProps = {
-};
+type TProps = {};
 type TState = {};
 
 class CategoriesView extends React.PureComponent<TProps, TState> {
@@ -22,7 +22,7 @@ class CategoriesView extends React.PureComponent<TProps, TState> {
                     </ButtonLink>
                 </div>
                 <WaitForSheets>
-                    CategoriesView List...
+                    <CategoriesList />
                 </WaitForSheets>
             </>
         );
