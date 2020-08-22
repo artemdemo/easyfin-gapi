@@ -10,6 +10,7 @@ import TransactionsView from "../views/components/TransactionsView";
 import AccountsView from "../views/components/AccountsView";
 import EditAccountView from "../views/components/EditAccountView";
 import CategoriesView from "../views/components/CategoriesView";
+import EditCategoryView from "../views/components/EditCategoryView";
 import SettingsView from "../views/components/SettingsView";
 
 type TProps = {
@@ -29,7 +30,9 @@ const MainRoutes = (props: TProps) => (
                 <Route path={routes.accounts()} component={AccountsView} exact />
                 <Route path={routes.accounts.new()} component={EditAccountView} />
                 <Route path={routes.accounts.edit()} component={EditAccountView} />
-                <Route path={routes.categories()} component={CategoriesView} />
+                <Route path={routes.categories()} component={CategoriesView} exact />
+                <Route path={routes.categories.new()} component={EditCategoryView} />
+                <Route path={routes.categories.edit()} component={EditCategoryView} />
                 <Route path={routes.settings()} component={SettingsView} />
             </AppView>
         </Router>

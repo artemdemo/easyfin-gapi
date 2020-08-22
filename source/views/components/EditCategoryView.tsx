@@ -11,6 +11,12 @@ import {
 import {TRouterMatch} from "../../types/react-router-dom";
 import {t} from "../../services/i18n";
 import {ICategoriesState} from "../../model/categories/categoriesReducer";
+import EditCategoryForm, {
+    categoryValidationSchema,
+    IEditCategoryForm,
+    TValues,
+    initValues,
+} from "../../containers/forms/EditCategoryForm";
 
 type TProps = {
     categories: ICategoriesState;
@@ -23,11 +29,39 @@ type TProps = {
 type TState = {};
 
 class EditCategoryView extends React.PureComponent<TProps, TState> {
+    state = {
+        initValues,
+    };
+
+    handleSubmit = (values: TValues, { setSubmitting }) => {}
+
+    renderFormContent = (formProps: IEditCategoryForm) => {
+        return (
+            <EditCategoryForm formProps={formProps} />
+        );
+    };
+
     renderForm() {
         const {categories} = this.props;
         const {categoryId} = this.props.match.params;
         const isEditingCategory = categories.data.length() > 0 && categoryId;
-        if (isEditingCategory || !categoryId) {}
+        if (isEditingCategory || !categoryId) {
+            const category = categories.data.find(item => item.getId() === categoryId);
+            const values = category?.getValues();
+            const _initValues = isEditingCategory ? {
+                name: values?.name,
+                parent: values?.parent,
+            } : initValues;
+            return (
+                <Formik
+                    initialValues={_initValues}
+                    validationSchema={categoryValidationSchema}
+                    onSubmit={this.handleSubmit}
+                >
+                    {this.renderFormContent}
+                </Formik>
+            );
+        }
         return null;
     }
 
