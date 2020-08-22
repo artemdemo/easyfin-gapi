@@ -5,8 +5,8 @@ import {t} from "../../services/i18n";
 import {getInputClass} from "../../styles/elements";
 import Select from "../../components/Select/Select";
 import Button from "../../components/Button/Button";
-import InputError from "../../components/InputError/InputError";
 import {EAccountType} from "../../google-api/GAccountRow";
+import EditForm, {IEditFormProps} from "./EditForm";
 
 export type TValues = {
     name: string;
@@ -33,30 +33,11 @@ export interface IEditAccountForm extends IFormProps {
     values: TValues;
 }
 
-type TProps = {
+interface IProps extends IEditFormProps {
     formProps: IEditAccountForm;
-};
-type TState = {};
+}
 
-class EditAccountForm extends React.PureComponent<TProps, TState> {
-    isDisabled() {
-        const { isSubmitting } = this.props.formProps;
-        return isSubmitting;
-    }
-
-    renderError(key: string) {
-        const {
-            errors,
-            touched,
-        } = this.props.formProps;
-
-        return (
-            <InputError show={errors[key] && touched[key]}>
-                {errors[key]}
-            </InputError>
-        );
-    }
-
+class EditAccountForm extends EditForm<IProps> {
     renderName() {
         const {
             values,

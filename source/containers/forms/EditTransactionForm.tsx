@@ -6,9 +6,9 @@ import {t} from "../../services/i18n";
 import {EButtonAppearance, getInputClass} from "../../styles/elements";
 import Select from "../../components/Select/Select";
 import Button from "../../components/Button/Button";
-import InputError from "../../components/InputError/InputError";
 import {TGlobalState} from "../../reducers";
 import {IAccountsState} from "../../model/accounts/accountsReducer";
+import EditForm, {IEditFormProps} from "./EditForm";
 
 export type TValues = {
     date: string;
@@ -42,32 +42,13 @@ export const initValues: TValues = {
     comment: '',
 };
 
-type TProps = {
+interface IProps extends IEditFormProps {
     formProps: IEditTransactionForm;
     mockSubmit: () => void;
     accounts: IAccountsState;
-};
-type TState = {};
+}
 
-class EditTransactionForm extends React.PureComponent<TProps, TState> {
-    isDisabled() {
-        const { isSubmitting } = this.props.formProps;
-        return isSubmitting;
-    }
-
-    renderError(key: string) {
-        const {
-            errors,
-            touched,
-        } = this.props.formProps;
-
-        return (
-            <InputError show={errors[key] && touched[key]}>
-                {errors[key]}
-            </InputError>
-        );
-    }
-
+class EditTransactionForm extends EditForm<IProps> {
     renderSelectAccount() {
         const {
             values,
