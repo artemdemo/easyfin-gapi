@@ -40,7 +40,7 @@ class AccountsList extends React.PureComponent<TProps> {
     getAccountById(accountId: string): GAccountRow {
         const account = this.props.accounts.data.find(item => item.getId() === accountId);
         if (!account) {
-            throw new Error(`Account for the given id is not found. id was ${accountId}`);
+            throw new Error(`Account for the given id is not found. ID was ${accountId}`);
         }
         return account;
     }

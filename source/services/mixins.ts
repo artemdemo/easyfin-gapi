@@ -13,8 +13,8 @@ export interface ITransaction extends Omit<ITransactionRowValues, 'accountFrom'|
 
 export const enrichTransactions = (
     transactions: DataListGRow<GTransactionRow>,
-    accounts: DataListGRow<GAccountRow> = new DataListGRow<GAccountRow>(),
-    categories: DataListGRow<GCategoryRow> = new DataListGRow<GCategoryRow>(),
+    accounts: DataListGRow<GAccountRow>,
+    categories: DataListGRow<GCategoryRow>,
 ): ITransaction[] => {
     return transactions.map((transactionRow) => {
         const transactionRowValues = transactionRow.getValues();
