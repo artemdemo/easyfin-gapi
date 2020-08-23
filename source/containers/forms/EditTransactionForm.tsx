@@ -49,6 +49,11 @@ interface IProps extends IEditFormProps {
 }
 
 class EditTransactionForm extends EditForm<IProps> {
+    isDisabled(): boolean | undefined {
+        const { accounts } = this.props;
+        return super.isDisabled() || accounts.loading;
+    }
+
     renderSelectAccount() {
         const {
             values,
@@ -59,7 +64,9 @@ class EditTransactionForm extends EditForm<IProps> {
         return (
             <>
                 <Select
-                    className={getInputClass()}
+                    className={getInputClass({
+                        disabled: this.isDisabled(),
+                    })}
                     placeholder="Account From"
                     name="accountFrom"
                     onChange={handleChange}
@@ -88,7 +95,9 @@ class EditTransactionForm extends EditForm<IProps> {
         return (
             <>
                 <Select
-                    className={getInputClass()}
+                    className={getInputClass({
+                        disabled: this.isDisabled(),
+                    })}
                     placeholder="Category"
                     name="category"
                     onChange={handleChange}
@@ -118,7 +127,9 @@ class EditTransactionForm extends EditForm<IProps> {
                     <div className="w-1/2 px-2">
                         <input
                             type="text"
-                            className={getInputClass()}
+                            className={getInputClass({
+                                disabled: this.isDisabled(),
+                            })}
                             placeholder="Amount"
                             name="amount"
                             onChange={handleChange}
@@ -136,7 +147,9 @@ class EditTransactionForm extends EditForm<IProps> {
                     <div className="w-1/2 px-2">
                         <input
                             type="date"
-                            className={getInputClass()}
+                            className={getInputClass({
+                                disabled: this.isDisabled(),
+                            })}
                             placeholder="Date"
                             name="date"
                             onChange={handleChange}
@@ -153,7 +166,9 @@ class EditTransactionForm extends EditForm<IProps> {
                 <div className="mb-4">
                     <textarea
                         rows={3}
-                        className={getInputClass()}
+                        className={getInputClass({
+                            disabled: this.isDisabled(),
+                        })}
                         placeholder="Comment"
                         name="comment"
                         onChange={handleChange}

@@ -5,8 +5,8 @@ import {TGlobalState} from "../../reducers";
 import {
     TCreateCategory,
     createCategory,
-    TDeleteCategory,
-    deleteCategory,
+    TUpdateCategory,
+    updateCategory,
 } from "../../model/categories/categoriesActions";
 import {TRouterMatch} from "../../types/react-router-dom";
 import {t} from "../../services/i18n";
@@ -17,11 +17,12 @@ import EditCategoryForm, {
     TValues,
     initValues,
 } from "../../containers/forms/EditCategoryForm";
+import GCategoryRow from "../../google-api/GCategoryRow";
 
 type TProps = {
     categories: ICategoriesState;
     createCategory: TCreateCategory;
-    deleteCategory: TDeleteCategory;
+    updateCategory: TUpdateCategory;
     match: TRouterMatch<{
         categoryId: string;
     }>;
@@ -33,7 +34,24 @@ class EditCategoryView extends React.PureComponent<TProps, TState> {
         initValues,
     };
 
-    handleSubmit = (values: TValues, { setSubmitting }) => {}
+    handleSubmit = (values: TValues, { setSubmitting }) => {
+        setSubmitting(false);
+        const {createCategory, updateCategory, categories} = this.props;
+        const {categoryId} = this.props.match.params;
+        const categoryProps = {
+            name: values.name,
+            parent: values.parent === '' ? undefined : values.parent,
+        };
+        if (categoryId) {
+            const category = categories.data.find(item => item.getId() === categoryId);
+            if (!category) {
+                throw new Error(`Category with given id not found. ID was: ${categoryId}`);
+            }
+            updateCategory(category.clone(categoryProps));
+        } else {
+            createCategory(new GCategoryRow(categoryProps));
+        }
+    }
 
     renderFormContent = (formProps: IEditCategoryForm) => {
         return (
@@ -82,6 +100,6 @@ export default connect(
     }),
     {
         createCategory,
-        deleteCategory,
+        updateCategory,
     },
 )(EditCategoryView);

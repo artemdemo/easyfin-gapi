@@ -22,8 +22,7 @@ export interface IEditCategoryForm extends IFormProps {
 export const categoryValidationSchema = Yup.object().shape({
     name: Yup.string()
         .required(t('common.required')),
-    parent: Yup.string()
-        .required(t('common.required')),
+    parent: Yup.string(),
 });
 
 export const initValues: TValues = {
@@ -38,16 +37,24 @@ interface IProps extends IEditFormProps {
 }
 
 class EditCategoryForm extends EditForm<IProps> {
+    isDisabled(): boolean | undefined {
+        const { categories } = this.props;
+        return super.isDisabled() || categories.loading;
+    }
+
     renderSelectParent() {
         const {
             values,
             handleChange,
             handleBlur,
         } = this.props.formProps;
+        const { categories } = this.props;
         return (
             <>
                 <Select
-                    className={getInputClass()}
+                    className={getInputClass({
+                        disabled: this.isDisabled(),
+                    })}
                     placeholder="Category"
                     name="category"
                     onChange={handleChange}
@@ -55,8 +62,14 @@ class EditCategoryForm extends EditForm<IProps> {
                     value={values.parent}
                     disabled={this.isDisabled()}
                 >
-                    <option>category one</option>
-                    <option>category two</option>
+                    <option value='' disabled>
+                        {t('categories.select_parent_category')}
+                    </option>
+                    {categories.data.map(category => (
+                        <option key={category.getId()}>
+                            {category.getName()}
+                        </option>
+                    ))}
                 </Select>
                 {this.renderError('category')}
             </>
@@ -77,7 +90,9 @@ class EditCategoryForm extends EditForm<IProps> {
                     <div className="w-1/2 px-2">
                         <input
                             type="text"
-                            className={getInputClass()}
+                            className={getInputClass({
+                                disabled: this.isDisabled(),
+                            })}
                             placeholder="Name"
                             name="name"
                             onChange={handleChange}

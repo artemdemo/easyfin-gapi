@@ -38,24 +38,21 @@ class EditAccountView extends React.PureComponent<TProps, TState> {
 
     handleSubmit = (values: TValues, { setSubmitting }) => {
         setSubmitting(false);
-        const { createAccount, updateAccount, accounts } = this.props;
+        const {createAccount, updateAccount, accounts} = this.props;
         const {accountId} = this.props.match.params;
+        const accountProps = {
+            name: values.name,
+            type: EAccountType[values.type],
+            startAmount: Number(values.startAmount),
+        }
         if (accountId) {
             const account = accounts.data.find(item => item.getId() === accountId);
             if (!account) {
                 throw new Error(`Account with given id not found. ID was: ${accountId}`);
             }
-            updateAccount(account.clone({
-                name: values.name,
-                type: EAccountType[values.type],
-                startAmount: Number(values.startAmount),
-            }));
+            updateAccount(account.clone(accountProps));
         } else {
-            createAccount(new GAccountRow({
-                name: values.name,
-                type: EAccountType[values.type],
-                startAmount: Number(values.startAmount),
-            }))
+            createAccount(new GAccountRow(accountProps))
         }
     };
 

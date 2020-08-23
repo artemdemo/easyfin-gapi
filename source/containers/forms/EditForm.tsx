@@ -4,12 +4,14 @@ import InputError from "../../components/InputError/InputError";
 
 export interface IEditFormProps {
     formProps: IFormProps;
+    disabled?: boolean;
 }
 
 class EditForm<T extends IEditFormProps> extends React.PureComponent<T, {}> {
     isDisabled() {
         const { isSubmitting } = this.props.formProps;
-        return isSubmitting;
+        const { disabled } = this.props;
+        return isSubmitting || disabled;
     }
 
     renderError(key: string) {

@@ -31,6 +31,7 @@
     "accounts.start_amount": "Start amount",
     "categories.new": "New category",
     "categories.loading": "Loading categories data",
+    "categories.select_parent_category": "Select Parent Category",
     "categories.table.name": "Name",
     "categories.table.parent": "Parent",
     "categories.table.no_categories": "No categories loaded",

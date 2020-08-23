@@ -28,6 +28,7 @@ const Button = (props: TProps) => {
         size: size,
         appearance: appearance || EButtonAppearance.PRIMARY,
         block: block || false,
+        disabled,
     }));
 
     return (

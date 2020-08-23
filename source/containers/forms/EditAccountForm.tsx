@@ -52,6 +52,7 @@ class EditAccountForm extends EditForm<IProps> {
                     type="text"
                     className={getInputClass({
                         error: errors.name && touched.name,
+                        disabled: this.isDisabled(),
                     })}
                     placeholder={t('accounts.name')}
                     name="name"
@@ -79,6 +80,7 @@ class EditAccountForm extends EditForm<IProps> {
                 <Select
                     className={getInputClass({
                         error: errors.type && touched.type,
+                        disabled: this.isDisabled(),
                     })}
                     name="type"
                     onChange={handleChange}
@@ -118,6 +120,7 @@ class EditAccountForm extends EditForm<IProps> {
                     type="number"
                     className={getInputClass({
                         error: errors.startAmount && touched.startAmount,
+                        disabled: this.isDisabled(),
                     })}
                     placeholder={t('accounts.start_amount')}
                     name="startAmount"
