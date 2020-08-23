@@ -37,10 +37,10 @@ export const updateCategory = (account: GCategoryRow): Promise<GCategoryRow> => 
         });
 };
 
-export const deleteCategory = (sheet: GSheet, account: GCategoryRow) => {
-    const lineIdx = account.getLineIdx();
+export const deleteCategory = (sheet: GSheet, category: GCategoryRow) => {
+    const lineIdx = category.getLineIdx();
     if (lineIdx == undefined) {
-        logger.error(account);
+        logger.error(category);
         throw new Error('There is no lineIdx in the given category');
     }
     return googleSheets.deleteRowByLineIdx(sheet.getId(), lineIdx);

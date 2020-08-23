@@ -9,7 +9,7 @@ import {
     deleteCategory,
 } from "../../model/categories/categoriesActions";
 import {ISheetsState} from "../../model/sheets/sheetsReducer";
-import {getAccountsSheet} from "../../services/sheets";
+import {getCategoriesSheet} from "../../services/sheets";
 import history from "../../history";
 import * as routes from "../../routing/routes";
 import {ICategoriesState} from "../../model/categories/categoriesReducer";
@@ -44,7 +44,7 @@ class CategoriesList extends React.PureComponent<TProps> {
     handleDelete = (item) => {
         const { deleteCategory, sheets } = this.props;
         deleteCategory({
-            sheet: getAccountsSheet(sheets.data),
+            sheet: getCategoriesSheet(sheets.data),
             category: this.getCategoryById(item.original.id),
         });
     };
