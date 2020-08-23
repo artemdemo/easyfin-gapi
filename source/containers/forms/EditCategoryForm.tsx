@@ -65,11 +65,16 @@ class EditCategoryForm extends EditForm<IProps> {
                     <option value='' disabled>
                         {t('categories.select_parent_category')}
                     </option>
-                    {categories.data.map(category => (
-                        <option key={category.getId()}>
-                            {category.getName()}
-                        </option>
-                    ))}
+                    {categories.data
+                        // Category can be parent only if it doesn't have `parent` of its own.
+                        // I don't want more than one level of parenthood
+                        // (daughters only, no grandchildren)
+                        .filter(category => !!category.getParent())
+                        .map(category => (
+                            <option key={category.getId()}>
+                                {category.getName()}
+                            </option>
+                        ))}
                 </Select>
                 {this.renderError('category')}
             </>

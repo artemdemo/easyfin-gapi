@@ -58,6 +58,10 @@ class GCategoryRow extends GRow {
         return this._values.name;
     }
 
+    getParent(): string|undefined {
+        return this._values.parent;
+    }
+
     clone(values?: ICreateCategoryValues): GCategoryRow {
         return new GCategoryRow(
             {
