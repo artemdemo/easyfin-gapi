@@ -1,7 +1,7 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
-import styled from "styled-components";
-import TransparentButton from "../TransparentButton/TransparentButton";
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import styled from 'styled-components';
+import TransparentButton from '../TransparentButton/TransparentButton';
 
 const NavItem = styled.div`
     display: inline-block;
@@ -36,7 +36,7 @@ class NavbarLink extends React.PureComponent<TProps, TState> {
                 // @ts-ignore
                 <NavLink
                     className={NavbarLink.linkClass}
-                    activeClassName="text-gray-900"
+                    activeClassName='text-gray-900'
                     to={this.props.to}
                     exact={this.props.exact}
                 >

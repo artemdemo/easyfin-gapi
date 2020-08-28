@@ -1,8 +1,8 @@
-import React from "react";
-import {Link} from "react-router-dom";
-import classnames from "classnames";
-import history from "../../history";
-import {EButtonAppearance, getBtnClass} from "../../styles/elements";
+import React from 'react';
+import {Link} from 'react-router-dom';
+import classnames from 'classnames';
+import history from '../../history';
+import {EButtonAppearance, getBtnClass} from '../../styles/elements';
 
 type TProps = {
     to: string;

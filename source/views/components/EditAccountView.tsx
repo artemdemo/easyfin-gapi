@@ -1,25 +1,25 @@
-import React from "react";
-import {connect} from "react-redux";
-import {Formik} from "formik";
+import React from 'react';
+import {connect} from 'react-redux';
+import {Formik} from 'formik';
 import EditAccountForm, {
     IEditAccountForm,
     TValues,
     accountValidationSchema,
     initValues,
-} from "../../containers/forms/EditAccountForm";
-import GAccountRow, { EAccountType } from "../../google-api/GAccountRow";
+} from '../../containers/forms/EditAccountForm';
+import GAccountRow, { EAccountType } from '../../google-api/GAccountRow';
 import {
     TCreateAccount,
     createAccount,
     TUpdateAccount,
     updateAccount,
-} from "../../model/accounts/accountsActions";
-import {TRouterMatch} from "../../types/react-router-dom";
-import {TGlobalState} from "../../reducers";
-import {IAccountsState} from "../../model/accounts/accountsReducer";
-import {t} from "../../services/i18n";
-import history from "../../history";
-import * as routes from "../../routing/routes";
+} from '../../model/accounts/accountsActions';
+import {TRouterMatch} from '../../types/react-router-dom';
+import {TGlobalState} from '../../reducers';
+import {IAccountsState} from '../../model/accounts/accountsReducer';
+import {t} from '../../services/i18n';
+import history from '../../history';
+import * as routes from '../../routing/routes';
 
 type TProps = {
     accounts: IAccountsState;

@@ -1,9 +1,9 @@
-import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSortAlphaDown, faSortAlphaDownAlt } from "@fortawesome/free-solid-svg-icons";
-import {useSortBy, useTable, Column} from "react-table";
-import { getTableClass, getTableThClass, getTableTdClass } from "../../styles/table";
-import {IHeaderGroup} from "../../types/react-table";
+import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSortAlphaDown, faSortAlphaDownAlt } from '@fortawesome/free-solid-svg-icons';
+import {useSortBy, useTable, Column} from 'react-table';
+import { getTableClass, getTableThClass, getTableTdClass } from '../../styles/table';
+import {IHeaderGroup} from '../../types/react-table';
 
 type TProps = {
     columns: Column[];

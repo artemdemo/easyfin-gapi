@@ -1,12 +1,12 @@
-import React from "react";
-import {Formik} from "formik";
-import {EButtonAppearance, getBtnClass, getInputClass} from "../../styles/elements";
-import {spreadsheetID} from "../../services/settingsStorage";
-import {IFormProps} from "../../types/formik";
-import Button from "../../components/Button/Button";
-import {sendNotification} from "../../model/notifications/notificationsActions";
-import store from "../../store";
-import logger from "../../services/logger";
+import React from 'react';
+import {Formik} from 'formik';
+import {EButtonAppearance, getBtnClass, getInputClass} from '../../styles/elements';
+import {spreadsheetID} from '../../services/settingsStorage';
+import {IFormProps} from '../../types/formik';
+import Button from '../../components/Button/Button';
+import {sendNotification} from '../../model/notifications/notificationsActions';
+import store from '../../store';
+import logger from '../../services/logger';
 
 type TValues = {
     spreadsheetId: string;
@@ -23,7 +23,7 @@ class SettingsMainView extends React.PureComponent<TProps, TState> {
     handleSubmit = (values: TValues, { setSubmitting }) => {
         setSubmitting(false);
         spreadsheetID.set(values.spreadsheetId);
-        store.dispatch(sendNotification("Settings saved"));
+        store.dispatch(sendNotification('Settings saved'));
     }
 
     handleValidation = (values: TValues) => {}
@@ -41,26 +41,26 @@ class SettingsMainView extends React.PureComponent<TProps, TState> {
 
         return (
             <form onSubmit={handleSubmit}>
-                <div className="flex flex-wrap -mx-2 mb-4">
-                    <div className="w-1/2 px-2">
+                <div className='flex flex-wrap -mx-2 mb-4'>
+                    <div className='w-1/2 px-2'>
                         <input
-                            type="text"
-                            name="spreadsheetId"
+                            type='text'
+                            name='spreadsheetId'
                             className={getInputClass()}
-                            placeholder="Spreadsheet ID"
+                            placeholder='Spreadsheet ID'
                             value={values.spreadsheetId}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             disabled={isSubmitting}
                         />
                     </div>
-                    <div className="w-1/2 px-2">
+                    <div className='w-1/2 px-2'>
                         <a
                             className={getBtnClass({
                                 disabled: values.spreadsheetId === '',
                                 appearance: EButtonAppearance.TEXT_LINK,
                             })}
-                            target="_blank"
+                            target='_blank'
                             href={`https://docs.google.com/spreadsheets/d/${values.spreadsheetId}/edit#gid=0`}
                         >
                             Open spreadsheet DB

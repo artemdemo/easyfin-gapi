@@ -1,29 +1,29 @@
-import React from "react";
-import { connect } from "react-redux";
-import { Formik } from "formik";
-import parseISO from "date-fns/parseISO";
+import React from 'react';
+import { connect } from 'react-redux';
+import { Formik } from 'formik';
+import parseISO from 'date-fns/parseISO';
 import {
     TCreateTransaction,
     createTransaction,
-} from "../../model/transactions/transactionsActions";
-import GTransactionRow from "../../google-api/GTransactionRow";
-import { ECoin, ETransactionType } from "../../google-api/services/transactionArrToData";
-import {TUserState} from "../../model/user/userReducer";
-import { sendNotification } from "../../model/notifications/notificationsActions";
-import {t} from "../../services/i18n";
+} from '../../model/transactions/transactionsActions';
+import GTransactionRow from '../../google-api/GTransactionRow';
+import { ECoin, ETransactionType } from '../../google-api/services/transactionArrToData';
+import {TUserState} from '../../model/user/userReducer';
+import { sendNotification } from '../../model/notifications/notificationsActions';
+import {t} from '../../services/i18n';
 import EditTransactionForm, {
     transactionValidationSchema,
     initValues,
     TValues,
     IEditTransactionForm,
-} from "../../containers/forms/EditTransactionForm";
-import {ISheetsState} from "../../model/sheets/sheetsReducer";
-import {getLastTransactionsSheet} from "../../services/sheets";
-import {TGlobalState} from "../../reducers";
-import {IAccountsState} from "../../model/accounts/accountsReducer";
-import {TRouterMatch} from "../../types/react-router-dom";
-import history from "../../history";
-import * as routes from "../../routing/routes";
+} from '../../containers/forms/EditTransactionForm';
+import {ISheetsState} from '../../model/sheets/sheetsReducer';
+import {getLastTransactionsSheet} from '../../services/sheets';
+import {TGlobalState} from '../../reducers';
+import {IAccountsState} from '../../model/accounts/accountsReducer';
+import {TRouterMatch} from '../../types/react-router-dom';
+import history from '../../history';
+import * as routes from '../../routing/routes';
 
 type TProps = {
     user: TUserState;

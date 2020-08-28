@@ -1,7 +1,7 @@
-import React from "react";
-import {Link} from "react-router-dom";
-import classnames from "classnames";
-import {getBtnClass, IBtnProps} from "../../styles/elements";
+import React from 'react';
+import {Link} from 'react-router-dom';
+import classnames from 'classnames';
+import {getBtnClass, IBtnProps} from '../../styles/elements';
 
 interface IProps extends IBtnProps {
     to: string;

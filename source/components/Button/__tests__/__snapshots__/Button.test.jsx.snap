@@ -2,17 +2,17 @@
 
 exports[`<Button> Render empty 1`] = `
 <button
-  className="py-2 px-4 rounded bg-blue-500 hover:bg-blue-700 text-white"
+  className='py-2 px-4 rounded bg-blue-500 hover:bg-blue-700 text-white'
   disabled={false}
-  type="submit"
+  type='submit'
 />
 `;
 
 exports[`<Button> With className 1`] = `
 <button
-  className="some-class py-2 px-4 rounded bg-blue-500 hover:bg-blue-700 text-white"
+  className='some-class py-2 px-4 rounded bg-blue-500 hover:bg-blue-700 text-white'
   disabled={false}
-  type="submit"
+  type='submit'
 >
   Some text
 </button>
@@ -20,9 +20,9 @@ exports[`<Button> With className 1`] = `
 
 exports[`<Button> With text 1`] = `
 <button
-  className="py-2 px-4 rounded bg-blue-500 hover:bg-blue-700 text-white"
+  className='py-2 px-4 rounded bg-blue-500 hover:bg-blue-700 text-white'
   disabled={false}
-  type="submit"
+  type='submit'
 >
   Some text
 </button>
@@ -30,9 +30,9 @@ exports[`<Button> With text 1`] = `
 
 exports[`<Button> With type 1`] = `
 <button
-  className="py-2 px-4 rounded bg-blue-500 hover:bg-blue-700 text-white"
+  className='py-2 px-4 rounded bg-blue-500 hover:bg-blue-700 text-white'
   disabled={false}
-  type="button"
+  type='button'
 >
   Some text
 </button>
@@ -40,9 +40,9 @@ exports[`<Button> With type 1`] = `
 
 exports[`<Button> appearance=danger 1`] = `
 <button
-  className="py-2 px-4 rounded bg-red-500 hover:bg-red-700 text-white"
+  className='py-2 px-4 rounded bg-red-500 hover:bg-red-700 text-white'
   disabled={false}
-  type="submit"
+  type='submit'
 >
   Some text
 </button>
@@ -50,9 +50,9 @@ exports[`<Button> appearance=danger 1`] = `
 
 exports[`<Button> appearance=light 1`] = `
 <button
-  className="py-2 px-4 rounded bg-white hover:bg-gray-100 text-gray-800"
+  className='py-2 px-4 rounded bg-white hover:bg-gray-100 text-gray-800'
   disabled={false}
-  type="submit"
+  type='submit'
 >
   Some text
 </button>
@@ -60,9 +60,9 @@ exports[`<Button> appearance=light 1`] = `
 
 exports[`<Button> block 1`] = `
 <button
-  className="py-2 px-4 rounded btn-block bg-blue-500 hover:bg-blue-700 text-white"
+  className='py-2 px-4 rounded btn-block bg-blue-500 hover:bg-blue-700 text-white'
   disabled={false}
-  type="submit"
+  type='submit'
 >
   Some text
 </button>
@@ -70,9 +70,9 @@ exports[`<Button> block 1`] = `
 
 exports[`<Button> lg 1`] = `
 <button
-  className="py-2 px-4 rounded text-lg bg-blue-500 hover:bg-blue-700 text-white"
+  className='py-2 px-4 rounded text-lg bg-blue-500 hover:bg-blue-700 text-white'
   disabled={false}
-  type="submit"
+  type='submit'
 >
   Some text
 </button>

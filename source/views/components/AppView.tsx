@@ -1,33 +1,33 @@
-import React from "react";
-import { connect } from "react-redux";
-import history from "../../history";
-import Container from "../../components/Container/Container";
-import MainMenu from "../../containers/MainMenu/MainMenu";
-import * as googleApi from "../../google-api/google-api";
+import React from 'react';
+import { connect } from 'react-redux';
+import history from '../../history';
+import Container from '../../components/Container/Container';
+import MainMenu from '../../containers/MainMenu/MainMenu';
+import * as googleApi from '../../google-api/google-api';
 import {
     TSignedIn,
     signedIn,
     signedOut,
-} from "../../model/user/userActions";
-import Notifications from "../../containers/Notifications/Notifications";
-import logger from "../../services/logger";
-import {loadSheets} from "../../model/sheets/sheetsActions";
+} from '../../model/user/userActions';
+import Notifications from '../../containers/Notifications/Notifications';
+import logger from '../../services/logger';
+import {loadSheets} from '../../model/sheets/sheetsActions';
 import {
     TLoadAccounts,
     loadAccounts,
-} from "../../model/accounts/accountsActions";
+} from '../../model/accounts/accountsActions';
 import {
     TLoadCategories,
     loadCategories,
-} from "../../model/categories/categoriesActions";
-import * as routes from "../../routing/routes";
+} from '../../model/categories/categoriesActions';
+import * as routes from '../../routing/routes';
 
 type TProps = {
     signedIn: TSignedIn;
     signedOut: () => void;
     loadSheets: () => void;
     loadAccounts: TLoadAccounts;
-    loadCategories: TLoadAccounts;
+    loadCategories: TLoadCategories;
 };
 
 type TState = {};

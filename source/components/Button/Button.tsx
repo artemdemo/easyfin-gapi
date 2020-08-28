@@ -1,6 +1,6 @@
-import React from "react";
-import classnames from "classnames";
-import {EButtonAppearance, EButtonSize, getBtnClass} from "../../styles/elements";
+import React from 'react';
+import classnames from 'classnames';
+import {EButtonAppearance, EButtonSize, getBtnClass} from '../../styles/elements';
 
 type TProps = {
     type?: 'submit' | 'reset' | 'button';

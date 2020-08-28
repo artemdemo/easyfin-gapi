@@ -1,9 +1,9 @@
-import React from "react";
-import styled from "styled-components";
-import enhanceWithClickOutside from "react-click-outside";
-import {EButtonAppearance} from "../../styles/elements";
-import Button from "../../components/Button/Button";
-import RowMenuItem, { TRowMenuItem } from "./RowMenuItem";
+import React from 'react';
+import styled from 'styled-components';
+import enhanceWithClickOutside from 'react-click-outside';
+import {EButtonAppearance} from '../../styles/elements';
+import Button from '../../components/Button/Button';
+import RowMenuItem, { TRowMenuItem } from './RowMenuItem';
 
 type TProps = {
     menu: TRowMenuItem[];
@@ -64,7 +64,7 @@ class RowMenu extends React.PureComponent<TProps, TState> {
                     ...
                 </Button>
                 <MenuContainer
-                    className="rounded bg-white border-gray-300 border-b-0 border shadow"
+                    className='rounded bg-white border-gray-300 border-b-0 border shadow'
                     visible={this.state.menuOpen}
                 >
                     {menu.map(menuItem => (

@@ -2,13 +2,13 @@
 
 exports[`Navbar render default 1`] = `
 <nav
-  className="flex items-center justify-between flex-wrap bg-gray-200 px-2 py-2"
+  className='flex items-center justify-between flex-wrap bg-gray-200 px-2 py-2'
 />
 `;
 
 exports[`Navbar should render with children 1`] = `
 <nav
-  className="flex items-center justify-between flex-wrap bg-gray-200 px-2 py-2"
+  className='flex items-center justify-between flex-wrap bg-gray-200 px-2 py-2'
 >
   children
 </nav>
@@ -16,7 +16,7 @@ exports[`Navbar should render with children 1`] = `
 
 exports[`Navbar should render with children and className 1`] = `
 <nav
-  className="test-class flex items-center justify-between flex-wrap bg-gray-200 px-2 py-2"
+  className='test-class flex items-center justify-between flex-wrap bg-gray-200 px-2 py-2'
 >
   children
 </nav>

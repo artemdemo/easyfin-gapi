@@ -1,12 +1,12 @@
-import React from "react";
-import {getInputClass, getBtnClass, EButtonAppearance} from "../../styles/elements";
-import {IFormProps} from "../../types/formik";
-import {apiKey, clientId} from "../../services/settingsStorage";
-import {Formik} from "formik";
-import Button from "../../components/Button/Button";
-import {sendNotification} from "../../model/notifications/notificationsActions";
-import store from "../../store";
-import logger from "../../services/logger";
+import React from 'react';
+import {getInputClass, getBtnClass, EButtonAppearance} from '../../styles/elements';
+import {IFormProps} from '../../types/formik';
+import {apiKey, clientId} from '../../services/settingsStorage';
+import {Formik} from 'formik';
+import Button from '../../components/Button/Button';
+import {sendNotification} from '../../model/notifications/notificationsActions';
+import store from '../../store';
+import logger from '../../services/logger';
 
 type TValues = {
     apiKey: string;
@@ -43,45 +43,45 @@ class SettingsApiKeys extends React.PureComponent<TProps, TState> {
 
         return (
             <form onSubmit={handleSubmit}>
-                <div className="flex flex-wrap -mx-2 mb-4">
-                    <div className="w-1/2 px-2">
+                <div className='flex flex-wrap -mx-2 mb-4'>
+                    <div className='w-1/2 px-2'>
                         <input
-                            type="text"
-                            name="apiKey"
+                            type='text'
+                            name='apiKey'
                             className={getInputClass()}
-                            placeholder="API key"
+                            placeholder='API key'
                             value={values.apiKey}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             disabled={isSubmitting}
                         />
                     </div>
-                    <div className="w-1/2 px-2">
+                    <div className='w-1/2 px-2'>
                         <a
                             className={getBtnClass({
                                 appearance: EButtonAppearance.TEXT_LINK,
                             })}
-                            target="_blank"
-                            href="https://console.developers.google.com/apis/credentials"
+                            target='_blank'
+                            href='https://console.developers.google.com/apis/credentials'
                         >
                             Google API credentials
                         </a>
                     </div>
                 </div>
-                <div className="flex flex-wrap -mx-2 mb-4">
-                    <div className="w-1/2 px-2">
+                <div className='flex flex-wrap -mx-2 mb-4'>
+                    <div className='w-1/2 px-2'>
                         <input
-                            type="text"
-                            name="clientId"
+                            type='text'
+                            name='clientId'
                             className={getInputClass()}
-                            placeholder="Client ID"
+                            placeholder='Client ID'
                             value={values.clientId}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             disabled={isSubmitting}
                         />
                     </div>
-                    <div className="w-1/2 px-2">
+                    <div className='w-1/2 px-2'>
                         &nbsp;
                     </div>
                 </div>
