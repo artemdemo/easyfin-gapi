@@ -1,4 +1,4 @@
-import logger from "../../services/logger";
+import logger from '../../services/logger';
 
 export type TParserMapItem = {
     key: string;
@@ -13,7 +13,7 @@ export type TParserMapItem = {
 export const convertArrToData = (rowArr: string[], parserMap: TParserMapItem[]): any => {
     return parserMap.reduce((acc, item, idx) => {
         if (acc.hasOwnProperty(item.key)) {
-            logger.error(`Same kay is used twice. Key was: "${item.key}"`);
+            logger.error(`Same kay is used twice. Key was: '${item.key}'`);
         }
         acc[item.key] = item.converter ? item.converter(rowArr[idx]) : rowArr[idx];
         return acc;

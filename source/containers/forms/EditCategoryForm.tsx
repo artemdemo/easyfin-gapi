@@ -1,14 +1,14 @@
-import React from "react";
-import * as Yup from "yup";
-import {connect} from "react-redux";
-import EditForm, {IEditFormProps} from "./EditForm";
-import {TGlobalState} from "../../reducers";
-import {ICategoriesState} from "../../model/categories/categoriesReducer";
-import {t} from "../../services/i18n";
-import {getInputClass} from "../../styles/elements";
-import {IFormProps} from "../../types/formik";
-import Select from "../../components/Select/Select";
-import Button from "../../components/Button/Button";
+import React from 'react';
+import * as Yup from 'yup';
+import {connect} from 'react-redux';
+import EditForm, {IEditFormProps} from './EditForm';
+import {TGlobalState} from '../../reducers';
+import {ICategoriesState} from '../../model/categories/categoriesReducer';
+import {t} from '../../services/i18n';
+import {getInputClass} from '../../styles/elements';
+import {IFormProps} from '../../types/formik';
+import Select from '../../components/Select/Select';
+import Button from '../../components/Button/Button';
 
 export type TValues = {
     name: string;
@@ -55,7 +55,7 @@ class EditCategoryForm extends EditForm<IProps> {
                     className={getInputClass({
                         disabled: this.isDisabled(),
                     })}
-                    name="parent"
+                    name='parent'
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.parent}
@@ -94,16 +94,16 @@ class EditCategoryForm extends EditForm<IProps> {
         } = this.props.formProps;
 
         return (
-            <form className="max-w-md" onSubmit={handleSubmit}>
+            <form className='max-w-md' onSubmit={handleSubmit}>
                 <div className='flex flex-wrap -mx-2 mb-4'>
-                    <div className="w-1/2 px-2">
+                    <div className='w-1/2 px-2'>
                         <input
-                            type="text"
+                            type='text'
                             className={getInputClass({
                                 disabled: this.isDisabled(),
                             })}
-                            placeholder="Name"
-                            name="name"
+                            placeholder='Name'
+                            name='name'
                             onChange={handleChange}
                             onBlur={handleBlur}
                             value={values.name}
@@ -111,11 +111,11 @@ class EditCategoryForm extends EditForm<IProps> {
                         />
                         {this.renderError('name')}
                     </div>
-                    <div className="w-1/2 px-2">
+                    <div className='w-1/2 px-2'>
                         {this.renderSelectParent()}
                     </div>
                 </div>
-                <Button type="submit" disabled={this.isDisabled()}>
+                <Button type='submit' disabled={this.isDisabled()}>
                     {t('common.submit')}
                 </Button>
             </form>

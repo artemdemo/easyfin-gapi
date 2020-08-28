@@ -1,8 +1,8 @@
-import format from "date-fns/format";
-import GSheet from "../google-api/GSheet";
-import DataList from "../model/DataList";
-import GTransactionRow from "../google-api/GTransactionRow";
-import logger from "./logger";
+import format from 'date-fns/format';
+import GSheet from '../google-api/GSheet';
+import DataList from '../model/DataList';
+import GTransactionRow from '../google-api/GTransactionRow';
+import logger from './logger';
 
 const transactionSheetNameRegex = /^\d{4}$/;
 
@@ -55,7 +55,7 @@ export const getLastTransactionsSheet = (sheets: DataList<GSheet>): GSheet => {
 const getSheetByTitle = (sheets: DataList<GSheet>, title: EDataSheetTitles): GSheet => {
     const sheet = sheets.find(item => item.getTitle() === title);
     if (!sheet) {
-        throw new Error(`There is no "${title}" sheet in the given list`);
+        throw new Error(`There is no '${title}' sheet in the given list`);
     }
     return sheet;
 };

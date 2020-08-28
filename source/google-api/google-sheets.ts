@@ -1,9 +1,9 @@
-import * as googleApi from "./google-api";
-import {EDimension, ESortOrder, IHttpResponse} from "./TSpreadsheetsApi";
-import GRow from "./GRow";
-import { spreadsheetID } from "../services/settingsStorage";
-import logger from "../services/logger";
-import {getLineIdxFromRange} from "./services/utils";
+import * as googleApi from './google-api';
+import {EDimension, ESortOrder, IHttpResponse} from './TSpreadsheetsApi';
+import GRow from './GRow';
+import { spreadsheetID } from '../services/settingsStorage';
+import logger from '../services/logger';
+import {getLineIdxFromRange} from './services/utils';
 
 type TUpdatesResult = {
     spreadsheetId: string;

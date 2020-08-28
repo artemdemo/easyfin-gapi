@@ -1,10 +1,10 @@
-import { handleActions } from "redux-actions";
-import * as actions from "./accountsActions";
-import GAccountRow from "../../google-api/GAccountRow";
-import {TAction, TActionHandlers} from "../../types/redux-actions";
-import {TCreateAccountPayload, TDeleteAccountPayload, TLoadAccountsPayload} from "./accountsActions";
-import DataListGRow from "../DataListGRow";
-import {IDataRestStateItem} from "../../types/reducer";
+import { handleActions } from 'redux-actions';
+import * as actions from './accountsActions';
+import GAccountRow from '../../google-api/GAccountRow';
+import {TAction, TActionHandlers} from '../../types/redux-actions';
+import {TCreateAccountPayload, TDeleteAccountPayload, TLoadAccountsPayload} from './accountsActions';
+import DataListGRow from '../DataListGRow';
+import {IDataRestStateItem} from '../../types/reducer';
 
 export interface IAccountsState extends IDataRestStateItem<GAccountRow> {
     data: DataListGRow<GAccountRow>;

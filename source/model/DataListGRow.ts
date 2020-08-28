@@ -1,5 +1,5 @@
-import DataList, {TListBoolCb} from "./DataList";
-import GRow from "../google-api/GRow";
+import DataList, {TListBoolCb} from './DataList';
+import GRow from '../google-api/GRow';
 
 class DataListGRow<T> extends DataList<T> {
     add(item?: T): DataListGRow<T> {

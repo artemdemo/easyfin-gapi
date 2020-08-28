@@ -1,5 +1,5 @@
-import * as googleSheets from "../../google-api/google-sheets";
-import GSheet from "../../google-api/GSheet";
+import * as googleSheets from '../../google-api/google-sheets';
+import GSheet from '../../google-api/GSheet';
 
 export const loadSheets = (): Promise<GSheet[]> => {
     return googleSheets.getAllSheets()

@@ -1,8 +1,8 @@
-import DataListGRow from "../model/DataListGRow";
-import GTransactionRow from "../google-api/GTransactionRow";
-import GCategoryRow from "../google-api/GCategoryRow";
-import GAccountRow from "../google-api/GAccountRow";
-import {ITransactionRowValues} from "../google-api/services/transactionArrToData";
+import DataListGRow from '../model/DataListGRow';
+import GTransactionRow from '../google-api/GTransactionRow';
+import GCategoryRow from '../google-api/GCategoryRow';
+import GAccountRow from '../google-api/GAccountRow';
+import {ITransactionRowValues} from '../google-api/services/transactionArrToData';
 
 export interface ITransaction extends Omit<ITransactionRowValues, 'accountFrom'|'accountTo'|'rootCategory'|'category'> {
     accountFrom: GAccountRow;

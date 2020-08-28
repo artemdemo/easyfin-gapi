@@ -1,14 +1,14 @@
-import React from "react";
-import * as Yup from "yup";
-import {connect} from "react-redux";
-import {IFormProps} from "../../types/formik";
-import {t} from "../../services/i18n";
-import {EButtonAppearance, getInputClass} from "../../styles/elements";
-import Select from "../../components/Select/Select";
-import Button from "../../components/Button/Button";
-import {TGlobalState} from "../../reducers";
-import {IAccountsState} from "../../model/accounts/accountsReducer";
-import EditForm, {IEditFormProps} from "./EditForm";
+import React from 'react';
+import * as Yup from 'yup';
+import {connect} from 'react-redux';
+import {IFormProps} from '../../types/formik';
+import {t} from '../../services/i18n';
+import {EButtonAppearance, getInputClass} from '../../styles/elements';
+import Select from '../../components/Select/Select';
+import Button from '../../components/Button/Button';
+import {TGlobalState} from '../../reducers';
+import {IAccountsState} from '../../model/accounts/accountsReducer';
+import EditForm, {IEditFormProps} from './EditForm';
 
 export type TValues = {
     date: string;
@@ -67,8 +67,8 @@ class EditTransactionForm extends EditForm<IProps> {
                     className={getInputClass({
                         disabled: this.isDisabled(),
                     })}
-                    placeholder="Account From"
-                    name="accountFrom"
+                    placeholder='Account From'
+                    name='accountFrom'
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.accountFrom}
@@ -98,8 +98,8 @@ class EditTransactionForm extends EditForm<IProps> {
                     className={getInputClass({
                         disabled: this.isDisabled(),
                     })}
-                    placeholder="Category"
-                    name="category"
+                    placeholder='Category'
+                    name='category'
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.accountFrom}
@@ -122,16 +122,16 @@ class EditTransactionForm extends EditForm<IProps> {
         } = this.props.formProps;
 
         return (
-            <form className="max-w-md" onSubmit={handleSubmit}>
+            <form className='max-w-md' onSubmit={handleSubmit}>
                 <div className='flex flex-wrap -mx-2 mb-4'>
-                    <div className="w-1/2 px-2">
+                    <div className='w-1/2 px-2'>
                         <input
-                            type="text"
+                            type='text'
                             className={getInputClass({
                                 disabled: this.isDisabled(),
                             })}
-                            placeholder="Amount"
-                            name="amount"
+                            placeholder='Amount'
+                            name='amount'
                             onChange={handleChange}
                             onBlur={handleBlur}
                             value={values.amount}
@@ -139,19 +139,19 @@ class EditTransactionForm extends EditForm<IProps> {
                         />
                         {this.renderError('amount')}
                     </div>
-                    <div className="w-1/2 px-2">
+                    <div className='w-1/2 px-2'>
                         {this.renderSelectAccount()}
                     </div>
                 </div>
                 <div className='flex flex-wrap -mx-2 mb-4'>
-                    <div className="w-1/2 px-2">
+                    <div className='w-1/2 px-2'>
                         <input
-                            type="date"
+                            type='date'
                             className={getInputClass({
                                 disabled: this.isDisabled(),
                             })}
-                            placeholder="Date"
-                            name="date"
+                            placeholder='Date'
+                            name='date'
                             onChange={handleChange}
                             onBlur={handleBlur}
                             value={values.date}
@@ -159,18 +159,18 @@ class EditTransactionForm extends EditForm<IProps> {
                         />
                         {this.renderError('date')}
                     </div>
-                    <div className="w-1/2 px-2">
+                    <div className='w-1/2 px-2'>
                         {this.renderSelectCategories()}
                     </div>
                 </div>
-                <div className="mb-4">
+                <div className='mb-4'>
                     <textarea
                         rows={3}
                         className={getInputClass({
                             disabled: this.isDisabled(),
                         })}
-                        placeholder="Comment"
-                        name="comment"
+                        placeholder='Comment'
+                        name='comment'
                         onChange={handleChange}
                         onBlur={handleBlur}
                         value={values.comment}
@@ -178,12 +178,12 @@ class EditTransactionForm extends EditForm<IProps> {
                     />
                     {this.renderError('comment')}
                 </div>
-                <Button type="submit" disabled={this.isDisabled()}>
+                <Button type='submit' disabled={this.isDisabled()}>
                     Submit
                 </Button>
                 &nbsp;
                 <Button
-                    type="button"
+                    type='button'
                     disabled={this.isDisabled()}
                     onClick={this.props.mockSubmit}
                     appearance={EButtonAppearance.LIGHT}

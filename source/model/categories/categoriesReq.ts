@@ -1,8 +1,8 @@
-import * as googleSheets from "../../google-api/google-sheets";
-import GCategoryRow from "../../google-api/GCategoryRow";
-import {EDataSheetTitles} from "../../services/sheets";
-import logger from "../../services/logger";
-import GSheet from "../../google-api/GSheet";
+import * as googleSheets from '../../google-api/google-sheets';
+import GCategoryRow from '../../google-api/GCategoryRow';
+import {EDataSheetTitles} from '../../services/sheets';
+import logger from '../../services/logger';
+import GSheet from '../../google-api/GSheet';
 
 export const loadCategories = (): Promise<GCategoryRow[]> => {
     return googleSheets.getAllRows(EDataSheetTitles.CATEGORIES)

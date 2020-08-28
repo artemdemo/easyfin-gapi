@@ -1,27 +1,27 @@
-import React from "react";
-import { connect } from "react-redux";
-import format from "date-fns/format";
-import { createSelector } from "reselect";
-import {formatMoney} from "../../services/numbers";
-import GeneralTable from "../../components/GeneralTable/GeneralTable";
-import { t } from "../../services/i18n";
-import RowMenu from "../../components/GeneralTable/RowMenu";
-import {ITransactionsState} from "../../model/transactions/transactionsReducer";
+import React from 'react';
+import { connect } from 'react-redux';
+import format from 'date-fns/format';
+import { createSelector } from 'reselect';
+import {formatMoney} from '../../services/numbers';
+import GeneralTable from '../../components/GeneralTable/GeneralTable';
+import { t } from '../../services/i18n';
+import RowMenu from '../../components/GeneralTable/RowMenu';
+import {ITransactionsState} from '../../model/transactions/transactionsReducer';
 import {
     TLoadTransactions,
     loadTransactions,
     TDeleteTransaction,
     deleteTransaction,
-} from "../../model/transactions/transactionsActions";
-import {TGlobalState} from "../../reducers";
-import {ISheetsState} from "../../model/sheets/sheetsReducer";
-import {getLastTransactionsSheet, getSheetForTransaction} from "../../services/sheets";
-import history from "../../history";
-import * as routes from "../../routing/routes";
-import GTransactionRow from "../../google-api/GTransactionRow";
-import {IAccountsState} from "../../model/accounts/accountsReducer";
-import {enrichTransactions} from "../../services/mixins";
-import {ICategoriesState} from "../../model/categories/categoriesReducer";
+} from '../../model/transactions/transactionsActions';
+import {TGlobalState} from '../../reducers';
+import {ISheetsState} from '../../model/sheets/sheetsReducer';
+import {getLastTransactionsSheet, getSheetForTransaction} from '../../services/sheets';
+import history from '../../history';
+import * as routes from '../../routing/routes';
+import GTransactionRow from '../../google-api/GTransactionRow';
+import {IAccountsState} from '../../model/accounts/accountsReducer';
+import {enrichTransactions} from '../../services/mixins';
+import {ICategoriesState} from '../../model/categories/categoriesReducer';
 
 type TProps = {
     sheets: ISheetsState;

@@ -1,6 +1,6 @@
-import React from "react";
-import classnames from "classnames";
-import Notification, {ENotificationAppearance} from "../../model/notifications/Notification";
+import React from 'react';
+import classnames from 'classnames';
+import Notification, {ENotificationAppearance} from '../../model/notifications/Notification';
 
 type TProps = {
     className?: string;

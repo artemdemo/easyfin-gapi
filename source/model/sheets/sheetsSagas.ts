@@ -1,6 +1,6 @@
-import { take, put, all } from "redux-saga/effects";
-import * as req from "./sheetsReq";
-import * as actions from "./sheetsActions";
+import { take, put, all } from 'redux-saga/effects';
+import * as req from './sheetsReq';
+import * as actions from './sheetsActions';
 
 function* loadSheetsSaga() {
     while (true) {

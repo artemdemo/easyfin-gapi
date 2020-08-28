@@ -1,8 +1,8 @@
-import * as googleSheets from "../../google-api/google-sheets";
-import GTransactionRow from "../../google-api/GTransactionRow";
-import logger from "../../services/logger";
-import GSheet from "../../google-api/GSheet";
-import GAccountRow from "../../google-api/GAccountRow";
+import * as googleSheets from '../../google-api/google-sheets';
+import GTransactionRow from '../../google-api/GTransactionRow';
+import logger from '../../services/logger';
+import GSheet from '../../google-api/GSheet';
+import GAccountRow from '../../google-api/GAccountRow';
 
 export const loadTransactions = (sheet: GSheet): Promise<GTransactionRow[]> => {
     return googleSheets.getAllRows(sheet.getTitle())

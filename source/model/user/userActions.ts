@@ -1,4 +1,4 @@
-import { createAction } from "redux-actions";
+import { createAction } from 'redux-actions';
 import BasicProfile = gapi.auth2.BasicProfile;
 
 export type TSignedInPayload = BasicProfile;

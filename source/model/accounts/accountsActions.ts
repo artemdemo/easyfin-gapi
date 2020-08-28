@@ -1,6 +1,6 @@
-import { createAction } from "redux-actions";
-import GAccountRow from "../../google-api/GAccountRow";
-import GSheet from "../../google-api/GSheet";
+import { createAction } from 'redux-actions';
+import GAccountRow from '../../google-api/GAccountRow';
+import GSheet from '../../google-api/GSheet';
 
 export type TLoadAccountsPayload = undefined;
 export type TLoadAccounts = (payload?: TLoadAccountsPayload) => void;

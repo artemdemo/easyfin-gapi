@@ -1,8 +1,8 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import {TGlobalState} from "../../reducers";
-import {ISheetsState} from "../../model/sheets/sheetsReducer";
-import {t} from "../../services/i18n";
+import React from 'react';
+import { useSelector } from 'react-redux';
+import {TGlobalState} from '../../reducers';
+import {ISheetsState} from '../../model/sheets/sheetsReducer';
+import {t} from '../../services/i18n';
 
 type TProps = {
     children: any;

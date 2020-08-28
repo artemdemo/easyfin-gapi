@@ -1,10 +1,10 @@
-import { handleActions } from "redux-actions";
-import * as actions from "./categoriesActions";
-import GCategoryRow from "../../google-api/GCategoryRow";
-import {TAction, TActionHandlers} from "../../types/redux-actions";
-import {TCreateCategoryPayload, TUpdateCategoryPayload, TDeleteCategoryPayload, TLoadCategoriesPayload} from "./categoriesActions";
-import DataListGRow from "../DataListGRow";
-import {IDataRestStateItem} from "../../types/reducer";
+import { handleActions } from 'redux-actions';
+import * as actions from './categoriesActions';
+import GCategoryRow from '../../google-api/GCategoryRow';
+import {TAction, TActionHandlers} from '../../types/redux-actions';
+import {TCreateCategoryPayload, TUpdateCategoryPayload, TDeleteCategoryPayload, TLoadCategoriesPayload} from './categoriesActions';
+import DataListGRow from '../DataListGRow';
+import {IDataRestStateItem} from '../../types/reducer';
 
 export interface ICategoriesState extends IDataRestStateItem<GCategoryRow> {
     data: DataListGRow<GCategoryRow>;

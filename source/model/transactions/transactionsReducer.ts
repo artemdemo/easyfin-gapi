@@ -1,15 +1,15 @@
-import { handleActions } from "redux-actions";
-import * as actions from "./transactionsActions";
-import {IDataRestStateItem} from "../../types/reducer";
-import GTransactionRow from "../../google-api/GTransactionRow";
-import DataListGRow from "../DataListGRow";
-import {TAction, TActionHandlers} from "../../types/redux-actions";
+import { handleActions } from 'redux-actions';
+import * as actions from './transactionsActions';
+import {IDataRestStateItem} from '../../types/reducer';
+import GTransactionRow from '../../google-api/GTransactionRow';
+import DataListGRow from '../DataListGRow';
+import {TAction, TActionHandlers} from '../../types/redux-actions';
 import {
     TCreateTransactionPayload,
     TDeleteTransactionPayload,
     TLoadTransactions,
     TUpdateTransactionPayload
-} from "./transactionsActions";
+} from './transactionsActions';
 
 export interface ITransactionsState extends IDataRestStateItem<GTransactionRow> {
     data: DataListGRow<GTransactionRow>;

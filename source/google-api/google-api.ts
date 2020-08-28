@@ -2,11 +2,11 @@
  * CLIENT_ID and API_KEY
  * are available here https://console.developers.google.com/apis/credentials
  */
-import { createNanoEvents } from "nanoevents";
-import { TSpreadsheetsApi } from "./TSpreadsheetsApi";
-import { getRandom } from "../services/numbers";
-import { apiKey, clientId } from "../services/settingsStorage";
-import getGapi from "./services/gapi";
+import { createNanoEvents } from 'nanoevents';
+import { TSpreadsheetsApi } from './TSpreadsheetsApi';
+import { getRandom } from '../services/numbers';
+import { apiKey, clientId } from '../services/settingsStorage';
+import getGapi from './services/gapi';
 import BasicProfile = gapi.auth2.BasicProfile;
 
 const emitter = createNanoEvents();

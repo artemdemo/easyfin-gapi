@@ -1,7 +1,7 @@
-import GRow from "./GRow";
-import _cloneDeep from "lodash/cloneDeep";
-import {convertArrToData, convertDataToArr, TParserMapItem} from "./services/converter";
-import {generateId} from "../services/id";
+import GRow from './GRow';
+import _cloneDeep from 'lodash/cloneDeep';
+import {convertArrToData, convertDataToArr, TParserMapItem} from './services/converter';
+import {generateId} from '../services/id';
 
 interface ICreateCategoryValues {
     id?: string;

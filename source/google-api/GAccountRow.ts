@@ -1,7 +1,7 @@
-import _cloneDeep from "lodash/cloneDeep";
-import GRow from "./GRow";
-import { TParserMapItem, convertArrToData, convertDataToArr } from "./services/converter";
-import {generateId} from "../services/id";
+import _cloneDeep from 'lodash/cloneDeep';
+import GRow from './GRow';
+import { TParserMapItem, convertArrToData, convertDataToArr } from './services/converter';
+import {generateId} from '../services/id';
 
 export enum EAccountType {
     credit = 'credit',

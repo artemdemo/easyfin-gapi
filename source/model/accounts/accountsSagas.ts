@@ -1,6 +1,6 @@
-import { take, put, all } from "redux-saga/effects";
-import * as req from "./accountsReq";
-import * as actions from "./accountsActions";
+import { take, put, all } from 'redux-saga/effects';
+import * as req from './accountsReq';
+import * as actions from './accountsActions';
 
 function* loadAccountsSaga() {
     while (true) {

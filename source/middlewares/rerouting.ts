@@ -1,7 +1,7 @@
-import {createAccount, updateAccount} from "../model/accounts/accountsActions";
-import { TAction } from "../types/redux-actions";
-import history from "../history";
-import * as routes from "../routing/routes";
+import {createAccount, updateAccount} from '../model/accounts/accountsActions';
+import { TAction } from '../types/redux-actions';
+import history from '../history';
+import * as routes from '../routing/routes';
 
 const rerouting = (store) => (next) => (action: TAction<any>) => {
     // Optimistic UI.

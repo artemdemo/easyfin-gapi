@@ -1,9 +1,9 @@
 import { handleActions } from 'redux-actions';
 import * as actions from './sheetsActions';
-import GSheet from "../../google-api/GSheet";
-import DataList from "../DataList";
-import {TActionHandlers} from "../../types/redux-actions";
-import {IDataStateItem} from "../../types/reducer";
+import GSheet from '../../google-api/GSheet';
+import DataList from '../DataList';
+import {TActionHandlers} from '../../types/redux-actions';
+import {IDataStateItem} from '../../types/reducer';
 
 export interface ISheetsState extends IDataStateItem<GSheet> {
     loading: boolean;

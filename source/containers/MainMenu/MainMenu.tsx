@@ -1,11 +1,11 @@
-import React from "react";
-import classnames from "classnames";
-import { connect } from "react-redux"
-import { TUserState } from "../../model/user/userReducer";
-import Navbar from "../../components/Navbar/Navbar";
-import NavbarLink from "../../components/Navbar/NavbarLink";
-import * as routes from "../../routing/routes";
-import {t} from "../../services/i18n";
+import React from 'react';
+import classnames from 'classnames';
+import { connect } from 'react-redux'
+import { TUserState } from '../../model/user/userReducer';
+import Navbar from '../../components/Navbar/Navbar';
+import NavbarLink from '../../components/Navbar/NavbarLink';
+import * as routes from '../../routing/routes';
+import {t} from '../../services/i18n';
 
 type TProps = {
     className: string;

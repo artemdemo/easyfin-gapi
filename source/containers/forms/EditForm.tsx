@@ -1,6 +1,6 @@
-import React from "react";
-import {IFormProps} from "../../types/formik";
-import InputError from "../../components/InputError/InputError";
+import React from 'react';
+import {IFormProps} from '../../types/formik';
+import InputError from '../../components/InputError/InputError';
 
 export interface IEditFormProps {
     formProps: IFormProps;

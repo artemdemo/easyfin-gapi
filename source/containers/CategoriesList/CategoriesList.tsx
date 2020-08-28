@@ -1,21 +1,21 @@
-import React from "react";
-import { connect } from "react-redux";
-import {Column, CellProps} from "react-table";
-import { t } from "../../services/i18n";
-import RowMenu from "../../components/GeneralTable/RowMenu";
-import GeneralTable from "../../components/GeneralTable/GeneralTable";
-import {TGlobalState} from "../../reducers";
+import React from 'react';
+import { connect } from 'react-redux';
+import {Column, CellProps} from 'react-table';
+import { t } from '../../services/i18n';
+import RowMenu from '../../components/GeneralTable/RowMenu';
+import GeneralTable from '../../components/GeneralTable/GeneralTable';
+import {TGlobalState} from '../../reducers';
 import {
     TDeleteCategory,
     deleteCategory,
-} from "../../model/categories/categoriesActions";
-import {ISheetsState} from "../../model/sheets/sheetsReducer";
-import {getCategoriesSheet} from "../../services/sheets";
-import history from "../../history";
-import * as routes from "../../routing/routes";
-import {ICategoriesState} from "../../model/categories/categoriesReducer";
-import {ICategoryRowValues} from "../../google-api/GCategoryRow";
-import GCategoryRow from "../../google-api/GCategoryRow";
+} from '../../model/categories/categoriesActions';
+import {ISheetsState} from '../../model/sheets/sheetsReducer';
+import {getCategoriesSheet} from '../../services/sheets';
+import history from '../../history';
+import * as routes from '../../routing/routes';
+import {ICategoriesState} from '../../model/categories/categoriesReducer';
+import {ICategoryRowValues} from '../../google-api/GCategoryRow';
+import GCategoryRow from '../../google-api/GCategoryRow';
 
 type TProps = {
     categories: ICategoriesState;

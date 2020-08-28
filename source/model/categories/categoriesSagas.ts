@@ -1,6 +1,6 @@
-import { take, put, all } from "redux-saga/effects";
-import * as req from "./categoriesReq";
-import * as actions from "./categoriesActions";
+import { take, put, all } from 'redux-saga/effects';
+import * as req from './categoriesReq';
+import * as actions from './categoriesActions';
 
 function* loadCategoriesSaga() {
     while (true) {

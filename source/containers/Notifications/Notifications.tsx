@@ -1,8 +1,8 @@
-import React from "react";
-import { connect } from "react-redux";
-import styled from "styled-components";
-import { INotificationsState } from "../../model/notifications/notificationsReducer";
-import NotificationBalloon from "./NotificationBalloon";
+import React from 'react';
+import { connect } from 'react-redux';
+import styled from 'styled-components';
+import { INotificationsState } from '../../model/notifications/notificationsReducer';
+import NotificationBalloon from './NotificationBalloon';
 
 type TProps = {
     notifications: INotificationsState,

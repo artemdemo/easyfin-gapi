@@ -1,5 +1,5 @@
-import _isString from "lodash/isString";
-import * as storage from "./storage";
+import _isString from 'lodash/isString';
+import * as storage from './storage';
 
 class SettingStorage {
     private readonly key: string;
@@ -16,14 +16,14 @@ class SettingStorage {
         if (ENV[this.key]) {
             return ENV[this.key];
         }
-        throw new Error(`No "${this.key}" stored`);
+        throw new Error(`No '${this.key}' stored`);
     }
 
     set(value: string): void {
         if (_isString(value) && value !== '') {
             storage.setItem(this.key, value);
         } else {
-            throw new Error(`"value" should be non empty string, instead given: "${value}"`);
+            throw new Error(`'value' should be non empty string, instead given: '${value}'`);
         }
     }
 }

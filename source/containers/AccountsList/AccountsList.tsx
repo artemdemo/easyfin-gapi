@@ -1,19 +1,19 @@
-import React from "react";
-import { connect } from "react-redux";
-import { t } from "../../services/i18n";
-import GAccountRow from "../../google-api/GAccountRow";
-import RowMenu from "../../components/GeneralTable/RowMenu";
-import GeneralTable from "../../components/GeneralTable/GeneralTable";
-import {TGlobalState} from "../../reducers";
+import React from 'react';
+import { connect } from 'react-redux';
+import { t } from '../../services/i18n';
+import GAccountRow from '../../google-api/GAccountRow';
+import RowMenu from '../../components/GeneralTable/RowMenu';
+import GeneralTable from '../../components/GeneralTable/GeneralTable';
+import {TGlobalState} from '../../reducers';
 import {
     TDeleteAccount,
     deleteAccount,
-} from "../../model/accounts/accountsActions";
-import {IAccountsState} from "../../model/accounts/accountsReducer";
-import {ISheetsState} from "../../model/sheets/sheetsReducer";
-import {getAccountsSheet} from "../../services/sheets";
-import history from "../../history";
-import * as routes from "../../routing/routes";
+} from '../../model/accounts/accountsActions';
+import {IAccountsState} from '../../model/accounts/accountsReducer';
+import {ISheetsState} from '../../model/sheets/sheetsReducer';
+import {getAccountsSheet} from '../../services/sheets';
+import history from '../../history';
+import * as routes from '../../routing/routes';
 
 type TProps = {
     accounts: IAccountsState;

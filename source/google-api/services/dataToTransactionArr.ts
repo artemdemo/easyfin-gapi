@@ -1,6 +1,6 @@
-import formatISO from "date-fns/formatISO";
-import { ITransactionRowValues } from "./transactionArrToData";
-import { TParserMapItem, convertDataToArr } from "./converter";
+import formatISO from 'date-fns/formatISO';
+import { ITransactionRowValues } from './transactionArrToData';
+import { TParserMapItem, convertDataToArr } from './converter';
 
 const parserMap: TParserMapItem[] = [
     { key: 'id' },

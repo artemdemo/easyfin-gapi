@@ -1,4 +1,4 @@
-import { generateId } from "../../services/id";
+import { generateId } from '../../services/id';
 
 export enum ENotificationAppearance {
     SUCCESS = 'success',
@@ -15,7 +15,7 @@ type TOnDeleteCb = (self: Notification) => void;
 const DELETE_TIMEOUT = 5000;
 
 class Notification {
-    // `id` is used as "key" in list
+    // `id` is used as 'key' in list
     readonly id: string;
     readonly msg: string;
     readonly timeoutToken: number;

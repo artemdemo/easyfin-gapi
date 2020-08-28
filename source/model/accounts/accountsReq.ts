@@ -1,8 +1,8 @@
-import * as googleSheets from "../../google-api/google-sheets";
-import GAccountRow from "../../google-api/GAccountRow";
-import {EDataSheetTitles} from "../../services/sheets";
-import logger from "../../services/logger";
-import GSheet from "../../google-api/GSheet";
+import * as googleSheets from '../../google-api/google-sheets';
+import GAccountRow from '../../google-api/GAccountRow';
+import {EDataSheetTitles} from '../../services/sheets';
+import logger from '../../services/logger';
+import GSheet from '../../google-api/GSheet';
 
 export const loadAccounts = (): Promise<GAccountRow[]> => {
     return googleSheets.getAllRows(EDataSheetTitles.ACCOUNTS)

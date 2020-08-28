@@ -1,6 +1,6 @@
-import { createAction } from "redux-actions";
-import GSheet from "../../google-api/GSheet";
-import GCategoryRow from "../../google-api/GCategoryRow";
+import { createAction } from 'redux-actions';
+import GSheet from '../../google-api/GSheet';
+import GCategoryRow from '../../google-api/GCategoryRow';
 
 export type TLoadCategoriesPayload = undefined;
 export type TLoadCategories = (payload?: TLoadCategoriesPayload) => void;

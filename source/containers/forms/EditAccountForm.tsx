@@ -1,12 +1,12 @@
-import React from "react";
-import * as Yup from "yup";
-import {IFormProps} from "../../types/formik";
-import {t} from "../../services/i18n";
-import {getInputClass} from "../../styles/elements";
-import Select from "../../components/Select/Select";
-import Button from "../../components/Button/Button";
-import {EAccountType} from "../../google-api/GAccountRow";
-import EditForm, {IEditFormProps} from "./EditForm";
+import React from 'react';
+import * as Yup from 'yup';
+import {IFormProps} from '../../types/formik';
+import {t} from '../../services/i18n';
+import {getInputClass} from '../../styles/elements';
+import Select from '../../components/Select/Select';
+import Button from '../../components/Button/Button';
+import {EAccountType} from '../../google-api/GAccountRow';
+import EditForm, {IEditFormProps} from './EditForm';
 
 export type TValues = {
     name: string;
@@ -49,13 +49,13 @@ class EditAccountForm extends EditForm<IProps> {
         return (
             <>
                 <input
-                    type="text"
+                    type='text'
                     className={getInputClass({
                         error: errors.name && touched.name,
                         disabled: this.isDisabled(),
                     })}
                     placeholder={t('accounts.name')}
-                    name="name"
+                    name='name'
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.name}
@@ -82,7 +82,7 @@ class EditAccountForm extends EditForm<IProps> {
                         error: errors.type && touched.type,
                         disabled: this.isDisabled(),
                     })}
-                    name="type"
+                    name='type'
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.type}
@@ -117,13 +117,13 @@ class EditAccountForm extends EditForm<IProps> {
         return (
             <>
                 <input
-                    type="number"
+                    type='number'
                     className={getInputClass({
                         error: errors.startAmount && touched.startAmount,
                         disabled: this.isDisabled(),
                     })}
                     placeholder={t('accounts.start_amount')}
-                    name="startAmount"
+                    name='startAmount'
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.startAmount}
@@ -138,21 +138,21 @@ class EditAccountForm extends EditForm<IProps> {
         const { handleSubmit } = this.props.formProps;
 
         return (
-            <form className="max-w-md" onSubmit={handleSubmit}>
+            <form className='max-w-md' onSubmit={handleSubmit}>
                 <div className='flex flex-wrap -mx-2 mb-4'>
-                    <div className="w-1/2 px-2">
+                    <div className='w-1/2 px-2'>
                         {this.renderName()}
                     </div>
-                    <div className="w-1/2 px-2">
+                    <div className='w-1/2 px-2'>
                         {this.renderType()}
                     </div>
                 </div>
                 <div className='flex flex-wrap -mx-2 mb-4'>
-                    <div className="w-1/2 px-2">
+                    <div className='w-1/2 px-2'>
                         {this.renderStartAmount()}
                     </div>
                 </div>
-                <Button type="submit" disabled={this.isDisabled()}>
+                <Button type='submit' disabled={this.isDisabled()}>
                     {t('common.submit')}
                 </Button>
             </form>

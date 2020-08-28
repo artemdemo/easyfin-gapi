@@ -2,10 +2,10 @@
 
 exports[`<MainMenu> Render 1`] = `
 <div
-  data-mock="Navbar"
+  data-mock='Navbar'
 >
   {
-  "className": "mb-3"
+  'className': 'mb-3'
 }
 </div>
 `;

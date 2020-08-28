@@ -1,11 +1,11 @@
-import _cloneDeep from "lodash/cloneDeep";
-import GRow from "./GRow";
+import _cloneDeep from 'lodash/cloneDeep';
+import GRow from './GRow';
 import transactionArrToData, {
     ICreateTransactionValues,
     ITransactionRowValues,
-} from "./services/transactionArrToData";
-import dataToTransactionArr from "./services/dataToTransactionArr";
-import {generateId} from "../services/id";
+} from './services/transactionArrToData';
+import dataToTransactionArr from './services/dataToTransactionArr';
+import {generateId} from '../services/id';
 
 class GTransactionRow extends GRow {
     private readonly _values: ITransactionRowValues;
