@@ -22,6 +22,8 @@ import {getLastTransactionsSheet} from "../../services/sheets";
 import {TGlobalState} from "../../reducers";
 import {IAccountsState} from "../../model/accounts/accountsReducer";
 import {TRouterMatch} from "../../types/react-router-dom";
+import history from "../../history";
+import * as routes from "../../routing/routes";
 
 type TProps = {
     user: TUserState;
@@ -71,6 +73,7 @@ class EditTransactionView extends React.PureComponent<TProps, TState> {
             transaction,
             sheet: getLastTransactionsSheet(sheets.data),
         });
+        history.push(routes.transactions());
     }
 
     renderFormContent = (formProps: IEditTransactionForm) => {

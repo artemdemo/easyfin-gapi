@@ -18,6 +18,8 @@ import {TRouterMatch} from "../../types/react-router-dom";
 import {TGlobalState} from "../../reducers";
 import {IAccountsState} from "../../model/accounts/accountsReducer";
 import {t} from "../../services/i18n";
+import history from "../../history";
+import * as routes from "../../routing/routes";
 
 type TProps = {
     accounts: IAccountsState;
@@ -54,6 +56,7 @@ class EditAccountView extends React.PureComponent<TProps, TState> {
         } else {
             createAccount(new GAccountRow(accountProps))
         }
+        history.push(routes.accounts());
     };
 
     renderFormContent = (formProps: IEditAccountForm) => {

@@ -18,6 +18,8 @@ import EditCategoryForm, {
     initValues,
 } from "../../containers/forms/EditCategoryForm";
 import GCategoryRow from "../../google-api/GCategoryRow";
+import history from "../../history";
+import * as routes from "../../routing/routes";
 
 type TProps = {
     categories: ICategoriesState;
@@ -51,6 +53,7 @@ class EditCategoryView extends React.PureComponent<TProps, TState> {
         } else {
             createCategory(new GCategoryRow(categoryProps));
         }
+        history.push(routes.categories());
     }
 
     renderFormContent = (formProps: IEditCategoryForm) => {

@@ -55,8 +55,7 @@ class EditCategoryForm extends EditForm<IProps> {
                     className={getInputClass({
                         disabled: this.isDisabled(),
                     })}
-                    placeholder="Category"
-                    name="category"
+                    name="parent"
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.parent}
@@ -69,7 +68,7 @@ class EditCategoryForm extends EditForm<IProps> {
                         // Category can be parent only if it doesn't have `parent` of its own.
                         // I don't want more than one level of parenthood
                         // (daughters only, no grandchildren)
-                        .filter(category => !!category.getParent())
+                        .filter(category => !category.getParent())
                         .map(category => (
                             <option key={category.getId()}>
                                 {category.getName()}
