@@ -24,6 +24,7 @@ import { ITransactionRowValues } from '../../google-api/services/transactionArrT
 import {IAccountsState} from '../../model/accounts/accountsReducer';
 import {enrichTransactions} from '../../services/mixins';
 import {ICategoriesState} from '../../model/categories/categoriesReducer';
+import * as time from '../../services/time';
 
 type TProps = {
     sheets: ISheetsState;
@@ -55,7 +56,7 @@ class TransactionsList extends React.PureComponent<TProps> {
         {
             Header: t('transactions.table.date'),
             accessor: 'date',
-            Cell: cellProps => format(cellProps.value, 'yyyy-MM-dd HH:mm'),
+            Cell: cellProps => format(cellProps.value, time.getDateTimeFormat()),
         },
         {
             Header: t('transactions.table.category'),

@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Formik } from 'formik';
 import parseISO from 'date-fns/parseISO';
+import format from 'date-fns/format';
 import {
     TCreateTransaction,
     createTransaction,
@@ -24,11 +25,14 @@ import {IAccountsState} from '../../model/accounts/accountsReducer';
 import {TRouterMatch} from '../../types/react-router-dom';
 import history from '../../history';
 import * as routes from '../../routing/routes';
+import {ITransactionsState} from "../../model/transactions/transactionsReducer";
+import * as time from '../../services/time';
 
 type TProps = {
     user: TUserState;
     sheets: ISheetsState;
     accounts: IAccountsState;
+    transactions: ITransactionsState;
     sendNotification: (data: any) => void;
     createTransaction: TCreateTransaction;
     match: TRouterMatch<{
@@ -65,7 +69,7 @@ class EditTransactionView extends React.PureComponent<TProps, TState> {
             transactionType: ETransactionType.expense,
             amountInDefaultCoin: parseFloat(values.amount),
             defaultCoin: ECoin.ils,
-            rootCategory: values.category,
+            rootCategory: values.rootCategory,
             comment: values.comment,
             userId: user.basicProfile?.getId() || '',
         });
@@ -86,13 +90,22 @@ class EditTransactionView extends React.PureComponent<TProps, TState> {
     };
 
     renderForm() {
-        const {accounts} = this.props;
+        const {accounts, transactions} = this.props;
         const {transactionId} = this.props.match.params;
         const isEditingTransaction = accounts.data.length() > 0 && transactionId;
         if (isEditingTransaction || !transactionId) {
+            const transaction = transactions.data.find(item => item.getId() === transactionId);
+            const values = transaction?.getValues();
+            const _initValues: TValues = isEditingTransaction ? {
+                date: values?.date ? format(values.date, time.getDateFormat()) : '',
+                amount: String(values?.amountInDefaultCoin) || '',
+                accountFrom: values?.accountFrom || '',
+                rootCategory: values?.rootCategory || '',
+                comment: values?.comment || '',
+            } : initValues;
             return (
                 <Formik
-                    initialValues={initValues}
+                    initialValues={_initValues}
                     validationSchema={transactionValidationSchema}
                     onSubmit={this.handleSubmit}
                 >
@@ -119,6 +132,7 @@ export default connect(
         user: state.user,
         sheets: state.sheets,
         accounts: state.accounts,
+        transactions: state.transactions,
     }),
     {
         sendNotification,

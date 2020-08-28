@@ -15,7 +15,7 @@ export type TValues = {
     date: string;
     amount: string;
     accountFrom: string;
-    category: string;
+    rootCategory: string;
     comment: string;
 };
 
@@ -38,7 +38,7 @@ export const transactionValidationSchema = Yup.object().shape({
 export const initValues: TValues = {
     amount: '',
     accountFrom: '',
-    category: '',
+    rootCategory: '',
     date: '',
     comment: '',
 };
@@ -110,7 +110,7 @@ class EditTransactionForm extends EditForm<IProps> {
                     name='category'
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    value={values.category}
+                    value={values.rootCategory}
                     disabled={this.isDisabled()}
                 >
                     <option value='' disabled>
