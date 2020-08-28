@@ -80,7 +80,12 @@ class EditTransactionForm extends EditForm<IProps> {
                         {t('accounts.select_account')}
                     </option>
                     {accounts.data.map(accountRow => (
-                        <option key={accountRow.getId()}>{accountRow.getName()}</option>
+                        <option
+                            key={accountRow.getId()}
+                            value={accountRow.getId()}
+                        >
+                            {accountRow.getName()}
+                        </option>
                     ))}
                 </Select>
                 {this.renderError('accountFrom')}
@@ -105,14 +110,19 @@ class EditTransactionForm extends EditForm<IProps> {
                     name='category'
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    value={values.accountFrom}
+                    value={values.category}
                     disabled={this.isDisabled()}
                 >
                     <option value='' disabled>
-                        {t('accounts.select_category')}
+                        {t('categories.select_category')}
                     </option>
                     {categories.data.map(categoryRow => (
-                        <option key={categoryRow.getId()}>{categoryRow.getName()}</option>
+                        <option
+                            key={categoryRow.getId()}
+                            value={categoryRow.getId()}
+                        >
+                            {categoryRow.getName()}
+                        </option>
                     ))}
                 </Select>
                 {this.renderError('category')}
@@ -133,7 +143,7 @@ class EditTransactionForm extends EditForm<IProps> {
                 <div className='flex flex-wrap -mx-2 mb-4'>
                     <div className='w-1/2 px-2'>
                         <input
-                            type='text'
+                            type='number'
                             className={getInputClass({
                                 disabled: this.isDisabled(),
                             })}

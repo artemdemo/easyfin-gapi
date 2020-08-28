@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import format from 'date-fns/format';
 import { createSelector } from 'reselect';
+import {Column} from 'react-table';
 import {formatMoney} from '../../services/numbers';
 import GeneralTable from '../../components/GeneralTable/GeneralTable';
 import { t } from '../../services/i18n';
@@ -19,6 +20,7 @@ import {getLastTransactionsSheet, getSheetForTransaction} from '../../services/s
 import history from '../../history';
 import * as routes from '../../routing/routes';
 import GTransactionRow from '../../google-api/GTransactionRow';
+import { ITransactionRowValues } from '../../google-api/services/transactionArrToData';
 import {IAccountsState} from '../../model/accounts/accountsReducer';
 import {enrichTransactions} from '../../services/mixins';
 import {ICategoriesState} from '../../model/categories/categoriesReducer';
@@ -49,7 +51,7 @@ const enrichedTransactionsSelector = createSelector(
 );
 
 class TransactionsList extends React.PureComponent<TProps> {
-    COLUMNS = [
+    COLUMNS: Column<ITransactionRowValues>[] = [
         {
             Header: t('transactions.table.date'),
             accessor: 'date',
@@ -67,7 +69,7 @@ class TransactionsList extends React.PureComponent<TProps> {
         {
             Header: t('transactions.table.tags'),
             accessor: 'tags',
-            Cell: cellProps => cellProps.value.join(', '),
+            Cell: cellProps => cellProps.value?.join(', ') || '',
         },
         {
             Header: t('transactions.table.comment'),
