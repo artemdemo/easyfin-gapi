@@ -8,6 +8,7 @@ import Select from '../../components/Select/Select';
 import Button from '../../components/Button/Button';
 import {TGlobalState} from '../../reducers';
 import {IAccountsState} from '../../model/accounts/accountsReducer';
+import {ICategoriesState} from '../../model/categories/categoriesReducer';
 import EditForm, {IEditFormProps} from './EditForm';
 
 export type TValues = {
@@ -46,6 +47,7 @@ interface IProps extends IEditFormProps {
     formProps: IEditTransactionForm;
     mockSubmit: () => void;
     accounts: IAccountsState;
+    categories: ICategoriesState;
 }
 
 class EditTransactionForm extends EditForm<IProps> {
@@ -75,7 +77,7 @@ class EditTransactionForm extends EditForm<IProps> {
                     disabled={this.isDisabled()}
                 >
                     <option value='' disabled>
-                        {t('accounts.account_type')}
+                        {t('accounts.select_account')}
                     </option>
                     {accounts.data.map(accountRow => (
                         <option key={accountRow.getId()}>{accountRow.getName()}</option>
@@ -92,6 +94,7 @@ class EditTransactionForm extends EditForm<IProps> {
             handleChange,
             handleBlur,
         } = this.props.formProps;
+        const { categories } = this.props;
         return (
             <>
                 <Select
@@ -105,8 +108,12 @@ class EditTransactionForm extends EditForm<IProps> {
                     value={values.accountFrom}
                     disabled={this.isDisabled()}
                 >
-                    <option>category one</option>
-                    <option>category two</option>
+                    <option value='' disabled>
+                        {t('accounts.select_category')}
+                    </option>
+                    {categories.data.map(categoryRow => (
+                        <option key={categoryRow.getId()}>{categoryRow.getName()}</option>
+                    ))}
                 </Select>
                 {this.renderError('category')}
             </>
@@ -198,5 +205,6 @@ class EditTransactionForm extends EditForm<IProps> {
 export default connect(
     (state: TGlobalState) => ({
         accounts: state.accounts,
+        categories: state.categories,
     }),
 )(EditTransactionForm);
