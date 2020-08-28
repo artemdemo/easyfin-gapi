@@ -1,25 +1,11 @@
-type TSortedRow<T> = {
-    depth: number;
-    index: number;
-    original: T;
-};
+import {
+    UseExpandedRowProps,
+    UseSortByColumnProps,
+    UseSortByOptions,
+    HeaderGroup,
+} from 'react-table';
 
-export type TCellProps<T> = {
-    value: any;
-    data: T[];
-    row: {
-        original: T;
-    };
-    sortedRows: TSortedRow<T>[];
-    sortedFlatRows: TSortedRow<T>[];
-    totalColumnsMaxWidth: number;
-    totalColumnsMinWidth: number;
-    totalColumnsWidth: number;
-    allColumnsHidden: boolean;
-};
-
-export type TColumn<T> = {
-    Header: string;
-    accessor: string;
-    Cell?: (cellProps: TCellProps<T>) => any;
-};
+export interface IRow<D extends object = {}> extends UseExpandedRowProps<D> { }
+export interface IColumnInstance<D extends object = {}> extends UseSortByColumnProps<D> { }
+export interface ITableOptions<D extends object = {}> extends UseSortByOptions<D> { }
+export interface IHeaderGroup<D extends object = {}> extends HeaderGroup<D>, UseSortByColumnProps<D> { }

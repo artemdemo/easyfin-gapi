@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import {Column, CellProps} from "react-table";
 import { t } from "../../services/i18n";
 import RowMenu from "../../components/GeneralTable/RowMenu";
 import GeneralTable from "../../components/GeneralTable/GeneralTable";
@@ -15,7 +16,6 @@ import * as routes from "../../routing/routes";
 import {ICategoriesState} from "../../model/categories/categoriesReducer";
 import {ICategoryRowValues} from "../../google-api/GCategoryRow";
 import GCategoryRow from "../../google-api/GCategoryRow";
-import {TCellProps, TColumn} from "../../types/react-table";
 
 type TProps = {
     categories: ICategoriesState;
@@ -24,7 +24,7 @@ type TProps = {
 };
 
 class CategoriesList extends React.PureComponent<TProps> {
-    COLUMNS: TColumn<ICategoryRowValues>[] = [];
+    COLUMNS: Column<ICategoryRowValues>[] = [];
 
     constructor(props) {
         super(props);
@@ -63,7 +63,7 @@ class CategoriesList extends React.PureComponent<TProps> {
         history.push(routes.categories.edit(item.original.id));
     };
 
-    renderParentCell = (cellProps: TCellProps<ICategoryRowValues>) => {
+    renderParentCell = (cellProps: CellProps<ICategoryRowValues>) => {
         const { categories } = this.props;
         const category = categories.data.find(item => item.getId() === cellProps.value);
         if (category) {

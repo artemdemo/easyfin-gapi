@@ -1,6 +1,9 @@
 import React from "react";
-import {Column, useSortBy, useTable} from "react-table";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSortAlphaDown, faSortAlphaDownAlt } from "@fortawesome/free-solid-svg-icons";
+import {useSortBy, useTable, Column} from "react-table";
 import { getTableClass, getTableThClass, getTableTdClass } from "../../styles/table";
+import {IHeaderGroup} from "../../types/react-table";
 
 type TProps = {
     columns: Column[];
@@ -29,19 +32,26 @@ const GeneralTable = (props: TProps) => {
             <thead>
             {headerGroups.map(headerGroup => (
                 <tr {...headerGroup.getHeaderGroupProps()}>
-                    {headerGroup.headers.map((column, idx) => (
-                        <th
-                            className={getTableThClass({
-                                roundedTl: idx === 0,
-                            })}
-                            {...column.getHeaderProps(
-                                // @ts-ignore
-                                column.getSortByToggleProps()
-                            )}
-                        >
-                            {column.render('Header')}
-                        </th>
-                    ))}
+                    {headerGroup.headers.map((column: IHeaderGroup, idx) => {
+                        return (
+                            <th
+                                className={getTableThClass({
+                                    roundedTl: idx === 0,
+                                })}
+                                {...column.getHeaderProps(
+                                    column.getSortByToggleProps()
+                                )}
+                            >
+                                {column.render('Header')}
+                                &nbsp;
+                                {column.isSorted ? (
+                                    <FontAwesomeIcon
+                                        icon={column.isSortedDesc ? faSortAlphaDownAlt : faSortAlphaDown}
+                                    />
+                                ) : null}
+                            </th>
+                        );
+                    })}
                     <th
                         className={getTableThClass({
                             roundedTr: true,
