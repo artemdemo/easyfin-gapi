@@ -13,7 +13,9 @@ import {getCategoriesSheet} from "../../services/sheets";
 import history from "../../history";
 import * as routes from "../../routing/routes";
 import {ICategoriesState} from "../../model/categories/categoriesReducer";
+import {ICategoryRowValues} from "../../google-api/GCategoryRow";
 import GCategoryRow from "../../google-api/GCategoryRow";
+import {TCellProps, TColumn} from "../../types/react-table";
 
 type TProps = {
     categories: ICategoriesState;
@@ -22,16 +24,24 @@ type TProps = {
 };
 
 class CategoriesList extends React.PureComponent<TProps> {
-    COLUMNS = [
-        {
-            Header: t('categories.table.name'),
-            accessor: 'name',
-        },
-        {
-            Header: t('categories.table.parent'),
-            accessor: 'parent',
-        },
-    ];
+    COLUMNS: TColumn<ICategoryRowValues>[] = [];
+
+    constructor(props) {
+        super(props);
+
+        this.COLUMNS = [
+            {
+                Header: t('categories.table.name'),
+                accessor: 'name',
+            },
+            {
+                Header: t('categories.table.parent'),
+                accessor: 'parent',
+                Cell: this.renderParentCell,
+            },
+        ];
+    }
+
 
     getCategoryById(categoryId: string): GCategoryRow {
         const account = this.props.categories.data.find(item => item.getId() === categoryId);
@@ -51,6 +61,19 @@ class CategoriesList extends React.PureComponent<TProps> {
 
     handleEdit = (item) => {
         history.push(routes.categories.edit(item.original.id));
+    };
+
+    renderParentCell = (cellProps: TCellProps<ICategoryRowValues>) => {
+        const { categories } = this.props;
+        const category = categories.data.find(item => item.getId() === cellProps.value);
+        if (category) {
+            return (
+                <>
+                    {category.getName()}
+                </>
+            );
+        }
+        return null;
     };
 
     render() {

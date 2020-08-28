@@ -20,8 +20,7 @@ export interface IEditCategoryForm extends IFormProps {
 }
 
 export const categoryValidationSchema = Yup.object().shape({
-    name: Yup.string()
-        .required(t('common.required')),
+    name: Yup.string().required(t('common.required')),
     parent: Yup.string(),
 });
 
@@ -34,6 +33,7 @@ interface IProps extends IEditFormProps {
     formProps: IEditCategoryForm;
     mockSubmit: () => void;
     categories: ICategoriesState;
+    categoryId?: string;
 }
 
 class EditCategoryForm extends EditForm<IProps> {
@@ -48,7 +48,7 @@ class EditCategoryForm extends EditForm<IProps> {
             handleChange,
             handleBlur,
         } = this.props.formProps;
-        const { categories } = this.props;
+        const { categories, categoryId } = this.props;
         return (
             <>
                 <Select
@@ -68,9 +68,14 @@ class EditCategoryForm extends EditForm<IProps> {
                         // Category can be parent only if it doesn't have `parent` of its own.
                         // I don't want more than one level of parenthood
                         // (daughters only, no grandchildren)
-                        .filter(category => !category.getParent())
+                        .filter((category) => {
+                            return !category.getParent() && category.getId() !== categoryId;
+                        })
                         .map(category => (
-                            <option key={category.getId()}>
+                            <option
+                                value={category.getId()}
+                                key={category.getId()}
+                            >
                                 {category.getName()}
                             </option>
                         ))}

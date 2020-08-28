@@ -57,8 +57,12 @@ class EditCategoryView extends React.PureComponent<TProps, TState> {
     }
 
     renderFormContent = (formProps: IEditCategoryForm) => {
+        const {categoryId} = this.props.match.params;
         return (
-            <EditCategoryForm formProps={formProps} />
+            <EditCategoryForm
+                categoryId={categoryId}
+                formProps={formProps}
+            />
         );
     };
 

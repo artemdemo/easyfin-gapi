@@ -9,7 +9,7 @@ interface ICreateCategoryValues {
     parent?: string;
 }
 
-interface ICategoryRowValues extends ICreateCategoryValues {
+export interface ICategoryRowValues extends ICreateCategoryValues {
     id: string;
 }
 
