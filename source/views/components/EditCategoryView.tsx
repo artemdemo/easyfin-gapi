@@ -76,7 +76,7 @@ class EditCategoryView extends React.PureComponent<TProps, TState> {
             const parent = categories.data.find(item => item.getId() === values?.parent);
             const _initValues = isEditingCategory ? {
                 name: values?.name,
-                parent: parent ? parent.getId() : '',
+                parent: parent?.getId() || '',
             } : initValues;
             return (
                 <Formik
