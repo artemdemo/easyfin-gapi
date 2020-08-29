@@ -2,7 +2,7 @@ import React from 'react';
 import {HeaderGroup} from 'react-table';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faSortAlphaDown, faSortAlphaDownAlt} from '@fortawesome/free-solid-svg-icons';
-import {IColumnInstance, IHeaderGroup} from '../../types/react-table';
+import {IHeaderGroup} from '../../types/react-table';
 import {getTableThClass} from '../../styles/table';
 
 type TProps = {
@@ -11,7 +11,7 @@ type TProps = {
 };
 
 class GeneralHeadTr extends React.Component<TProps> {
-    renderSortingIcon(column: IColumnInstance) {
+    renderSortingIcon(column: IHeaderGroup) {
         if (column.isSorted) {
             return (
                 <>

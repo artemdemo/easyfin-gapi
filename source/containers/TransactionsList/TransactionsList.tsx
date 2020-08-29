@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import format from 'date-fns/format';
 import { createSelector } from 'reselect';
 import {Column} from 'react-table';
+import {IColumnInstance} from "../../types/react-table";
 import {formatMoney} from '../../services/numbers';
 import GeneralTable from '../../components/GeneralTable/GeneralTable';
 import { t } from '../../services/i18n';
@@ -25,6 +26,7 @@ import {IAccountsState} from '../../model/accounts/accountsReducer';
 import {enrichTransactions} from '../../services/mixins';
 import {ICategoriesState} from '../../model/categories/categoriesReducer';
 import * as time from '../../services/time';
+import SelectColumnFilter from '../../components/GeneralTable/filters/SelectColumnFilter';
 
 type TProps = {
     sheets: ISheetsState;
@@ -52,7 +54,7 @@ const enrichedTransactionsSelector = createSelector(
 );
 
 class TransactionsList extends React.PureComponent<TProps> {
-    COLUMNS: Column<ITransactionRowValues>[] = [
+    COLUMNS: IColumnInstance<ITransactionRowValues>[] = [
         {
             Header: t('transactions.table.date'),
             accessor: 'date',
@@ -67,6 +69,8 @@ class TransactionsList extends React.PureComponent<TProps> {
         {
             Header: t('transactions.table.category'),
             accessor: 'rootCategory',
+            Filter: SelectColumnFilter,
+            filter: 'includes',
         },
         {
             Header: t('transactions.table.amount'),
