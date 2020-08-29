@@ -15,13 +15,6 @@ type TProps = {
 const GeneralTable = (props: TProps) => {
     const { columns, data, menu } = props;
 
-    const defaultColumn = React.useMemo(
-        () => ({
-            Filter: () => null,
-        }),
-        [],
-    );
-
     const {
         getTableProps,
         getTableBodyProps,
@@ -32,8 +25,6 @@ const GeneralTable = (props: TProps) => {
         {
             columns,
             data,
-            // @ts-ignore
-            defaultColumn,
         },
         useFilters,
         useSortBy,

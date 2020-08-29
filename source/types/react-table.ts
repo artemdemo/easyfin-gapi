@@ -26,4 +26,6 @@ export interface ITableOptions<D extends object = {}>
 export interface IHeaderGroup<D extends object = {}>
     extends HeaderGroup<D>,
         UseFiltersColumnProps<D>,
-        UseSortByColumnProps<D> { }
+        UseFiltersColumnOptions<D>,
+        UseSortByColumnProps<D> {
+}

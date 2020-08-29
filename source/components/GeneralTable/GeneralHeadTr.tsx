@@ -11,14 +11,26 @@ type TProps = {
 };
 
 class GeneralHeadTr extends React.Component<TProps> {
-    renderSortingIcon(column: IHeaderGroup) {
-        if (column.isSorted) {
+    renderSortingIcon(header: IHeaderGroup) {
+        if (header.isSorted) {
             return (
                 <>
                     &nbsp;
                     <FontAwesomeIcon
-                        icon={column.isSortedDesc ? faSortAlphaDownAlt : faSortAlphaDown}
+                        icon={header.isSortedDesc ? faSortAlphaDownAlt : faSortAlphaDown}
                     />
+                </>
+            );
+        }
+        return null;
+    }
+
+    renderFilter(header: IHeaderGroup) {
+        if (header.canFilter && header.Filter) {
+            return (
+                <>
+                    &nbsp;
+                    {header.render('Filter')}
                 </>
             );
         }
@@ -58,7 +70,7 @@ class GeneralHeadTr extends React.Component<TProps> {
                         >
                             {header.render('Header')}
                             {this.renderSortingIcon(header)}
-                            <div>{header.canFilter ? header.render('Filter') : null}</div>
+                            {this.renderFilter(header)}
                         </th>
                     );
                 })}

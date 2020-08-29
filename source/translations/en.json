@@ -43,5 +43,6 @@
     "common.required": "Required",
     "common.delete": "Delete",
     "common.submit": "Submit",
+    "common.all": "All",
     "common.edit": "Edit"
 }
