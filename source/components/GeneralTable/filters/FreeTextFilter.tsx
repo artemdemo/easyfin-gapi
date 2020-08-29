@@ -10,6 +10,9 @@ const FreeTextFilter = (props) => {
         <input
             value={filterValue || ''}
             placeholder={t('common.search')}
+            onClick={(e) => {
+                e.stopPropagation();
+            }}
             onChange={(e) => {
                 const { value } = e.target;
                 setFilter(value || undefined);

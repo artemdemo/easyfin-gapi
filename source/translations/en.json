@@ -44,5 +44,6 @@
     "common.delete": "Delete",
     "common.submit": "Submit",
     "common.all": "All",
+    "common.search": "Search",
     "common.edit": "Edit"
 }

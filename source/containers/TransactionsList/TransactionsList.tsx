@@ -27,6 +27,7 @@ import {ICategoriesState} from '../../model/categories/categoriesReducer';
 import * as time from '../../services/time';
 import SelectFilter from '../../components/GeneralTable/filters/SelectFilter';
 import FreeTextFilter from '../../components/GeneralTable/filters/FreeTextFilter';
+import {filterIncludesCaseInsensitive, filterEquals} from '../../components/GeneralTable/filters/customFilters';
 
 type TProps = {
     sheets: ISheetsState;
@@ -46,11 +47,10 @@ const enrichedTransactionsSelector = createSelector(
             .map((transaction) => {
                 return {
                     ...transaction,
-                    comment: transaction.comment || '',
-                    accountFrom: transaction.accountFrom?.getName() || '',
-                    accountTo: transaction.accountTo?.getName() || '',
-                    rootCategory: transaction.rootCategory?.getName() || '',
-                    category: transaction.category?.getName() || '',
+                    accountFrom: transaction.accountFrom?.getName(),
+                    accountTo: transaction.accountTo?.getName(),
+                    rootCategory: transaction.rootCategory?.getName(),
+                    category: transaction.category?.getName(),
                 };
             });
     },
@@ -73,7 +73,7 @@ class TransactionsList extends React.PureComponent<TProps> {
             Header: t('transactions.table.category'),
             accessor: 'rootCategory',
             Filter: SelectFilter,
-            filter: 'equals',
+            filter: filterEquals,
         },
         {
             Header: t('transactions.table.amount'),
@@ -89,7 +89,7 @@ class TransactionsList extends React.PureComponent<TProps> {
             Header: t('transactions.table.comment'),
             accessor: 'comment',
             Filter: FreeTextFilter,
-            filter: 'includes',
+            filter: filterIncludesCaseInsensitive,
         },
     ];
 
