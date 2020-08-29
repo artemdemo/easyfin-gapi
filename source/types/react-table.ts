@@ -1,4 +1,3 @@
-import {ReactChild} from 'react';
 import {
     UseExpandedRowProps,
     UseSortByColumnProps,
@@ -18,7 +17,7 @@ export interface IColumnInstance<D extends object = {}>
         UseTableColumnOptions<D>,
         UseFiltersColumnOptions<D> {
     accessor: string;
-    Cell?: (cellProps: CellProps<D>) => ReactChild;
+    Cell?: (cellProps: CellProps<D>) => JSX.Element | null;
 }
 
 export interface ITableOptions<D extends object = {}>

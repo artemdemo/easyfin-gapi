@@ -1,12 +1,13 @@
 import React from 'react';
-import {useSortBy, useTable, useFilters, Column} from 'react-table';
+import {useSortBy, useTable, useFilters} from 'react-table';
+import {IColumnInstance} from '../../types/react-table';
 import {getTableClass} from '../../styles/table';
 import GeneralHeadTr from './GeneralHeadTr';
 import GeneralBodyTr from './GeneralBodyTr';
 
 
 type TProps = {
-    columns: Column[];
+    columns: IColumnInstance<any>[];
     data: {}[];
     menu?: (row: any) => any;
 };
@@ -16,7 +17,6 @@ const GeneralTable = (props: TProps) => {
 
     const defaultColumn = React.useMemo(
         () => ({
-            // Let's set up our default Filter UI
             Filter: () => null,
         }),
         [],
