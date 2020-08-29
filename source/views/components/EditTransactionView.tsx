@@ -25,7 +25,11 @@ import {IAccountsState} from '../../model/accounts/accountsReducer';
 import {TRouterMatch} from '../../types/react-router-dom';
 import history from '../../history';
 import * as routes from '../../routing/routes';
-import {ITransactionsState} from "../../model/transactions/transactionsReducer";
+import {ITransactionsState} from '../../model/transactions/transactionsReducer';
+import {
+    TLoadTransactions,
+    loadTransactions,
+} from '../../model/transactions/transactionsActions';
 import * as time from '../../services/time';
 
 type TProps = {
@@ -35,6 +39,7 @@ type TProps = {
     transactions: ITransactionsState;
     sendNotification: (data: any) => void;
     createTransaction: TCreateTransaction;
+    loadTransactions: TLoadTransactions;
     match: TRouterMatch<{
         transactionId: string;
     }>;
@@ -42,22 +47,13 @@ type TProps = {
 type TState = {};
 
 class EditTransactionView extends React.PureComponent<TProps, TState> {
-    mockSubmit = () => {
-        const { user, sheets, createTransaction } = this.props;
-        const transaction = new GTransactionRow({
-            date: new Date(),
-            accountFrom: 'account',
-            transactionType: ETransactionType.expense,
-            amountInDefaultCoin: parseFloat('33.5'),
-            defaultCoin: ECoin.ils,
-            rootCategory: 'category',
-            comment: 'some comment',
-            userId: user.basicProfile?.getEmail() || '',
-        });
-        createTransaction({
-            transaction,
-            sheet: getLastTransactionsSheet(sheets.data),
-        });
+    componentDidUpdate(prevProps: Readonly<TProps>) {
+        const {loadTransactions, sheets, transactions} = this.props;
+        if (prevProps.sheets.loading && !sheets.loading) {
+            if (transactions.data.length() === 0 && !transactions.loading) {
+                loadTransactions(getLastTransactionsSheet(sheets.data));
+            }
+        }
     }
 
     handleSubmit = (values: TValues, { setSubmitting }) => {
@@ -84,7 +80,6 @@ class EditTransactionView extends React.PureComponent<TProps, TState> {
         return (
             <EditTransactionForm
                 formProps={formProps}
-                mockSubmit={this.mockSubmit}
             />
         );
     };
@@ -117,11 +112,12 @@ class EditTransactionView extends React.PureComponent<TProps, TState> {
     }
 
     render() {
-        const {accounts} = this.props;
+        const {accounts, transactions, sheets} = this.props;
+        const isLoading = accounts.loading || transactions.loading || sheets.loading;
         return (
             <>
-                {this.renderForm()}
-                {accounts.loading ? t('common.loading') : ''}
+                {!isLoading && this.renderForm()}
+                {isLoading ? t('common.loading') : ''}
             </>
         );
     }
@@ -137,5 +133,6 @@ export default connect(
     {
         sendNotification,
         createTransaction,
+        loadTransactions,
     },
 )(EditTransactionView);

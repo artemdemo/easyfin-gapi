@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 import {connect} from 'react-redux';
 import {IFormProps} from '../../types/formik';
 import {t} from '../../services/i18n';
-import {EButtonAppearance, getInputClass} from '../../styles/elements';
+import {getInputClass} from '../../styles/elements';
 import Select from '../../components/Select/Select';
 import Button from '../../components/Button/Button';
 import {TGlobalState} from '../../reducers';
@@ -45,7 +45,6 @@ export const initValues: TValues = {
 
 interface IProps extends IEditFormProps {
     formProps: IEditTransactionForm;
-    mockSubmit: () => void;
     accounts: IAccountsState;
     categories: ICategoriesState;
 }
@@ -196,16 +195,7 @@ class EditTransactionForm extends EditForm<IProps> {
                     {this.renderError('comment')}
                 </div>
                 <Button type='submit' disabled={this.isDisabled()}>
-                    Submit
-                </Button>
-                &nbsp;
-                <Button
-                    type='button'
-                    disabled={this.isDisabled()}
-                    onClick={this.props.mockSubmit}
-                    appearance={EButtonAppearance.LIGHT}
-                >
-                    Mock submit
+                    {t('common.submit')}
                 </Button>
             </form>
         );
