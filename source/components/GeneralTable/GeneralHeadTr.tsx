@@ -58,6 +58,7 @@ class GeneralHeadTr extends React.Component<TProps> {
                         >
                             {header.render('Header')}
                             {this.renderSortingIcon(header)}
+                            <div>{header.canFilter ? header.render('Filter') : null}</div>
                         </th>
                     );
                 })}

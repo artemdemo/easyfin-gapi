@@ -45,10 +45,10 @@ const enrichedTransactionsSelector = createSelector(
         return enrichTransactions(transactions.data, accounts.data, categories.data)
             .map((transaction) => ({
                 ...transaction,
-                accountFrom: transaction.accountFrom?.getName(),
-                accountTo: transaction.accountTo?.getName(),
-                rootCategory: transaction.rootCategory?.getName(),
-                category: transaction.category?.getName(),
+                accountFrom: transaction.accountFrom?.getName() || '',
+                accountTo: transaction.accountTo?.getName() || '',
+                rootCategory: transaction.rootCategory?.getName() || '',
+                category: transaction.category?.getName() || '',
             }));
     },
 );
