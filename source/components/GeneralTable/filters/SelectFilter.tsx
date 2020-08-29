@@ -1,7 +1,8 @@
 import React from 'react';
 import {t} from '../../../services/i18n';
+import {getRandom} from '../../../services/numbers';
 
-const ALL = '#--all--#';
+const ALL = `all-${getRandom(5)}`;
 
 const SelectFilter = (props) => {
     const {
@@ -9,6 +10,7 @@ const SelectFilter = (props) => {
     } = props;
 
     const options = React.useMemo(() => {
+        // I'm using Set in order to dismiss duplicate values.
         const options = new Set();
         preFilteredRows.forEach((row) => {
             options.add(row.values[id]);

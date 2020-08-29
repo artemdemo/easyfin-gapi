@@ -26,6 +26,7 @@ import {enrichTransactions} from '../../services/mixins';
 import {ICategoriesState} from '../../model/categories/categoriesReducer';
 import * as time from '../../services/time';
 import SelectFilter from '../../components/GeneralTable/filters/SelectFilter';
+import FreeTextFilter from '../../components/GeneralTable/filters/FreeTextFilter';
 
 type TProps = {
     sheets: ISheetsState;
@@ -42,13 +43,16 @@ const enrichedTransactionsSelector = createSelector(
     (props: TProps) => props.categories,
     (transactions, accounts, categories) => {
         return enrichTransactions(transactions.data, accounts.data, categories.data)
-            .map((transaction) => ({
-                ...transaction,
-                accountFrom: transaction.accountFrom?.getName() || '',
-                accountTo: transaction.accountTo?.getName() || '',
-                rootCategory: transaction.rootCategory?.getName() || '',
-                category: transaction.category?.getName() || '',
-            }));
+            .map((transaction) => {
+                return {
+                    ...transaction,
+                    comment: transaction.comment || '',
+                    accountFrom: transaction.accountFrom?.getName() || '',
+                    accountTo: transaction.accountTo?.getName() || '',
+                    rootCategory: transaction.rootCategory?.getName() || '',
+                    category: transaction.category?.getName() || '',
+                };
+            });
     },
 );
 
@@ -84,6 +88,8 @@ class TransactionsList extends React.PureComponent<TProps> {
         {
             Header: t('transactions.table.comment'),
             accessor: 'comment',
+            Filter: FreeTextFilter,
+            filter: 'includes',
         },
     ];
 
