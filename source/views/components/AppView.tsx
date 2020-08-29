@@ -21,6 +21,7 @@ import {
     loadCategories,
 } from '../../model/categories/categoriesActions';
 import * as routes from '../../routing/routes';
+import ErrorHandler from '../../components/ErrorHandler/ErrorHandler';
 
 type TProps = {
     signedIn: TSignedIn;
@@ -74,7 +75,9 @@ class AppView extends React.PureComponent<TProps, TState> {
             <Container>
                 <MainMenu />
                 <Notifications />
-                {this.props.children}
+                <ErrorHandler>
+                    {this.props.children}
+                </ErrorHandler>
             </Container>
         );
     }

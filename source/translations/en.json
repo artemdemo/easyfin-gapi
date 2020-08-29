@@ -38,6 +38,7 @@
     "categories.table.no_categories": "No categories loaded",
     "categories.select_category": "Select Category",
     "sheets.loading": "Loading spreadsheet data",
+    "error.general": "Something broke",
     "common.loading": "Loading",
     "common.required": "Required",
     "common.delete": "Delete",
