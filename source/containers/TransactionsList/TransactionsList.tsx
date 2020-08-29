@@ -56,7 +56,13 @@ class TransactionsList extends React.PureComponent<TProps> {
         {
             Header: t('transactions.table.date'),
             accessor: 'date',
-            Cell: cellProps => format(cellProps.value, time.getDateTimeFormat()),
+            Cell: (cellProps) => {
+                return (
+                    <span title={format(cellProps.value, time.getDateTimeFormat())}>
+                        {format(cellProps.value, time.getDateFormat())}
+                    </span>
+                );
+            },
         },
         {
             Header: t('transactions.table.category'),
