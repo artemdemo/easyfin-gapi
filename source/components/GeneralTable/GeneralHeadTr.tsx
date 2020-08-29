@@ -14,9 +14,12 @@ class GeneralHeadTr extends React.PureComponent<TProps> {
     renderSortingIcon(column: IColumnInstance) {
         if (column.isSorted) {
             return (
-                <FontAwesomeIcon
-                    icon={column.isSortedDesc ? faSortAlphaDownAlt : faSortAlphaDown}
-                />
+                <>
+                    &nbsp;
+                    <FontAwesomeIcon
+                        icon={column.isSortedDesc ? faSortAlphaDownAlt : faSortAlphaDown}
+                    />
+                </>
             );
         }
         return null;
@@ -54,7 +57,6 @@ class GeneralHeadTr extends React.PureComponent<TProps> {
                             )}
                         >
                             {header.render('Header')}
-                            &nbsp;
                             {this.renderSortingIcon(header)}
                         </th>
                     );
