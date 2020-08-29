@@ -1,7 +1,9 @@
 import React from 'react';
 import {t} from '../../../services/i18n';
 
-const SelectColumnFilter = (props) => {
+const ALL = '#--all--#';
+
+const SelectFilter = (props) => {
     const {
         column: { filterValue, setFilter, preFilteredRows, id },
     } = props;
@@ -23,10 +25,11 @@ const SelectColumnFilter = (props) => {
                 e.stopPropagation();
             }}
             onChange={(e) => {
-                setFilter(e.target.value || undefined);
+                const { value } = e.target;
+                setFilter(value === ALL ? undefined : value);
             }}
         >
-            <option value="">{t('common.all')}</option>
+            <option value={ALL}>{t('common.all')}</option>
             {options.map((option: string, i) => (
                 <option key={i} value={option}>
                     {option}
@@ -36,4 +39,4 @@ const SelectColumnFilter = (props) => {
     )
 }
 
-export default SelectColumnFilter;
+export default SelectFilter;

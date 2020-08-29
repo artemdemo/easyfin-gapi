@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import format from 'date-fns/format';
 import { createSelector } from 'reselect';
-import {Column} from 'react-table';
 import {IColumnInstance} from "../../types/react-table";
 import {formatMoney} from '../../services/numbers';
 import GeneralTable from '../../components/GeneralTable/GeneralTable';
@@ -26,7 +25,7 @@ import {IAccountsState} from '../../model/accounts/accountsReducer';
 import {enrichTransactions} from '../../services/mixins';
 import {ICategoriesState} from '../../model/categories/categoriesReducer';
 import * as time from '../../services/time';
-import SelectColumnFilter from '../../components/GeneralTable/filters/SelectColumnFilter';
+import SelectFilter from '../../components/GeneralTable/filters/SelectFilter';
 
 type TProps = {
     sheets: ISheetsState;
@@ -69,8 +68,8 @@ class TransactionsList extends React.PureComponent<TProps> {
         {
             Header: t('transactions.table.category'),
             accessor: 'rootCategory',
-            Filter: SelectColumnFilter,
-            filter: 'includes',
+            Filter: SelectFilter,
+            filter: 'equals',
         },
         {
             Header: t('transactions.table.amount'),
