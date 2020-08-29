@@ -7,7 +7,7 @@ type TProps = {
     menu?: (row: any) => any;
 };
 
-class GeneralBodyTr extends React.PureComponent<TProps> {
+class GeneralBodyTr extends React.Component<TProps> {
     renderMenuColumn() {
         const { row, menu } = this.props;
         if (menu) {

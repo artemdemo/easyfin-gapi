@@ -10,6 +10,9 @@ type TTableTh = {
 
 export const getTableThClass = (props?: TTableTh) => classnames({
     'px-4 py-2 bg-gray-200 border-gray-300 border-b-2 text-left': true,
+    // I'm using `user-select: none;` so I can click freely on the header, in order to change sorting.
+    // Without selecting the text.
+    'select-none': true,
     'rounded-tl': props?.roundedTl ?? false,
     'rounded-tr': props?.roundedTr ?? false,
     hidden: props?.hidden ?? false,

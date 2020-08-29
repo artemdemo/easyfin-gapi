@@ -10,7 +10,7 @@ type TProps = {
     menu?: (row: any) => any;
 };
 
-class GeneralHeadTr extends React.PureComponent<TProps> {
+class GeneralHeadTr extends React.Component<TProps> {
     renderSortingIcon(column: IColumnInstance) {
         if (column.isSorted) {
             return (
