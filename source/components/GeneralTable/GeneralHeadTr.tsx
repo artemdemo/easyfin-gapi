@@ -4,6 +4,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faSortAlphaDown, faSortAlphaDownAlt} from '@fortawesome/free-solid-svg-icons';
 import {IHeaderGroup} from '../../types/react-table';
 import {getTableThClass} from '../../styles/table';
+import FilterButton from './FilterButton/FilterButton';
 
 type TProps = {
     headerGroup: HeaderGroup;
@@ -30,7 +31,9 @@ class GeneralHeadTr extends React.Component<TProps> {
             return (
                 <>
                     &nbsp;
-                    {header.render('Filter')}
+                    <FilterButton>
+                        {header.render('Filter')}
+                    </FilterButton>
                 </>
             );
         }
