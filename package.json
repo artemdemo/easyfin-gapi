@@ -51,6 +51,7 @@
     "less-loader": "^6.1.0",
     "less-plugin-clean-css": "^1.5.1",
     "lodash": "^4.17.15",
+    "match-sorter": "^4.2.0",
     "nanoevents": "^5.1.8",
     "nanoid": "^3.1.10",
     "prop-types": "^15.7.2",

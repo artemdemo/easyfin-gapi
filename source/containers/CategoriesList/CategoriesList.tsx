@@ -16,6 +16,7 @@ import * as routes from '../../routing/routes';
 import {ICategoriesState} from '../../model/categories/categoriesReducer';
 import {ICategoryRowValues} from '../../google-api/GCategoryRow';
 import GCategoryRow from '../../google-api/GCategoryRow';
+import {IColumnInstance} from "../../types/react-table";
 
 type TProps = {
     categories: ICategoriesState;
@@ -24,7 +25,7 @@ type TProps = {
 };
 
 class CategoriesList extends React.PureComponent<TProps> {
-    COLUMNS: Column<ICategoryRowValues>[] = [];
+    COLUMNS: IColumnInstance<ICategoryRowValues>[] = [];
 
     constructor(props) {
         super(props);

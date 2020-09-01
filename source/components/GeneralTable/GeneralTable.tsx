@@ -1,17 +1,20 @@
 import React from 'react';
-import {useSortBy, useTable, Column} from 'react-table';
+import {useSortBy, useTable, useFilters} from 'react-table';
+import {IColumnInstance} from '../../types/react-table';
 import {getTableClass} from '../../styles/table';
 import GeneralHeadTr from './GeneralHeadTr';
 import GeneralBodyTr from './GeneralBodyTr';
 
+
 type TProps = {
-    columns: Column[];
+    columns: IColumnInstance<any>[];
     data: {}[];
     menu?: (row: any) => any;
 };
 
 const GeneralTable = (props: TProps) => {
     const { columns, data, menu } = props;
+
     const {
         getTableProps,
         getTableBodyProps,
@@ -23,21 +26,20 @@ const GeneralTable = (props: TProps) => {
             columns,
             data,
         },
+        useFilters,
         useSortBy,
     )
 
     return (
         <table className={getTableClass()} {...getTableProps()}>
             <thead>
-                {headerGroups.map((headerGroup, idx) => {
-                    return (
-                        <GeneralHeadTr
-                            headerGroup={headerGroup}
-                            menu={menu}
-                            key={idx}
-                        />
-                    )
-                })}
+                {headerGroups.map((headerGroup, idx) => (
+                    <GeneralHeadTr
+                        headerGroup={headerGroup}
+                        menu={menu}
+                        key={idx}
+                    />
+                ))}
             </thead>
             <tbody {...getTableBodyProps()}>
                 {rows.map((row, idxRow) => {

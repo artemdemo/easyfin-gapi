@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import format from 'date-fns/format';
 import { createSelector } from 'reselect';
-import {Column} from 'react-table';
+import {IColumnInstance} from "../../types/react-table";
 import {formatMoney} from '../../services/numbers';
 import GeneralTable from '../../components/GeneralTable/GeneralTable';
 import { t } from '../../services/i18n';
@@ -25,6 +25,9 @@ import {IAccountsState} from '../../model/accounts/accountsReducer';
 import {enrichTransactions} from '../../services/mixins';
 import {ICategoriesState} from '../../model/categories/categoriesReducer';
 import * as time from '../../services/time';
+import SelectFilter from '../../components/GeneralTable/filters/SelectFilter';
+import FreeTextFilter from '../../components/GeneralTable/filters/FreeTextFilter';
+import {filterIncludesCaseInsensitive, filterEquals} from '../../components/GeneralTable/filters/customFilters';
 
 type TProps = {
     sheets: ISheetsState;
@@ -41,18 +44,20 @@ const enrichedTransactionsSelector = createSelector(
     (props: TProps) => props.categories,
     (transactions, accounts, categories) => {
         return enrichTransactions(transactions.data, accounts.data, categories.data)
-            .map((transaction) => ({
-                ...transaction,
-                accountFrom: transaction.accountFrom?.getName(),
-                accountTo: transaction.accountTo?.getName(),
-                rootCategory: transaction.rootCategory?.getName(),
-                category: transaction.category?.getName(),
-            }));
+            .map((transaction) => {
+                return {
+                    ...transaction,
+                    accountFrom: transaction.accountFrom?.getName(),
+                    accountTo: transaction.accountTo?.getName(),
+                    rootCategory: transaction.rootCategory?.getName(),
+                    category: transaction.category?.getName(),
+                };
+            });
     },
 );
 
 class TransactionsList extends React.PureComponent<TProps> {
-    COLUMNS: Column<ITransactionRowValues>[] = [
+    COLUMNS: IColumnInstance<ITransactionRowValues>[] = [
         {
             Header: t('transactions.table.date'),
             accessor: 'date',
@@ -67,6 +72,8 @@ class TransactionsList extends React.PureComponent<TProps> {
         {
             Header: t('transactions.table.category'),
             accessor: 'rootCategory',
+            Filter: SelectFilter,
+            filter: filterEquals,
         },
         {
             Header: t('transactions.table.amount'),
@@ -81,6 +88,8 @@ class TransactionsList extends React.PureComponent<TProps> {
         {
             Header: t('transactions.table.comment'),
             accessor: 'comment',
+            Filter: FreeTextFilter,
+            filter: filterIncludesCaseInsensitive,
         },
     ];
 

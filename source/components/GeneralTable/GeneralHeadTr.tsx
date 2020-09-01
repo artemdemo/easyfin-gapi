@@ -2,8 +2,9 @@ import React from 'react';
 import {HeaderGroup} from 'react-table';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faSortAlphaDown, faSortAlphaDownAlt} from '@fortawesome/free-solid-svg-icons';
-import {IColumnInstance, IHeaderGroup} from '../../types/react-table';
+import {IHeaderGroup} from '../../types/react-table';
 import {getTableThClass} from '../../styles/table';
+import FilterButton from './FilterButton/FilterButton';
 
 type TProps = {
     headerGroup: HeaderGroup;
@@ -11,14 +12,28 @@ type TProps = {
 };
 
 class GeneralHeadTr extends React.Component<TProps> {
-    renderSortingIcon(column: IColumnInstance) {
-        if (column.isSorted) {
+    renderSortingIcon(header: IHeaderGroup) {
+        if (header.isSorted) {
             return (
                 <>
                     &nbsp;
                     <FontAwesomeIcon
-                        icon={column.isSortedDesc ? faSortAlphaDownAlt : faSortAlphaDown}
+                        icon={header.isSortedDesc ? faSortAlphaDownAlt : faSortAlphaDown}
                     />
+                </>
+            );
+        }
+        return null;
+    }
+
+    renderFilter(header: IHeaderGroup) {
+        if (header.canFilter && header.Filter) {
+            return (
+                <>
+                    &nbsp;
+                    <FilterButton>
+                        {header.render('Filter')}
+                    </FilterButton>
                 </>
             );
         }
@@ -58,6 +73,7 @@ class GeneralHeadTr extends React.Component<TProps> {
                         >
                             {header.render('Header')}
                             {this.renderSortingIcon(header)}
+                            {this.renderFilter(header)}
                         </th>
                     );
                 })}
