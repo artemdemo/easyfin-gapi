@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import enhanceWithClickOutside from 'react-click-outside';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faFilter} from '@fortawesome/free-solid-svg-icons';
 import TransparentButton from '../../TransparentButton/TransparentButton';
@@ -37,6 +38,12 @@ class FilterButton extends React.PureComponent<TProps, TState> {
         open: false,
     };
 
+    handleClickOutside = () => {
+        this.setState({
+            open: false,
+        });
+    };
+
     handleClick = (e) => {
         e.stopPropagation();
         this.setState(prevState => ({
@@ -58,4 +65,4 @@ class FilterButton extends React.PureComponent<TProps, TState> {
     }
 }
 
-export default FilterButton;
+export default enhanceWithClickOutside(FilterButton);
