@@ -1,6 +1,5 @@
 import parseISO from 'date-fns/parseISO';
 import { TParserMapItem, convertArrToData } from './converter';
-import GAccountRow from '../GAccountRow';
 
 export enum ECoin {
     ils = 'ILS',

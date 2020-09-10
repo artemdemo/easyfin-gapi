@@ -50,7 +50,7 @@ export const appendRow = (row: GRow, sheetName: string) => new Promise<GRow>((re
         // Here `A1` is default value, data will be added one after another.
         // Without `A1` data wouldn't be added starting from A column.
         range: `${sheetName}!A1`,
-        valueInputOption: 'RAW', // USER_ENTERED
+        valueInputOption: 'USER_ENTERED', // RAW, USER_ENTERED
         insertDataOption: 'INSERT_ROWS',
     };
 

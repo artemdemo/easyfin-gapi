@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Formik } from 'formik';
 import parseISO from 'date-fns/parseISO';
 import format from 'date-fns/format';
+import set from 'date-fns/set';
 import {
     TCreateTransaction,
     createTransaction,
@@ -44,18 +45,20 @@ type TProps = {
 type TState = {};
 
 class EditTransactionView extends React.PureComponent<TProps, TState> {
-    componentDidUpdate(prevProps: Readonly<TProps>) {
-        const {loadTransactions, transactions} = this.props;
-        if (transactions.data.length() === 0 && !transactions.loading) {
-            loadTransactions();
-        }
-    }
-
     handleSubmit = (values: TValues, { setSubmitting }) => {
         setSubmitting(false);
         const { user, createTransaction } = this.props;
+        const now = new Date();
+        const date = set(
+            parseISO(values.date),
+            {
+                hours: now.getUTCHours(),
+                minutes: now.getUTCMinutes(),
+                seconds: now.getUTCSeconds(),
+            },
+        );
         const transaction = new GTransactionRow({
-            date: parseISO(values.date),
+            date,
             accountFrom: values.accountFrom,
             transactionType: ETransactionType.expense,
             amountInDefaultCoin: parseFloat(values.amount),
