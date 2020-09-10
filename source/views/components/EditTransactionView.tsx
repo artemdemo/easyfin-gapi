@@ -18,8 +18,6 @@ import EditTransactionForm, {
     TValues,
     IEditTransactionForm,
 } from '../../containers/forms/EditTransactionForm';
-import {ISheetsState} from '../../model/sheets/sheetsReducer';
-import {getLastTransactionsSheet} from '../../services/sheets';
 import {TGlobalState} from '../../reducers';
 import {IAccountsState} from '../../model/accounts/accountsReducer';
 import {TRouterMatch} from '../../types/react-router-dom';
@@ -34,7 +32,6 @@ import * as time from '../../services/time';
 
 type TProps = {
     user: TUserState;
-    sheets: ISheetsState;
     accounts: IAccountsState;
     transactions: ITransactionsState;
     sendNotification: (data: any) => void;
@@ -48,17 +45,15 @@ type TState = {};
 
 class EditTransactionView extends React.PureComponent<TProps, TState> {
     componentDidUpdate(prevProps: Readonly<TProps>) {
-        const {loadTransactions, sheets, transactions} = this.props;
-        if (prevProps.sheets.loading && !sheets.loading) {
-            if (transactions.data.length() === 0 && !transactions.loading) {
-                loadTransactions(getLastTransactionsSheet(sheets.data));
-            }
+        const {loadTransactions, transactions} = this.props;
+        if (transactions.data.length() === 0 && !transactions.loading) {
+            loadTransactions();
         }
     }
 
     handleSubmit = (values: TValues, { setSubmitting }) => {
         setSubmitting(false);
-        const { user, sheets, createTransaction } = this.props;
+        const { user, createTransaction } = this.props;
         const transaction = new GTransactionRow({
             date: parseISO(values.date),
             accountFrom: values.accountFrom,
@@ -69,10 +64,7 @@ class EditTransactionView extends React.PureComponent<TProps, TState> {
             comment: values.comment,
             userId: user.basicProfile?.getId() || '',
         });
-        createTransaction({
-            transaction,
-            sheet: getLastTransactionsSheet(sheets.data),
-        });
+        createTransaction(transaction);
         history.push(routes.transactions());
     }
 
@@ -112,8 +104,8 @@ class EditTransactionView extends React.PureComponent<TProps, TState> {
     }
 
     render() {
-        const {accounts, transactions, sheets} = this.props;
-        const isLoading = accounts.loading || transactions.loading || sheets.loading;
+        const {accounts, transactions} = this.props;
+        const isLoading = accounts.loading || transactions.loading;
         return (
             <>
                 {!isLoading && this.renderForm()}
@@ -126,7 +118,6 @@ class EditTransactionView extends React.PureComponent<TProps, TState> {
 export default connect(
     (state: TGlobalState) => ({
         user: state.user,
-        sheets: state.sheets,
         accounts: state.accounts,
         transactions: state.transactions,
     }),

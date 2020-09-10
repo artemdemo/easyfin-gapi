@@ -47,7 +47,7 @@ const actionHandlers: TActionHandlers<ITransactionsState> = {
     // Create
     [actions.createTransaction]: (state, action: TAction<TCreateTransactionPayload>) => ({
         ...state,
-        data: state.data.add(action.payload?.transaction),
+        data: state.data.add(action.payload),
         creating: true,
     }),
     [actions.transactionCreated]: (state) => ({

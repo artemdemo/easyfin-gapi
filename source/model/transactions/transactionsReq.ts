@@ -3,9 +3,10 @@ import GTransactionRow from '../../google-api/GTransactionRow';
 import logger from '../../services/logger';
 import GSheet from '../../google-api/GSheet';
 import GAccountRow from '../../google-api/GAccountRow';
+import {EDataSheetTitles} from '../../services/sheets';
 
-export const loadTransactions = (sheet: GSheet): Promise<GTransactionRow[]> => {
-    return googleSheets.getAllRows(sheet.getTitle())
+export const loadTransactions = (): Promise<GTransactionRow[]> => {
+    return googleSheets.getAllRows(EDataSheetTitles.TRANSACTIONS)
         .then((data: any) => {
             return data.values || [];
         })
@@ -23,15 +24,15 @@ export const loadTransactions = (sheet: GSheet): Promise<GTransactionRow[]> => {
         });
 };
 
-export const createTransaction = (sheet: GSheet, transaction: GTransactionRow): Promise<GTransactionRow> => {
-    return googleSheets.appendRow(transaction, sheet.getTitle())
+export const createTransaction = (transaction: GTransactionRow): Promise<GTransactionRow> => {
+    return googleSheets.appendRow(transaction, EDataSheetTitles.TRANSACTIONS)
         .then((result) => {
             return <GTransactionRow>result;
         });
 };
 
-export const updateTransaction = (sheet: GSheet, transaction: GTransactionRow): Promise<GAccountRow> => {
-    return googleSheets.updateRow(transaction, sheet.getTitle())
+export const updateTransaction = (transaction: GTransactionRow): Promise<GAccountRow> => {
+    return googleSheets.updateRow(transaction, EDataSheetTitles.TRANSACTIONS)
         .then((result) => {
             return <GAccountRow>result;
         });

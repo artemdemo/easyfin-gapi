@@ -16,7 +16,7 @@ import {
 } from '../../model/transactions/transactionsActions';
 import {TGlobalState} from '../../reducers';
 import {ISheetsState} from '../../model/sheets/sheetsReducer';
-import {getLastTransactionsSheet, getSheetForTransaction} from '../../services/sheets';
+import {getTransactionsSheet} from '../../services/sheets';
 import history from '../../history';
 import * as routes from '../../routing/routes';
 import GTransactionRow from '../../google-api/GTransactionRow';
@@ -94,9 +94,9 @@ class TransactionsList extends React.PureComponent<TProps> {
     ];
 
     componentDidMount() {
-        const {loadTransactions, sheets, transactions} = this.props;
+        const {loadTransactions, transactions} = this.props;
         if (transactions.data.length() === 0 && !transactions.loading) {
-            loadTransactions(getLastTransactionsSheet(sheets.data));
+            loadTransactions();
         }
     }
 
@@ -112,7 +112,7 @@ class TransactionsList extends React.PureComponent<TProps> {
         const { deleteTransaction, sheets } = this.props;
         const transaction = this.getTransactionById(item.original.id);
         deleteTransaction({
-            sheet: getSheetForTransaction(sheets.data, transaction),
+            sheet: getTransactionsSheet(sheets.data),
             transaction,
         });
     };

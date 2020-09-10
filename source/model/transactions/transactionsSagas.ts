@@ -4,9 +4,9 @@ import * as actions from './transactionsActions';
 
 function* loadTransactionsSaga() {
     while (true) {
-        const data: { payload: actions.TLoadTransactionsPayload } = yield take(actions.loadTransactions);
+        yield take(actions.loadTransactions);
         try {
-            const result = yield req.loadTransactions(data.payload);
+            const result = yield req.loadTransactions();
 
             yield put(actions.transactionsLoaded(result));
         } catch (err) {
@@ -18,9 +18,9 @@ function* loadTransactionsSaga() {
 function* createTransactionSaga() {
     while (true) {
         const data: { payload: actions.TCreateTransactionPayload } = yield take(actions.createTransaction);
-        const { sheet, transaction } = data.payload;
+        const transaction = data.payload;
         try {
-            const result = yield req.createTransaction(sheet, transaction);
+            const result = yield req.createTransaction(transaction);
 
             yield put(actions.transactionCreated(result));
         } catch (err) {
