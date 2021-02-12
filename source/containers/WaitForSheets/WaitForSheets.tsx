@@ -1,11 +1,11 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import {TGlobalState} from '../../reducers';
 import {ISheetsState} from '../../model/sheets/sheetsReducer';
 import {t} from '../../services/i18n';
 
 type TProps = {
-    children: any;
+  children: any;
 };
 
 /**
@@ -15,14 +15,14 @@ type TProps = {
  * @constructor
  */
 const WaitForSheets = (props: TProps) => {
-    const sheets: ISheetsState = useSelector((state: TGlobalState) => state.sheets);
-    if (sheets.data.length() > 0) {
-        return props.children;
-    }
-    if (sheets.loading) {
-        return t('sheets.loading');
-    }
-    return null;
+  const sheets: ISheetsState = useSelector((state: TGlobalState) => state.sheets);
+  if (sheets.data.length() > 0) {
+    return props.children;
+  }
+  if (sheets.loading) {
+    return t('sheets.loading');
+  }
+  return null;
 };
 
 export default WaitForSheets;

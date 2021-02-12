@@ -9,8 +9,6 @@ import {t} from '../../services/i18n';
 import RowMenu from '../../components/GeneralTable/RowMenu';
 import {ITransactionsState} from '../../model/transactions/transactionsReducer';
 import {
-  TLoadTransactions,
-  loadTransactions,
   TDeleteTransaction,
   deleteTransaction,
 } from '../../model/transactions/transactionsActions';
@@ -34,7 +32,6 @@ type TProps = {
   transactions: ITransactionsState;
   accounts: IAccountsState;
   categories: ICategoriesState;
-  loadTransactions: TLoadTransactions;
   deleteTransaction: TDeleteTransaction;
 };
 
@@ -92,13 +89,6 @@ class TransactionsList extends React.PureComponent<TProps> {
       filter: filterIncludesCaseInsensitive,
     },
   ];
-
-  componentDidMount() {
-    const {loadTransactions, transactions} = this.props;
-    if (transactions.data.length() === 0 && !transactions.loading) {
-      loadTransactions();
-    }
-  }
 
   getTransactionById(transactionId: string): GTransactionRow {
     const transaction = this.props.transactions.data.find(item => item.getId() === transactionId);
@@ -169,7 +159,6 @@ export default connect(
     categories: state.categories,
   }),
   {
-    loadTransactions,
     deleteTransaction,
   },
 )(TransactionsList);
