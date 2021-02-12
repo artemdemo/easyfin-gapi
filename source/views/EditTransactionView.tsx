@@ -1,6 +1,5 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Formik} from 'formik';
 import parseISO from 'date-fns/parseISO';
 import format from 'date-fns/format';
 import set from 'date-fns/set';
@@ -16,10 +15,8 @@ import {TUserState} from '../model/user/userReducer';
 import {sendNotification} from '../model/notifications/notificationsActions';
 import {t} from '../services/i18n';
 import EditTransForm, {
-  transactionValidationSchema,
   initValues,
   TValues,
-  IEditTransForm,
 } from '../containers/forms/EditTransForm/EditTransForm';
 import {TGlobalState} from '../reducers';
 import {IAccountsState} from '../model/accounts/accountsReducer';
@@ -48,8 +45,7 @@ type TProps = {
 type TState = {};
 
 class EditTransactionView extends React.PureComponent<TProps, TState> {
-  handleSubmit = (values: TValues, {setSubmitting}) => {
-    setSubmitting(false);
+  handleSubmit = (values: TValues) => {
     const {user, createTransaction, updateTransaction} = this.props;
     const now = new Date();
     const date = set(
@@ -108,17 +104,10 @@ class EditTransactionView extends React.PureComponent<TProps, TState> {
         comment: values?.comment || '',
       } : initValues;
       return (
-        <Formik
+        <EditTransForm
           initialValues={_initValues}
-          validationSchema={transactionValidationSchema}
-          onSubmit={this.handleSubmit}
-        >
-          {(formProps: IEditTransForm) => (
-            <EditTransForm
-              formProps={formProps}
-            />
-          )}
-        </Formik>
+          handleSubmit={this.handleSubmit}
+        />
       );
     }
     return null;

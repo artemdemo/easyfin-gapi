@@ -7,12 +7,13 @@ import Button from '../../../components/Button/Button';
 import {TGlobalState} from '../../../reducers';
 import {IAccountsState} from '../../../model/accounts/accountsReducer';
 import {ICategoriesState} from '../../../model/categories/categoriesReducer';
-import EditForm, {IEditFormProps} from '../EditForm';
+import {IEditFormProps} from '../EditForm';
 import {InputAmount} from './InputAmount';
 import {InputDate} from './InputDate';
 import {TextareaComment} from './TextareaComment';
 import {SelectAccount} from './SelectAccount';
 import {SelectCategory} from './SelectCategory';
+import {Formik} from 'formik';
 
 export type TValues = {
   date: string;
@@ -26,7 +27,7 @@ export interface IEditTransForm extends IFormProps {
   values: TValues;
 }
 
-export const transactionValidationSchema = Yup.object().shape({
+const transactionValidationSchema = Yup.object().shape({
   date: Yup.string()
     .required(t('common.required')),
   amount: Yup.number()
@@ -47,86 +48,74 @@ export const initValues: TValues = {
 };
 
 interface IProps extends IEditFormProps {
+  initialValues: TValues;
   formProps: IEditTransForm;
   accounts: IAccountsState;
   categories: ICategoriesState;
+  handleSubmit: (values: TValues) => void;
 }
 
-class EditTransForm extends EditForm<IProps> {
-  isDisabled(): boolean | undefined {
-    const {accounts} = this.props;
-    return super.isDisabled() || accounts.loading;
+const EditTransForm: React.FC<IProps> = (props) => {
+  const { initialValues, accounts, categories, handleSubmit } = props;
+  const isDisabled = () => {
+    return accounts.loading;
   }
 
-  render() {
-    const {
-      values,
-      handleChange,
-      handleBlur,
-      handleSubmit,
-    } = this.props.formProps;
-    const {accounts, categories} = this.props;
-
-    return (
-      <form className='max-w-md' onSubmit={handleSubmit}>
-        <div className='flex flex-wrap -mx-2 mb-4'>
-          <div className='w-1/2 px-2'>
-            <InputAmount
-              handleChange={handleChange}
-              handleBlur={handleBlur}
-              disabled={this.isDisabled()}
-              value={values.amount}
-            />
-            {this.renderError('amount')}
+  return (
+    <Formik
+      initialValues={initialValues}
+      validationSchema={transactionValidationSchema}
+      onSubmit={(values: TValues, {setSubmitting}) => {
+        setSubmitting(false);
+        handleSubmit(values);
+      }}
+    >
+      {(formProps: IEditTransForm) => (
+        <form className='max-w-md' onSubmit={formProps.handleSubmit}>
+          <div className='flex flex-wrap -mx-2 mb-4'>
+            <div className='w-1/2 px-2'>
+              <InputAmount
+                disabled={isDisabled()}
+                formProps={formProps}
+              />
+            </div>
+            <div className='w-1/2 px-2'>
+              <SelectAccount
+                disabled={isDisabled()}
+                formProps={formProps}
+                accounts={accounts}
+              />
+            </div>
           </div>
-          <div className='w-1/2 px-2'>
-            <SelectAccount
-              handleChange={handleChange}
-              handleBlur={handleBlur}
-              disabled={this.isDisabled()}
-              value={values.accountFrom}
-              accounts={accounts}
-            />
-            {this.renderError('accountFrom')}
+          <div className='flex flex-wrap -mx-2 mb-4'>
+            <div className='w-1/2 px-2'>
+              <InputDate
+                disabled={isDisabled()}
+                formProps={formProps}
+              />
+            </div>
+            <div className='w-1/2 px-2'>
+              <SelectCategory
+                disabled={isDisabled()}
+                formProps={formProps}
+                categories={categories}
+              />
+            </div>
           </div>
-        </div>
-        <div className='flex flex-wrap -mx-2 mb-4'>
-          <div className='w-1/2 px-2'>
-            <InputDate
-              handleChange={handleChange}
-              handleBlur={handleBlur}
-              disabled={this.isDisabled()}
-              value={values.date}
+          <div className='mb-4'>
+            <TextareaComment
+              disabled={isDisabled()}
+              formProps={formProps}
             />
-            {this.renderError('date')}
           </div>
-          <div className='w-1/2 px-2'>
-            <SelectCategory
-              handleChange={handleChange}
-              handleBlur={handleBlur}
-              disabled={this.isDisabled()}
-              value={values.rootCategory}
-              categories={categories}
-            />
-            {this.renderError('rootCategory')}
-          </div>
-        </div>
-        <div className='mb-4'>
-          <TextareaComment
-            handleChange={handleChange}
-            handleBlur={handleBlur}
-            disabled={this.isDisabled()}
-            value={values.comment}
-          />
-          {this.renderError('comment')}
-        </div>
-        <Button type='submit' disabled={this.isDisabled()}>
-          {t('common.submit')}
-        </Button>
-      </form>
-    );
-  }
-}
+          <Button type='submit' disabled={isDisabled()}>
+            {t('common.submit')}
+          </Button>
+        </form>
+      )}
+    </Formik>
+  );
+};
 
 export default connect(
   (state: TGlobalState) => ({

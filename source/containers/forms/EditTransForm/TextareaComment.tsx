@@ -1,27 +1,36 @@
 import React from 'react';
 import {getInputClass} from '../../../styles/elements';
+import {IEditTransForm} from './EditTransForm';
+import {t} from '../../../services/i18n';
+import InputError from '../../../components/InputError/InputError';
 
 interface IProps {
-  handleChange: () => void;
-  handleBlur: () => void;
+  formProps: IEditTransForm;
   disabled?: boolean;
-  value: string;
 }
 
 export const TextareaComment: React.FC<IProps> = (props) => {
-  const { handleChange, handleBlur, disabled, value } = props;
+  const { disabled } = props;
+  const { handleChange, handleBlur, values, isSubmitting, errors, touched } = props.formProps;
+  const _disabled = isSubmitting || disabled;
+  const key = 'comment';
   return (
-    <textarea
-      rows={3}
-      className={getInputClass({
-        disabled,
-      })}
-      placeholder='Comment'
-      name='comment'
-      onChange={handleChange}
-      onBlur={handleBlur}
-      value={value}
-      disabled={disabled}
-    />
+    <>
+      <textarea
+        rows={3}
+        className={getInputClass({
+          disabled: _disabled,
+        })}
+        placeholder={t(key)}
+        name={key}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        value={values[key]}
+        disabled={_disabled}
+      />
+      <InputError show={errors[key] && touched[key]}>
+        {errors[key]}
+      </InputError>
+    </>
   );
 };
