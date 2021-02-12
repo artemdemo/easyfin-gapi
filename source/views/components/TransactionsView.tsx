@@ -11,23 +11,23 @@ type TProps = {};
 type TState = {};
 
 class TransactionsView extends React.PureComponent<TProps, TState> {
-    render() {
-        return (
-            <>
-                <div className='mb-3'>
-                    <ButtonLink
-                        to={routes.transactions.new()}
-                        appearance={EButtonAppearance.PRIMARY}
-                    >
-                        {t('transactions.new')}
-                    </ButtonLink>
-                </div>
-                <WaitForSheets>
-                    <TransactionsList />
-                </WaitForSheets>
-            </>
-        );
-    }
+  render() {
+    return (
+      <>
+        <div className='mb-3'>
+          <ButtonLink
+            to={routes.transactions.new()}
+            appearance={EButtonAppearance.PRIMARY}
+          >
+            {t('transactions.new')}
+          </ButtonLink>
+        </div>
+        <WaitForSheets>
+          <TransactionsList/>
+        </WaitForSheets>
+      </>
+    );
+  }
 }
 
 export default TransactionsView;
