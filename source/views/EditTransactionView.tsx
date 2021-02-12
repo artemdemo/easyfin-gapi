@@ -20,7 +20,7 @@ import EditTransactionForm, {
   initValues,
   TValues,
   IEditTransactionForm,
-} from '../containers/forms/EditTransactionForm';
+} from '../containers/forms/EditTransactionForm/EditTransactionForm';
 import {TGlobalState} from '../reducers';
 import {IAccountsState} from '../model/accounts/accountsReducer';
 import {TRouterMatch} from '../types/react-router-dom';
