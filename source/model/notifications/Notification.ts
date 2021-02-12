@@ -18,7 +18,7 @@ class Notification {
     // `id` is used as 'key' in list
     readonly id: string;
     readonly msg: string;
-    readonly timeoutToken: number;
+    readonly timeoutToken: any;
     readonly appearance: ENotificationAppearance;
     private readonly onDeleteCbs: Set<TOnDeleteCb>;
 
