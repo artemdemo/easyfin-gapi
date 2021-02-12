@@ -3,7 +3,11 @@ const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const {
   DefinePlugin,
 } = require('webpack');
+const {
+  ModuleConcatenationPlugin,
+} = require('webpack').optimize;
 const packageFile = require('./package.json');
+const path = require('path');
 
 const isProduction = process.env.NODE_ENV === 'production';
 const configOptions = {
@@ -15,14 +19,10 @@ const configOptions = {
   isProduction,
 };
 
-const path = require('path');
-// const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-
-module.exports = (env, argv) => {
+module.exports = () => {
   return {
     entry: path.join(__dirname, 'source', 'index.tsx'),
     output: {
-      // path: path.resolve(__dirname, 'dist'),
       path: `${process.cwd()}/${configOptions.buildFolder}`,
       filename: configOptions.isProduction ?
         './js/[name]-[chunkhash].js' :
@@ -33,10 +33,8 @@ module.exports = (env, argv) => {
       publicPath: '/',
     },
     devServer: {
-      // open: true,
       host: 'easyfin.local',
       port: 8080,
-      // clientLogLevel: 'silent',
       contentBase: `${configOptions.buildFolder}/`,
       historyApiFallback: true,
       hot: true,
@@ -84,6 +82,12 @@ module.exports = (env, argv) => {
           apiKey: JSON.stringify(configOptions.apiKey),
         },
       }),
+
+      // ModuleConcatenationPlugin
+      // * faster build
+      // * faster execution time in the browser
+      // @link https://webpack.js.org/plugins/module-concatenation-plugin/
+      // new ModuleConcatenationPlugin(),
 
       new HtmlWebpackPlugin({
         template: './source/index.ejs',
