@@ -22,7 +22,7 @@ const GOOGLE_SCRIPT_ID = `apis-google-client-${getRandom(5)}`;
 const DATA_LOADED_ATTR_NAME = 'data-gapi-loaded';
 const SCRIPT_GAPI_LOADED = 'SCRIPT_GAPI_LOADED';
 
-export const _load = () => new Promise((resolve) => {
+export const _load = () => new Promise<void>((resolve) => {
     let scriptEl = <HTMLScriptElement> document.getElementById(GOOGLE_SCRIPT_ID);
     if (scriptEl) {
         if (scriptEl.getAttribute(DATA_LOADED_ATTR_NAME) !== 'true') {
@@ -53,7 +53,7 @@ export const _load = () => new Promise((resolve) => {
     }
 });
 
-export const _init = () => new Promise((resolve, reject) => {
+export const _init = () => new Promise<void>((resolve, reject) => {
     if (!getGapi().client.getToken()) {
         getGapi().client
             .init({
