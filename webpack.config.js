@@ -1,10 +1,8 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const {
-  IgnorePlugin,
   DefinePlugin,
 } = require('webpack');
-
 const packageFile = require('./package.json');
 
 const isProduction = process.env.NODE_ENV === 'production';
@@ -63,19 +61,13 @@ module.exports = (env, argv) => {
           exclude: /node_modules/,
           use: [
             'style-loader',
-            // {
-            //   loader: MiniCssExtractPlugin.loader,
-            //   options: {
-            //     hmr: argv.mode === 'development'
-            //   }
-            // },
             {
               loader: 'css-loader',
               options: {
                 importLoaders: 1
               }
             },
-            'postcss-loader'
+            'postcss-loader',
           ]
         },
       ]
