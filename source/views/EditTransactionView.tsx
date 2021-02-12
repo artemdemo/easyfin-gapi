@@ -15,12 +15,12 @@ import {ECoin, ETransactionType} from '../google-api/services/transactionArrToDa
 import {TUserState} from '../model/user/userReducer';
 import {sendNotification} from '../model/notifications/notificationsActions';
 import {t} from '../services/i18n';
-import EditTransactionForm, {
+import EditTransForm, {
   transactionValidationSchema,
   initValues,
   TValues,
-  IEditTransactionForm,
-} from '../containers/forms/EditTransactionForm/EditTransactionForm';
+  IEditTransForm,
+} from '../containers/forms/EditTransForm/EditTransForm';
 import {TGlobalState} from '../reducers';
 import {IAccountsState} from '../model/accounts/accountsReducer';
 import {TRouterMatch} from '../types/react-router-dom';
@@ -113,8 +113,8 @@ class EditTransactionView extends React.PureComponent<TProps, TState> {
           validationSchema={transactionValidationSchema}
           onSubmit={this.handleSubmit}
         >
-          {(formProps: IEditTransactionForm) => (
-            <EditTransactionForm
+          {(formProps: IEditTransForm) => (
+            <EditTransForm
               formProps={formProps}
             />
           )}

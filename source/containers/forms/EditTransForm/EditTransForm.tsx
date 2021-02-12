@@ -22,7 +22,7 @@ export type TValues = {
   comment: string;
 };
 
-export interface IEditTransactionForm extends IFormProps {
+export interface IEditTransForm extends IFormProps {
   values: TValues;
 }
 
@@ -47,12 +47,12 @@ export const initValues: TValues = {
 };
 
 interface IProps extends IEditFormProps {
-  formProps: IEditTransactionForm;
+  formProps: IEditTransForm;
   accounts: IAccountsState;
   categories: ICategoriesState;
 }
 
-class EditTransactionForm extends EditForm<IProps> {
+class EditTransForm extends EditForm<IProps> {
   isDisabled(): boolean | undefined {
     const {accounts} = this.props;
     return super.isDisabled() || accounts.loading;
@@ -133,4 +133,4 @@ export default connect(
     accounts: state.accounts,
     categories: state.categories,
   }),
-)(EditTransactionForm);
+)(EditTransForm);
