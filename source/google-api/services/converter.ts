@@ -1,7 +1,7 @@
 import logger from '../../services/logger';
 
-export type TParserMapItem = {
-    key: string;
+export type TParserMapItem<T> = {
+    key: T;
     converter?: (value: any) => any;
 };
 
@@ -10,12 +10,12 @@ export type TParserMapItem = {
  * @param rowArr
  * @param parserMap
  */
-export const convertArrToData = (rowArr: string[], parserMap: TParserMapItem[]): any => {
+export const convertArrToData = <T>(rowArr: string[], parserMap: TParserMapItem<T>[]): any => {
     return parserMap.reduce((acc, item, idx) => {
-        if (acc.hasOwnProperty(item.key)) {
+        if (acc.hasOwnProperty(item.key as unknown as string)) {
             logger.error(`Same kay is used twice. Key was: '${item.key}'`);
         }
-        acc[item.key] = item.converter ? item.converter(rowArr[idx]) : rowArr[idx];
+        acc[item.key as unknown as string] = item.converter ? item.converter(rowArr[idx]) : rowArr[idx];
         return acc;
     }, {});
 };
@@ -29,10 +29,11 @@ type TData = {
  * @param data
  * @param parserMap
  */
-export const convertDataToArr = (data: TData, parserMap: TParserMapItem[]): any[] => {
+export const convertDataToArr = <T>(data: TData, parserMap: TParserMapItem<T>[]): any[] => {
     return parserMap.map((parseItem) => {
-        if (data.hasOwnProperty(parseItem.key)) {
-            return parseItem.converter ? parseItem.converter(data[parseItem.key]) : data[parseItem.key];
+        if (data.hasOwnProperty(parseItem.key as unknown as string)) {
+            const value = data[parseItem.key as unknown as string];
+            return parseItem.converter ? parseItem.converter(value) : value;
         }
         return;
     });

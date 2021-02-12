@@ -1,8 +1,8 @@
 import formatISO from 'date-fns/formatISO';
-import { ITransactionRowValues } from './transactionArrToData';
+import {ITransactionRowValues} from './transactionArrToData';
 import { TParserMapItem, convertDataToArr } from './converter';
 
-const parserMap: TParserMapItem[] = [
+const parserMap: TParserMapItem<keyof ITransactionRowValues>[] = [
     { key: 'id' },
     { key: 'date', converter: date => formatISO(date) },
     { key: 'accountFrom' },

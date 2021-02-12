@@ -69,7 +69,7 @@ export interface ITransactionRowValues extends ICreateTransactionValues {
 }
 
 const transactionArrToData = (rowArr: string[]): ITransactionRowValues => {
-    const parserMap: TParserMapItem[] = [
+    const parserMap: TParserMapItem<keyof ICreateTransactionValues>[] = [
         {key: 'id'},
         {key: 'date', converter: parseISO},
         {key: 'accountFrom'},

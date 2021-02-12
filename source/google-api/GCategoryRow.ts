@@ -14,7 +14,7 @@ export interface ICategoryRowValues extends ICreateCategoryValues {
 }
 
 const accountArrToData = (rowArr: string[]): ICategoryRowValues => {
-    const parserMap: TParserMapItem[] = [
+    const parserMap: TParserMapItem<keyof ICategoryRowValues>[] = [
         {key: 'id'},
         {key: 'name'},
         {key: 'parent'},
@@ -38,7 +38,7 @@ class GCategoryRow extends GRow {
     }
 
     toJSON(): any[] {
-        const parserMap: TParserMapItem[] = [
+        const parserMap: TParserMapItem<keyof ICategoryRowValues>[] = [
             {key: 'id'},
             {key: 'name'},
             {key: 'parent'},

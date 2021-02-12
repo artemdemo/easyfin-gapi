@@ -22,7 +22,7 @@ interface IAccountRowValues extends ICreateAccountValues {
 }
 
 const accountArrToData = (rowArr: string[]): IAccountRowValues => {
-    const parserMap: TParserMapItem[] = [
+    const parserMap: TParserMapItem<keyof ICreateAccountValues>[] = [
         {key: 'id'},
         {key: 'name'},
         {key: 'type', converter: value => EAccountType[value]},
@@ -47,7 +47,7 @@ class GAccountRow extends GRow {
     }
 
     toJSON(): any[] {
-        const parserMap: TParserMapItem[] = [
+        const parserMap: TParserMapItem<keyof ICreateAccountValues>[] = [
             {key: 'id'},
             {key: 'name'},
             {key: 'type'},
