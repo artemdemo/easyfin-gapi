@@ -83,14 +83,6 @@ class EditTransactionView extends React.PureComponent<TProps, TState> {
     history.push(routes.transactions());
   }
 
-  renderFormContent = (formProps: IEditTransactionForm) => {
-    return (
-      <EditTransactionForm
-        formProps={formProps}
-      />
-    );
-  };
-
   isEditingTransaction() {
     const {accounts} = this.props;
     const {transactionId} = this.props.match.params;
@@ -121,7 +113,11 @@ class EditTransactionView extends React.PureComponent<TProps, TState> {
           validationSchema={transactionValidationSchema}
           onSubmit={this.handleSubmit}
         >
-          {this.renderFormContent}
+          {(formProps: IEditTransactionForm) => (
+            <EditTransactionForm
+              formProps={formProps}
+            />
+          )}
         </Formik>
       );
     }
