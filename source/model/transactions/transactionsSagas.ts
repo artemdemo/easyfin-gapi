@@ -1,6 +1,7 @@
 import {take, put, all} from 'redux-saga/effects';
 import * as req from './transactionsReq';
 import * as actions from './transactionsActions';
+import {TAction} from '../../types/redux-actions';
 
 function* loadTransactionsSaga() {
   while (true) {
@@ -17,8 +18,8 @@ function* loadTransactionsSaga() {
 
 function* createTransactionSaga() {
   while (true) {
-    const data: { payload: actions.TCreateTransactionPayload } = yield take(actions.createTransaction);
-    const transaction = data.payload;
+    const data: TAction<actions.TCreateTransactionPayload> = yield take(actions.createTransaction);
+    const transaction = data.payload!;
     try {
       const result = yield req.createTransaction(transaction);
 
@@ -30,13 +31,23 @@ function* createTransactionSaga() {
 }
 
 function* updateTransactionSaga() {
+  while (true) {
+    const data: TAction<actions.TUpdateTransactionPayload> = yield take(actions.updateTransaction);
+    const transaction = data.payload!;
+    try {
+      const result = yield req.updateTransaction(transaction);
 
+      yield put(actions.transactionUpdated(result));
+    } catch (err) {
+      yield put(actions.transactionUpdatingError(err));
+    }
+  }
 }
 
 function* deleteTransactionSaga() {
   while (true) {
-    const data: { payload: actions.TDeleteTransactionPayload } = yield take(actions.deleteTransaction);
-    const { transaction, sheet } = data.payload;
+    const data: TAction<actions.TDeleteTransactionPayload> = yield take(actions.deleteTransaction);
+    const { transaction, sheet } = data.payload!;
     try {
       const result = yield req.deleteTransaction(sheet, transaction);
 

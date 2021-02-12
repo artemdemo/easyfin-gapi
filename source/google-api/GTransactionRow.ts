@@ -14,7 +14,7 @@ class GTransactionRow extends GRow {
         return new GTransactionRow(transactionArrToData(rowArr), lineIdx);
     }
 
-    constructor(values: ICreateTransactionValues, lineIdx?:number) {
+    constructor(values: ICreateTransactionValues, lineIdx?: number) {
         super(lineIdx);
         this._values = {
             ...values,
