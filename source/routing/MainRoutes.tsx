@@ -2,16 +2,16 @@ import React from 'react';
 import {Provider} from 'react-redux';
 import {Router, Route} from 'react-router-dom';
 import * as routes from './routes';
-import AppView from '../views/components/AppView';
-import MainView from '../views/components/MainView';
-import LoginView from '../views/components/LoginView';
-import EditTransaction from '../views/components/EditTransactionView';
-import TransactionsView from '../views/components/TransactionsView';
-import AccountsView from '../views/components/AccountsView';
-import EditAccountView from '../views/components/EditAccountView';
-import CategoriesView from '../views/components/CategoriesView';
-import EditCategoryView from '../views/components/EditCategoryView';
-import SettingsView from '../views/components/SettingsView';
+import AppView from '../views/AppView';
+import MainView from '../views/MainView';
+import LoginView from '../views/LoginView';
+import EditTransaction from '../views/EditTransactionView';
+import TransactionsView from '../views/TransactionsView';
+import AccountsView from '../views/AccountsView';
+import EditAccountView from '../views/EditAccountView';
+import CategoriesView from '../views/CategoriesView';
+import EditCategoryView from '../views/EditCategoryView';
+import SettingsView from '../views/SettingsView';
 
 type TProps = {
   store: any;

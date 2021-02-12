@@ -1,10 +1,10 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import TabLink from '../../components/Tabs/TabLink';
-import TabsContainer from '../../components/Tabs/TabsContainer';
+import TabLink from '../components/Tabs/TabLink';
+import TabsContainer from '../components/Tabs/TabsContainer';
 import SettingsMainView from './SettingsMainView';
 import SettingsApiKeys from './SettingsApiKeys';
-import * as routes from '../../routing/routes';
+import * as routes from '../routing/routes';
 
 type TProps = {};
 type TState = {};

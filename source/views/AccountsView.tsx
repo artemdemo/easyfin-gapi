@@ -1,10 +1,10 @@
 import React from 'react';
-import AccountsList from '../../containers/AccountsList/AccountsList';
-import ButtonLink from '../../components/ButtonLink/ButtonLink';
-import * as routes from '../../routing/routes';
-import {EButtonAppearance} from '../../styles/elements';
-import {t} from '../../services/i18n';
-import WaitForSheets from '../../containers/WaitForSheets/WaitForSheets';
+import AccountsList from '../containers/AccountsList/AccountsList';
+import ButtonLink from '../components/ButtonLink/ButtonLink';
+import * as routes from '../routing/routes';
+import {EButtonAppearance} from '../styles/elements';
+import {t} from '../services/i18n';
+import WaitForSheets from '../containers/WaitForSheets/WaitForSheets';
 
 type TProps = {};
 type TState = {};

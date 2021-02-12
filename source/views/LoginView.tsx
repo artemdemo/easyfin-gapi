@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Button from '../../components/Button/Button';
-import { TUserState } from '../../model/user/userReducer';
+import Button from '../components/Button/Button';
+import { TUserState } from '../model/user/userReducer';
 
 type TProps = {
     user: TUserState;

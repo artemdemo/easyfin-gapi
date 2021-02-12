@@ -9,29 +9,29 @@ import {
   createTransaction,
   updateTransaction,
   TUpdateTransaction,
-} from '../../model/transactions/transactionsActions';
-import GTransactionRow from '../../google-api/GTransactionRow';
-import {ECoin, ETransactionType} from '../../google-api/services/transactionArrToData';
-import {TUserState} from '../../model/user/userReducer';
-import {sendNotification} from '../../model/notifications/notificationsActions';
-import {t} from '../../services/i18n';
+} from '../model/transactions/transactionsActions';
+import GTransactionRow from '../google-api/GTransactionRow';
+import {ECoin, ETransactionType} from '../google-api/services/transactionArrToData';
+import {TUserState} from '../model/user/userReducer';
+import {sendNotification} from '../model/notifications/notificationsActions';
+import {t} from '../services/i18n';
 import EditTransactionForm, {
   transactionValidationSchema,
   initValues,
   TValues,
   IEditTransactionForm,
-} from '../../containers/forms/EditTransactionForm';
-import {TGlobalState} from '../../reducers';
-import {IAccountsState} from '../../model/accounts/accountsReducer';
-import {TRouterMatch} from '../../types/react-router-dom';
-import history from '../../history';
-import * as routes from '../../routing/routes';
-import {ITransactionsState} from '../../model/transactions/transactionsReducer';
+} from '../containers/forms/EditTransactionForm';
+import {TGlobalState} from '../reducers';
+import {IAccountsState} from '../model/accounts/accountsReducer';
+import {TRouterMatch} from '../types/react-router-dom';
+import history from '../history';
+import * as routes from '../routing/routes';
+import {ITransactionsState} from '../model/transactions/transactionsReducer';
 import {
   TLoadTransactions,
   loadTransactions,
-} from '../../model/transactions/transactionsActions';
-import * as time from '../../services/time';
+} from '../model/transactions/transactionsActions';
+import * as time from '../services/time';
 
 type TProps = {
   user: TUserState;

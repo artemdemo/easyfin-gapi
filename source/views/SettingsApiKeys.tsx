@@ -1,12 +1,12 @@
 import React from 'react';
-import {getInputClass, getBtnClass, EButtonAppearance} from '../../styles/elements';
-import {IFormProps} from '../../types/formik';
-import {apiKey, clientId} from '../../services/settingsStorage';
+import {getInputClass, getBtnClass, EButtonAppearance} from '../styles/elements';
+import {IFormProps} from '../types/formik';
+import {apiKey, clientId} from '../services/settingsStorage';
 import {Formik} from 'formik';
-import Button from '../../components/Button/Button';
-import {sendNotification} from '../../model/notifications/notificationsActions';
-import store from '../../store';
-import logger from '../../services/logger';
+import Button from '../components/Button/Button';
+import {sendNotification} from '../model/notifications/notificationsActions';
+import store from '../store';
+import logger from '../services/logger';
 
 type TValues = {
     apiKey: string;

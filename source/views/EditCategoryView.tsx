@@ -1,25 +1,25 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Formik} from 'formik';
-import {TGlobalState} from '../../reducers';
+import {TGlobalState} from '../reducers';
 import {
     TCreateCategory,
     createCategory,
     TUpdateCategory,
     updateCategory,
-} from '../../model/categories/categoriesActions';
-import {TRouterMatch} from '../../types/react-router-dom';
-import {t} from '../../services/i18n';
-import {ICategoriesState} from '../../model/categories/categoriesReducer';
+} from '../model/categories/categoriesActions';
+import {TRouterMatch} from '../types/react-router-dom';
+import {t} from '../services/i18n';
+import {ICategoriesState} from '../model/categories/categoriesReducer';
 import EditCategoryForm, {
     categoryValidationSchema,
     IEditCategoryForm,
     TValues,
     initValues,
-} from '../../containers/forms/EditCategoryForm';
-import GCategoryRow from '../../google-api/GCategoryRow';
-import history from '../../history';
-import * as routes from '../../routing/routes';
+} from '../containers/forms/EditCategoryForm';
+import GCategoryRow from '../google-api/GCategoryRow';
+import history from '../history';
+import * as routes from '../routing/routes';
 
 type TProps = {
     categories: ICategoriesState;
