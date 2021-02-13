@@ -9,6 +9,7 @@
     "transactions.added": "Transaction added",
     "transactions.loading": "Loading transactions data",
     "transactions.table.date": "Date",
+    "transactions.table.transactionType": "Type",
     "transactions.table.category": "Category",
     "transactions.table.amount": "Amount",
     "transactions.table.tags": "Tags",

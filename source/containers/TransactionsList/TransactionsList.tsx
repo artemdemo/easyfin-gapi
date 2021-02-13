@@ -73,6 +73,12 @@ class TransactionsList extends React.PureComponent<TProps> {
       filter: filterEquals,
     },
     {
+      Header: t('transactions.table.transactionType'),
+      accessor: 'transactionType',
+      Filter: SelectFilter,
+      filter: filterEquals,
+    },
+    {
       Header: t('transactions.table.amount'),
       accessor: 'amountInDefaultCoin',
       Cell: cellProps => formatMoney(cellProps.value),
