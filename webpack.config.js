@@ -33,7 +33,7 @@ module.exports = () => {
       publicPath: '/',
     },
     devServer: {
-      host: 'easyfin.local',
+      host: 'personal.finance',
       port: 8080,
       contentBase: `${configOptions.buildFolder}/`,
       historyApiFallback: true,
