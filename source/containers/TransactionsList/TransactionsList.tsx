@@ -61,8 +61,8 @@ class TransactionsList extends React.PureComponent<TProps> {
       Cell: (cellProps) => {
         return (
           <span title={format(cellProps.value, time.getDateTimeFormat())}>
-                        {format(cellProps.value, time.getDateFormat())}
-                    </span>
+            {format(cellProps.value, time.getDateFormat())}
+          </span>
         );
       },
     },
