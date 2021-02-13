@@ -1,6 +1,6 @@
 import React from 'react';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faExclamationTriangle} from '@fortawesome/free-solid-svg-icons';
+import {EFaIcons} from '../Icon/iconProps';
+import {Icon} from '../Icon/Icon.async';
 import {t} from '../../services/i18n';
 import InfoPanel, {EInfoAppearance} from '../InfoPanel/InfoPanel';
 
@@ -30,7 +30,7 @@ class ErrorHandler extends React.PureComponent<TProps, TState> {
         <InfoPanel
           title={(
             <>
-              <FontAwesomeIcon icon={faExclamationTriangle}/>
+              <Icon iconName={EFaIcons.faExclamationTriangle} />
               &nbsp;
               {t('Something broke')}
             </>

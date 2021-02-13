@@ -1,7 +1,7 @@
 import React from 'react';
 import {HeaderGroup} from 'react-table';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faSortAlphaDown, faSortAlphaDownAlt} from '@fortawesome/free-solid-svg-icons';
+import {EFaIcons} from '../Icon/iconProps';
+import {Icon} from '../Icon/Icon.async';
 import {IHeaderGroup} from '../../types/react-table';
 import {getTableThClass} from '../../styles/table';
 import FilterButton from './FilterButton/FilterButton';
@@ -17,9 +17,7 @@ class GeneralHeadTr extends React.Component<TProps> {
       return (
         <>
           &nbsp;
-          <FontAwesomeIcon
-            icon={header.isSortedDesc ? faSortAlphaDownAlt : faSortAlphaDown}
-          />
+          <Icon iconName={header.isSortedDesc ? EFaIcons.faSortAlphaDownAlt : EFaIcons.faSortAlphaDown} />
         </>
       );
     }

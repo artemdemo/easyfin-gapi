@@ -1,12 +1,12 @@
 import React from 'react';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faCircleNotch} from '@fortawesome/free-solid-svg-icons';
+import {EFaIcons} from '../Icon/iconProps';
+import {Icon} from '../Icon/Icon.async';
 
 export const ViewLoading: React.FC = () => {
   return (
     <div className='text-blue-300'>
-      <FontAwesomeIcon
-        icon={faCircleNotch}
+      <Icon
+        iconName={EFaIcons.faCircleNotch}
         size='2x'
         spin
       />

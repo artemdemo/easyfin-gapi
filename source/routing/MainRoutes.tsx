@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import {Provider} from 'react-redux';
 import {Router, Route} from 'react-router-dom';
 import * as routes from './routes';
@@ -24,7 +24,7 @@ const MainRoutes = (props: TProps) => (
   <Provider store={props.store}>
     <Router history={props.history}>
       <AppView>
-        <Suspense fallback={<ViewLoading />}>
+        <React.Suspense fallback={<ViewLoading />}>
           <Route path={routes.main()} component={MainView} exact/>
           <Route path={routes.login()} component={LoginView}/>
           <Route path={routes.transactions()} component={TransactionsView} exact/>
@@ -37,7 +37,7 @@ const MainRoutes = (props: TProps) => (
           <Route path={routes.categories.new()} component={EditCategoryView}/>
           <Route path={routes.categories.edit()} component={EditCategoryView}/>
           <Route path={routes.settings()} component={SettingsView}/>
-        </Suspense>
+        </React.Suspense>
       </AppView>
     </Router>
   </Provider>
