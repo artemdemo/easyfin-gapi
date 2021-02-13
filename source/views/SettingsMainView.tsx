@@ -3,7 +3,7 @@ import {Formik} from 'formik';
 import {EButtonAppearance, getBtnClass, getInputClass} from '../styles/elements';
 import {spreadsheetID} from '../services/settingsStorage';
 import {IFormProps} from '../types/formik';
-import Button from '../components/Button/Button';
+import {Button} from '../components/Button/Button';
 import {sendNotification} from '../model/notifications/notificationsActions';
 import store from '../store';
 import logger from '../services/logger';

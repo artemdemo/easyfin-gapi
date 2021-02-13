@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import history from '../history';
-import Container from '../components/Container/Container';
+import {Container} from '../components/Container/Container';
 import MainMenu from '../containers/MainMenu/MainMenu';
 import * as googleApi from '../google-api/google-api';
 import {

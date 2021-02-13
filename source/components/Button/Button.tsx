@@ -13,7 +13,7 @@ type TProps = {
   disabled?: boolean;
 };
 
-const Button = (props: TProps) => {
+export const Button = (props: TProps) => {
   const {
     type = 'submit',
     className,
@@ -42,5 +42,3 @@ const Button = (props: TProps) => {
     </button>
   );
 };
-
-export default Button;

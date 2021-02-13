@@ -2,16 +2,16 @@ import React from 'react';
 import styled from 'styled-components';
 import enhanceWithClickOutside from 'react-click-outside';
 import {EButtonAppearance} from '../../styles/elements';
-import Button from '../../components/Button/Button';
-import RowMenuItem, { TRowMenuItem } from './RowMenuItem';
+import {Button} from '../Button/Button';
+import RowMenuItem, {TRowMenuItem} from './RowMenuItem';
 
 type TProps = {
-    menu: TRowMenuItem[];
-    row: any;
+  menu: TRowMenuItem[];
+  row: any;
 };
 
 type TState = {
-    menuOpen: boolean;
+  menuOpen: boolean;
 };
 
 const Wrapper = styled.div`
@@ -20,7 +20,7 @@ const Wrapper = styled.div`
 `;
 
 type TMenuContainerProps = {
-    visible: boolean;
+  visible: boolean;
 };
 const MenuContainer = styled.div<TMenuContainerProps>`
     display: ${props => props.visible ? 'block' : 'none'};
@@ -30,54 +30,54 @@ const MenuContainer = styled.div<TMenuContainerProps>`
 `;
 
 class RowMenu extends React.PureComponent<TProps, TState> {
-    state = {
-        menuOpen: false,
-    };
+  state = {
+    menuOpen: false,
+  };
 
-    handleClickOutside = () => {
-        this.setState({
-            menuOpen: false,
-        });
-    };
+  handleClickOutside = () => {
+    this.setState({
+      menuOpen: false,
+    });
+  };
 
-    handleMenuItemClick = (item) => {
-        this.setState({
-            menuOpen: false,
-        });
-        item.onClick && item.onClick(this.props.row);
-    };
+  handleMenuItemClick = (item) => {
+    this.setState({
+      menuOpen: false,
+    });
+    item.onClick && item.onClick(this.props.row);
+  };
 
-    menuDotsClick = () => {
-        this.setState(prevState => ({
-            menuOpen: !prevState.menuOpen,
-        }))
-    };
+  menuDotsClick = () => {
+    this.setState(prevState => ({
+      menuOpen: !prevState.menuOpen,
+    }))
+  };
 
-    render() {
-        const { menu } = this.props;
-        return (
-            <Wrapper>
-                <Button
-                    appearance={EButtonAppearance.TEXT}
-                    onClick={this.menuDotsClick}
-                >
-                    ...
-                </Button>
-                <MenuContainer
-                    className='rounded bg-white border-gray-300 border-b-0 border shadow'
-                    visible={this.state.menuOpen}
-                >
-                    {menu.map(menuItem => (
-                        <RowMenuItem
-                            item={menuItem}
-                            onClick={this.handleMenuItemClick}
-                            key={menuItem.text}
-                        />
-                    ))}
-                </MenuContainer>
-            </Wrapper>
-        );
-    }
+  render() {
+    const {menu} = this.props;
+    return (
+      <Wrapper>
+        <Button
+          appearance={EButtonAppearance.TEXT}
+          onClick={this.menuDotsClick}
+        >
+          ...
+        </Button>
+        <MenuContainer
+          className='rounded bg-white border-gray-300 border-b-0 border shadow'
+          visible={this.state.menuOpen}
+        >
+          {menu.map(menuItem => (
+            <RowMenuItem
+              item={menuItem}
+              onClick={this.handleMenuItemClick}
+              key={menuItem.text}
+            />
+          ))}
+        </MenuContainer>
+      </Wrapper>
+    );
+  }
 }
 
 export default enhanceWithClickOutside(RowMenu);

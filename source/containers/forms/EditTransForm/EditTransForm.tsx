@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 import {connect} from 'react-redux';
 import {IFormProps} from '../../../types/formik';
 import {t} from '../../../services/i18n';
-import Button from '../../../components/Button/Button';
+import {Button} from '../../../components/Button/Button';
 import {TGlobalState} from '../../../reducers';
 import {IAccountsState} from '../../../model/accounts/accountsReducer';
 import {ICategoriesState} from '../../../model/categories/categoriesReducer';

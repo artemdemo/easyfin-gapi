@@ -1,15 +1,9 @@
 import React from 'react';
 
-type TProps = {
-    children: any;
+export const Container:React.FC = (props) => {
+  return (
+    <div className='container mx-auto'>
+      {props.children}
+    </div>
+  );
 };
-
-const Container = (props: TProps) => {
-    return (
-        <div className='container mx-auto'>
-            {props.children}
-        </div>
-    );
-};
-
-export default Container;
