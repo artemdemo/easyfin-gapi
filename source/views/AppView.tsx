@@ -33,11 +33,10 @@ type TProps = {
   loadAccounts: TLoadAccounts;
   loadCategories: TLoadCategories;
   loadTransactions: TLoadTransactions;
+  children: any;
 };
 
-type TState = {};
-
-class AppView extends React.PureComponent<TProps, TState> {
+class AppView extends React.PureComponent<TProps> {
   componentDidMount() {
     googleApi.loadAndInit()
       .then(this.handleClientInitialized)

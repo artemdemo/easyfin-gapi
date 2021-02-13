@@ -1,21 +1,11 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
-type TProps = {};
+const MainView: React.FC = () => {
+  return (
+    <>
+      MainView
+    </>
+  );
+};
 
-type TState = {};
-
-class MainView extends React.PureComponent<TProps, TState> {
-    render() {
-        return (
-            <>
-                MainView
-            </>
-        );
-    }
-}
-
-export default connect(
-    () => ({}),
-    {},
-)(MainView);
+export default MainView;

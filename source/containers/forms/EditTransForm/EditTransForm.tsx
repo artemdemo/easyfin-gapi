@@ -7,7 +7,6 @@ import {Button} from '../../../components/Button/Button';
 import {TGlobalState} from '../../../reducers';
 import {IAccountsState} from '../../../model/accounts/accountsReducer';
 import {ICategoriesState} from '../../../model/categories/categoriesReducer';
-import {IEditFormProps} from '../EditForm';
 import {InputAmount} from './InputAmount';
 import {InputDate} from './InputDate';
 import {TextareaComment} from './TextareaComment';
@@ -47,9 +46,8 @@ const transactionValidationSchema = Yup.object().shape({
   comment: Yup.string(),
 });
 
-interface IProps extends IEditFormProps {
+interface IProps {
   transaction?: GTransactionRow;
-  formProps: IEditTransForm;
   accounts: IAccountsState;
   categories: ICategoriesState;
   handleSubmit: (values: TValues) => void;

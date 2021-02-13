@@ -31,7 +31,6 @@ export const initValues: TValues = {
 
 interface IProps extends IEditFormProps {
   formProps: IEditCategoryForm;
-  mockSubmit: () => void;
   categories: ICategoriesState;
   categoryId?: string;
 }

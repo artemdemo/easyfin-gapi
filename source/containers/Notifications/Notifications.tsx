@@ -1,13 +1,13 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import styled from 'styled-components';
-import { INotificationsState } from '../../model/notifications/notificationsReducer';
+import {INotificationsState} from '../../model/notifications/notificationsReducer';
 import NotificationBalloon from './NotificationBalloon';
+import {TGlobalState} from '../../reducers';
 
 type TProps = {
-    notifications: INotificationsState,
+  notifications: INotificationsState,
 };
-type TState = {};
 
 const NotificationWrapper = styled.div`
     position: absolute;
@@ -15,24 +15,21 @@ const NotificationWrapper = styled.div`
     top: 25px;
 `;
 
-class Notifications extends React.PureComponent<TProps, TState> {
-    render() {
-        const { notifications } = this.props;
-        return (
-            <NotificationWrapper>
-                {notifications.data.map(item => (
-                    <NotificationBalloon
-                        key={item.id}
-                        data={item}
-                    />
-                ))}
-            </NotificationWrapper>
-        );
-    }
-}
+const Notifications: React.FC<TProps> = ({notifications}) => {
+  return (
+    <NotificationWrapper>
+      {notifications.data.map(item => (
+        <NotificationBalloon
+          key={item.id}
+          data={item}
+        />
+      ))}
+    </NotificationWrapper>
+  );
+};
 
 export default connect(
-    state => ({
-        notifications: state.notifications,
-    }),
+  (state: TGlobalState) => ({
+    notifications: state.notifications,
+  }),
 )(Notifications);

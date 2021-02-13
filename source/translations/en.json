@@ -47,6 +47,7 @@
     "common.all": "All",
     "common.search": "Search",
     "common.edit": "Edit",
+    "login.authorize": "Authorize",
     "transaction_created": "Transaction Created",
     "transaction_updated": "Transaction Updated"
 }
