@@ -16,14 +16,13 @@ import {ECoin, ETransactionType} from '../google-api/services/transactionArrToDa
 import {TUserState} from '../model/user/userReducer';
 import {sendNotification} from '../model/notifications/notificationsActions';
 import {t} from '../services/i18n';
-import EditTransForm, {initValues, TValues,} from '../containers/forms/EditTransForm/EditTransForm';
+import EditTransForm, {TValues,} from '../containers/forms/EditTransForm/EditTransForm';
 import {TGlobalState} from '../reducers';
 import {IAccountsState} from '../model/accounts/accountsReducer';
 import {TRouterMatch} from '../types/react-router-dom';
 import history from '../history';
 import * as routes from '../routing/routes';
 import {ITransactionsState} from '../model/transactions/transactionsReducer';
-import * as time from '../services/time';
 
 type TProps = {
   user: TUserState;
@@ -53,6 +52,7 @@ class EditTransactionView extends React.PureComponent<TProps, TState> {
       },
     );
     const originalTransaction = this.getCurrentTransaction();
+    const lineIdx = originalTransaction?.getLineIdx();
     const transaction = new GTransactionRow(
       {
         id: originalTransaction?.getId(),
@@ -65,20 +65,14 @@ class EditTransactionView extends React.PureComponent<TProps, TState> {
         comment: values.comment,
         userId: user.basicProfile?.getId() || '',
       },
-      originalTransaction?.getLineIdx()
+      lineIdx,
     );
-    if (this.isEditingTransaction()) {
+    if (lineIdx) {
       updateTransaction(transaction);
     } else {
       createTransaction(transaction);
     }
     history.push(routes.transactions());
-  }
-
-  isEditingTransaction() {
-    const {accounts} = this.props;
-    const {transactionId} = this.props.match.params;
-    return accounts.data.length() > 0 && transactionId;
   }
 
   getCurrentTransaction() {
@@ -88,26 +82,12 @@ class EditTransactionView extends React.PureComponent<TProps, TState> {
   }
 
   renderForm() {
-    const {transactionId} = this.props.match.params;
-    if (this.isEditingTransaction() || !transactionId) {
-      const transaction = this.getCurrentTransaction();
-      const values = transaction?.getValues();
-      const _initValues: TValues = this.isEditingTransaction() ? {
-        date: values?.date ? format(values.date, time.getDateFormat()) : '',
-        amount: String(values?.amountInDefaultCoin) || '',
-        accountFrom: values?.accountFrom || '',
-        rootCategory: values?.rootCategory || '',
-        comment: values?.comment || '',
-        transactionType: values?.transactionType || ETransactionType.expense,
-      } : initValues;
-      return (
-        <EditTransForm
-          initialValues={_initValues}
-          handleSubmit={this.handleSubmit}
-        />
-      );
-    }
-    return null;
+    return (
+      <EditTransForm
+        transaction={this.getCurrentTransaction()}
+        handleSubmit={this.handleSubmit}
+      />
+    );
   }
 
   render() {

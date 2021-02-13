@@ -16,6 +16,9 @@ import {SelectCategory} from './SelectCategory';
 import {Formik} from 'formik';
 import {SelectTransType} from './SelectTransType';
 import {ETransactionType} from '../../../google-api/services/transactionArrToData';
+import GTransactionRow from '../../../google-api/GTransactionRow';
+import format from 'date-fns/format';
+import * as time from '../../../services/time';
 
 export type TValues = {
   date: string;
@@ -44,17 +47,8 @@ const transactionValidationSchema = Yup.object().shape({
   comment: Yup.string(),
 });
 
-export const initValues: TValues = {
-  amount: '',
-  accountFrom: '',
-  rootCategory: '',
-  date: '',
-  comment: '',
-  transactionType: ETransactionType.expense,
-};
-
 interface IProps extends IEditFormProps {
-  initialValues: TValues;
+  transaction?: GTransactionRow;
   formProps: IEditTransForm;
   accounts: IAccountsState;
   categories: ICategoriesState;
@@ -62,14 +56,26 @@ interface IProps extends IEditFormProps {
 }
 
 const EditTransForm: React.FC<IProps> = (props) => {
-  const { initialValues, accounts, categories, handleSubmit } = props;
+  const { transaction, accounts, categories, handleSubmit } = props;
   const isDisabled = () => {
     return accounts.loading;
   }
 
+  const gitInitValues = (): TValues => {
+    const values = transaction?.getValues();
+    return {
+      date: values?.date ? format(values.date, time.getDateFormat()) : '',
+      amount: String(values?.amountInDefaultCoin) || '',
+      accountFrom: values?.accountFrom || '',
+      rootCategory: values?.rootCategory || '',
+      comment: values?.comment || '',
+      transactionType: values?.transactionType || ETransactionType.expense,
+    };
+  };
+
   return (
     <Formik
-      initialValues={initialValues}
+      initialValues={gitInitValues()}
       validationSchema={transactionValidationSchema}
       onSubmit={(values: TValues, {setSubmitting}) => {
         setSubmitting(false);
