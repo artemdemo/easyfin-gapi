@@ -1,7 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import parseISO from 'date-fns/parseISO';
-import format from 'date-fns/format';
 import set from 'date-fns/set';
 import {
   createTransaction,
@@ -12,7 +11,7 @@ import {
   updateTransaction,
 } from '../model/transactions/transactionsActions';
 import GTransactionRow from '../google-api/GTransactionRow';
-import {ECoin, ETransactionType} from '../google-api/services/transactionArrToData';
+import {ECoin} from '../google-api/services/transactionArrToData';
 import {TUserState} from '../model/user/userReducer';
 import {sendNotification} from '../model/notifications/notificationsActions';
 import {t} from '../services/i18n';
@@ -23,6 +22,7 @@ import {TRouterMatch} from '../types/react-router-dom';
 import history from '../history';
 import * as routes from '../routing/routes';
 import {ITransactionsState} from '../model/transactions/transactionsReducer';
+import {getHours, getMinutes, getSeconds} from 'date-fns';
 
 type TProps = {
   user: TUserState;
@@ -41,17 +41,18 @@ type TState = {};
 class EditTransactionView extends React.PureComponent<TProps, TState> {
   handleSubmit = (values: TValues) => {
     const {user, createTransaction, updateTransaction} = this.props;
+    const originalTransaction = this.getCurrentTransaction();
+    const originalDate = originalTransaction?.getDate();
     const now = new Date();
-    // ToDo: this is a problem for updating transaction - you allways change time
     const date = set(
       parseISO(values.date),
       {
-        hours: now.getUTCHours(),
-        minutes: now.getUTCMinutes(),
-        seconds: now.getUTCSeconds(),
+        hours: originalDate ? getHours(originalDate) : now.getUTCHours(),
+        minutes: originalDate ? getMinutes(originalDate) : now.getUTCMinutes(),
+        seconds: originalDate ? getSeconds(originalDate) : now.getUTCSeconds(),
       },
     );
-    const originalTransaction = this.getCurrentTransaction();
+
     const lineIdx = originalTransaction?.getLineIdx();
     const transaction = new GTransactionRow(
       {
