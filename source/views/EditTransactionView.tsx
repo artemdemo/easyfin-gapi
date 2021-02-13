@@ -43,6 +43,7 @@ class EditTransactionView extends React.PureComponent<TProps, TState> {
   handleSubmit = (values: TValues) => {
     const {user, createTransaction, updateTransaction} = this.props;
     const now = new Date();
+    // ToDo: this is a problem for updating transaction - you allways change time
     const date = set(
       parseISO(values.date),
       {
@@ -57,7 +58,7 @@ class EditTransactionView extends React.PureComponent<TProps, TState> {
         id: originalTransaction?.getId(),
         date,
         accountFrom: values.accountFrom,
-        transactionType: ETransactionType.expense,
+        transactionType: values.transactionType,
         amountInDefaultCoin: parseFloat(values.amount),
         defaultCoin: ECoin.ils,
         rootCategory: values.rootCategory,
