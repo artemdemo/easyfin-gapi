@@ -14,6 +14,8 @@ import {TextareaComment} from './TextareaComment';
 import {SelectAccount} from './SelectAccount';
 import {SelectCategory} from './SelectCategory';
 import {Formik} from 'formik';
+import {SelectTransType} from './SelectTransType';
+import {ETransactionType} from '../../../google-api/services/transactionArrToData';
 
 export type TValues = {
   date: string;
@@ -21,6 +23,7 @@ export type TValues = {
   accountFrom: string;
   rootCategory: string;
   comment: string;
+  transactionType: ETransactionType;
 };
 
 export interface IEditTransForm extends IFormProps {
@@ -36,6 +39,8 @@ const transactionValidationSchema = Yup.object().shape({
     .required(t('common.required')),
   rootCategory: Yup.string()
     .required(t('common.required')),
+  transactionType: Yup.string()
+    .required(t('common.required')),
   comment: Yup.string(),
 });
 
@@ -45,6 +50,7 @@ export const initValues: TValues = {
   rootCategory: '',
   date: '',
   comment: '',
+  transactionType: ETransactionType.expense,
 };
 
 interface IProps extends IEditFormProps {
@@ -74,38 +80,46 @@ const EditTransForm: React.FC<IProps> = (props) => {
         <form className='max-w-md' onSubmit={formProps.handleSubmit}>
           <div className='flex flex-wrap -mx-2 mb-4'>
             <div className='w-1/2 px-2'>
-              <InputAmount
-                disabled={isDisabled()}
+              <SelectTransType
                 formProps={formProps}
+                disabled={isDisabled()}
+              />
+            </div>
+          </div>
+          <div className='flex flex-wrap -mx-2 mb-4'>
+            <div className='w-1/2 px-2'>
+              <InputAmount
+                formProps={formProps}
+                disabled={isDisabled()}
               />
             </div>
             <div className='w-1/2 px-2'>
               <SelectAccount
-                disabled={isDisabled()}
                 formProps={formProps}
                 accounts={accounts}
+                disabled={isDisabled()}
               />
             </div>
           </div>
           <div className='flex flex-wrap -mx-2 mb-4'>
             <div className='w-1/2 px-2'>
               <InputDate
-                disabled={isDisabled()}
                 formProps={formProps}
+                disabled={isDisabled()}
               />
             </div>
             <div className='w-1/2 px-2'>
               <SelectCategory
-                disabled={isDisabled()}
                 formProps={formProps}
                 categories={categories}
+                disabled={isDisabled()}
               />
             </div>
           </div>
           <div className='mb-4'>
             <TextareaComment
-              disabled={isDisabled()}
               formProps={formProps}
+              disabled={isDisabled()}
             />
           </div>
           <Button type='submit' disabled={isDisabled()}>
