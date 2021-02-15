@@ -1,7 +1,7 @@
 import _cloneDeep from 'lodash/cloneDeep';
 import GRow from './GRow';
 import transactionArrToData, {
-    ICreateTransactionValues,
+    TCreateTransactionValues,
     ITransactionRowValues,
 } from './services/transactionArrToData';
 import dataToTransactionArr from './services/dataToTransactionArr';
@@ -14,7 +14,7 @@ class GTransactionRow extends GRow {
         return new GTransactionRow(transactionArrToData(rowArr), lineIdx);
     }
 
-    constructor(values: ICreateTransactionValues, lineIdx?: number) {
+    constructor(values: TCreateTransactionValues, lineIdx?: number) {
         super(lineIdx);
         this._values = {
             ...values,

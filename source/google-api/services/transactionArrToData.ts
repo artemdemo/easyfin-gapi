@@ -1,5 +1,6 @@
 import parseISO from 'date-fns/parseISO';
 import { TParserMapItem, convertArrToData } from './converter';
+import {ITransactionsTable} from '../db/TransactionsTable';
 
 export enum ECoin {
     ils = 'ILS',
@@ -34,10 +35,11 @@ const getTags = (valueStr: string): string[] => {
     return valueStr !== '' ? valueStr.split(',') : [];
 };
 
-export interface ICreateTransactionValues {
+type Modify<T, R> = Omit<T, keyof R> & R;
+
+export type TCreateTransactionValues = Modify<ITransactionsTable, {
     id?: string;
     date: Date;
-    accountFrom: string;
     accountTo?: string;
     transactionType: ETransactionType;
     amountInDefaultCoin: number;
@@ -50,26 +52,15 @@ export interface ICreateTransactionValues {
     comment?: string;
     tags?: string[];
     category?: string;
-    rootCategory: string;
-    // `parentId` is used to group related transactions.
-    // For example when you purchased number of goods together,
-    // but you need to place it in different categories.
-    // This is only are unique id, not a reference to somewhere.
-    // There is no actual parent, just a way to find all related transactions.
     parentId?: string;
-    // In order to manage family budget I need to keep all transactions in one file,
-    // but to allow different family members access to it.
-    // In order to distinguish between entries I'm using `userId`,
-    // which most likely will be an email.
-    userId: string;
-}
+}>;
 
-export interface ITransactionRowValues extends ICreateTransactionValues {
+export interface ITransactionRowValues extends TCreateTransactionValues {
     id: string;
 }
 
 const transactionArrToData = (rowArr: string[]): ITransactionRowValues => {
-    const parserMap: TParserMapItem<keyof ICreateTransactionValues>[] = [
+    const parserMap: TParserMapItem<keyof ITransactionsTable>[] = [
         {key: 'id'},
         {key: 'date', converter: parseISO},
         {key: 'accountFrom'},
@@ -86,6 +77,7 @@ const transactionArrToData = (rowArr: string[]): ITransactionRowValues => {
         {key: 'tags', converter: getTags},
         {key: 'category', converter: getStringMaybe},
         {key: 'rootCategory'},
+        {key: 'parentId', converter: getStringMaybe},
         {key: 'userId'},
     ];
     return <ITransactionRowValues> convertArrToData(rowArr, parserMap);
