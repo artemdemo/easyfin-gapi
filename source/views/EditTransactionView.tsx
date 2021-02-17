@@ -11,7 +11,6 @@ import {
   updateTransaction,
 } from '../model/transactions/transactionsActions';
 import GTransactionRow from '../google-api/GTransactionRow';
-import {ECoin} from '../google-api/services/transactionArrToData';
 import {TUserState} from '../model/user/userReducer';
 import {sendNotification} from '../model/notifications/notificationsActions';
 import {t} from '../services/i18n';
@@ -23,6 +22,7 @@ import history from '../history';
 import * as routes from '../routing/routes';
 import {ITransactionsState} from '../model/transactions/transactionsReducer';
 import {getHours, getMinutes, getSeconds} from 'date-fns';
+import {ECoin} from '../google-api/db/TransactionsTable';
 
 type TProps = {
   user: TUserState;
