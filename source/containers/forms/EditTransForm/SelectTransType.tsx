@@ -4,7 +4,7 @@ import {t} from '../../../services/i18n';
 import Select from '../../../components/Select/Select';
 import {IEditTransForm} from './EditTransForm';
 import InputError from '../../../components/InputError/InputError';
-import {ETransactionType} from '../../../google-api/services/transactionArrToData';
+import {ETransactionType} from '../../../google-api/db/TransactionsTable';
 
 interface IProps {
   formProps: IEditTransForm;

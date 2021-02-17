@@ -1,35 +1,30 @@
 import GRow from './GRow';
 import _cloneDeep from 'lodash/cloneDeep';
-import {convertArrToData, convertDataToArr, TParserMapItem} from './services/converter';
+import {convertArrToData, convertDataToArr} from './services/converter';
 import {generateId} from '../services/id';
+import {Modify} from '../types/utils';
+import {categoriesTableDefinition, ICategoriesTable} from './db/CategoriesTable';
 
-interface ICreateCategoryValues {
+export type TCreateCategoryValues = Modify<ICategoriesTable, {
     id?: string;
-    name: string;
     parent?: string;
-}
+}>;
 
-export interface ICategoryRowValues extends ICreateCategoryValues {
+export interface ICategoryRowValues extends TCreateCategoryValues {
     id: string;
 }
-
-const accountArrToData = (rowArr: string[]): ICategoryRowValues => {
-    const parserMap: TParserMapItem<keyof ICategoryRowValues>[] = [
-        {key: 'id'},
-        {key: 'name'},
-        {key: 'parent'},
-    ];
-    return <ICategoryRowValues> convertArrToData(rowArr, parserMap);
-};
 
 class GCategoryRow extends GRow {
     private readonly _values: ICategoryRowValues;
 
     static fromArr(rowArr: string[], lineIdx?: number): GCategoryRow {
-        return new GCategoryRow(accountArrToData(rowArr), lineIdx);
+        return new GCategoryRow(
+          convertArrToData(rowArr, categoriesTableDefinition),
+          lineIdx,
+        );
     }
 
-    constructor(values: ICreateCategoryValues, lineIdx?: number) {
+    constructor(values: TCreateCategoryValues, lineIdx?: number) {
         super(lineIdx);
         this._values = {
             ...values,
@@ -38,15 +33,10 @@ class GCategoryRow extends GRow {
     }
 
     toJSON(): any[] {
-        const parserMap: TParserMapItem<keyof ICategoryRowValues>[] = [
-            {key: 'id'},
-            {key: 'name'},
-            {key: 'parent'},
-        ];
-        return convertDataToArr(this._values, parserMap);
+        return convertDataToArr(this._values, categoriesTableDefinition);
     }
 
-    getValues(): ICreateCategoryValues {
+    getValues(): TCreateCategoryValues {
         return _cloneDeep(this._values);
     }
 
@@ -62,7 +52,7 @@ class GCategoryRow extends GRow {
         return this._values.parent;
     }
 
-    clone(values?: ICreateCategoryValues): GCategoryRow {
+    clone(values?: TCreateCategoryValues): GCategoryRow {
         return new GCategoryRow(
             {
                 ...this.getValues(),

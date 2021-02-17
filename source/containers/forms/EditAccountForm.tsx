@@ -5,8 +5,8 @@ import {t} from '../../services/i18n';
 import {getInputClass} from '../../styles/elements';
 import Select from '../../components/Select/Select';
 import {Button} from '../../components/Button/Button';
-import {EAccountType} from '../../google-api/GAccountRow';
 import EditForm, {IEditFormProps} from './EditForm';
+import {EAccountType} from '../../google-api/db/AccountsTable';
 
 export type TValues = {
   name: string;

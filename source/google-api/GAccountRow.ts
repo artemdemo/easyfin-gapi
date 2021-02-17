@@ -1,44 +1,31 @@
 import _cloneDeep from 'lodash/cloneDeep';
 import GRow from './GRow';
-import { TParserMapItem, convertArrToData, convertDataToArr } from './services/converter';
+import { convertArrToData, convertDataToArr } from './services/converter';
 import {generateId} from '../services/id';
+import {Modify} from '../types/utils';
+import {accountsTableDefinition, EAccountType, IAccountsTable} from './db/AccountsTable';
 
-export enum EAccountType {
-    credit = 'credit',
-    saving = 'saving',
-    wallet = 'wallet',
-    bank = 'bank',
-}
-
-interface ICreateAccountValues {
+export type TCreateAccountValues = Modify<IAccountsTable, {
     id?: string;
-    name: string;
     type: EAccountType;
     startAmount: number;
-}
+}>;
 
-interface IAccountRowValues extends ICreateAccountValues {
+interface IAccountRowValues extends TCreateAccountValues {
     id: string;
 }
-
-const accountArrToData = (rowArr: string[]): IAccountRowValues => {
-    const parserMap: TParserMapItem<keyof ICreateAccountValues>[] = [
-        {key: 'id'},
-        {key: 'name'},
-        {key: 'type', converter: value => EAccountType[value]},
-        {key: 'startAmount', converter: parseFloat},
-    ];
-    return <IAccountRowValues> convertArrToData(rowArr, parserMap);
-};
 
 class GAccountRow extends GRow {
     private readonly _values: IAccountRowValues;
 
     static fromArr(rowArr: string[], lineIdx?: number): GAccountRow {
-        return new GAccountRow(accountArrToData(rowArr), lineIdx);
+        return new GAccountRow(
+          convertArrToData(rowArr, accountsTableDefinition),
+          lineIdx,
+        );
     }
 
-    constructor(values: ICreateAccountValues, lineIdx?:number) {
+    constructor(values: TCreateAccountValues, lineIdx?:number) {
         super(lineIdx);
         this._values = {
             ...values,
@@ -47,13 +34,7 @@ class GAccountRow extends GRow {
     }
 
     toJSON(): any[] {
-        const parserMap: TParserMapItem<keyof ICreateAccountValues>[] = [
-            {key: 'id'},
-            {key: 'name'},
-            {key: 'type'},
-            {key: 'startAmount'},
-        ];
-        return convertDataToArr(this._values, parserMap);
+        return convertDataToArr(this._values, accountsTableDefinition);
     }
 
     getValues(): IAccountRowValues {
@@ -68,7 +49,7 @@ class GAccountRow extends GRow {
         return this._values.name;
     }
 
-    clone(values?: ICreateAccountValues): GAccountRow {
+    clone(values?: TCreateAccountValues): GAccountRow {
         return new GAccountRow(
             {
                 ...this.getValues(),

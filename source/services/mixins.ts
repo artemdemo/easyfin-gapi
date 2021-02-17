@@ -1,21 +1,21 @@
 import DataListGRow from '../model/DataListGRow';
-import GTransactionRow from '../google-api/GTransactionRow';
+import GTransactionRow, {ITransactionRowValues} from '../google-api/GTransactionRow';
 import GCategoryRow from '../google-api/GCategoryRow';
 import GAccountRow from '../google-api/GAccountRow';
-import {ITransactionRowValues} from '../google-api/services/transactionArrToData';
+import {Modify} from '../types/utils';
 
-export interface ITransaction extends Omit<ITransactionRowValues, 'accountFrom'|'accountTo'|'rootCategory'|'category'> {
+export type TTransaction = Modify<ITransactionRowValues, {
     accountFrom: GAccountRow;
     accountTo?: GAccountRow;
     rootCategory: GCategoryRow;
     category?: GCategoryRow;
-}
+}>;
 
 export const enrichTransactions = (
     transactions: DataListGRow<GTransactionRow>,
     accounts: DataListGRow<GAccountRow>,
     categories: DataListGRow<GCategoryRow>,
-): ITransaction[] => {
+): TTransaction[] => {
     return transactions.map((transactionRow) => {
         const transactionRowValues = transactionRow.getValues();
         const accountFrom = accounts.find(accountRow => accountRow.getId() === transactionRowValues.accountFrom);

@@ -7,7 +7,7 @@ import EditAccountForm, {
     accountValidationSchema,
     initValues,
 } from '../containers/forms/EditAccountForm';
-import GAccountRow, { EAccountType } from '../google-api/GAccountRow';
+import GAccountRow from '../google-api/GAccountRow';
 import {
     TCreateAccount,
     createAccount,
@@ -20,6 +20,7 @@ import {IAccountsState} from '../model/accounts/accountsReducer';
 import {t} from '../services/i18n';
 import history from '../history';
 import * as routes from '../routing/routes';
+import {EAccountType} from '../google-api/db/AccountsTable';
 
 type TProps = {
     accounts: IAccountsState;

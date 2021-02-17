@@ -14,10 +14,10 @@ import {SelectAccount} from './SelectAccount';
 import {SelectCategory} from './SelectCategory';
 import {Formik} from 'formik';
 import {SelectTransType} from './SelectTransType';
-import {ETransactionType} from '../../../google-api/services/transactionArrToData';
 import GTransactionRow from '../../../google-api/GTransactionRow';
 import format from 'date-fns/format';
 import * as time from '../../../services/time';
+import {ETransactionType} from '../../../google-api/db/TransactionsTable';
 
 export type TValues = {
   date: string;

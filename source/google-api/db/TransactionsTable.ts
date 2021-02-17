@@ -1,3 +1,7 @@
+import formatISO from 'date-fns/formatISO';
+import parseISO from 'date-fns/parseISO';
+import {TTableDefinition} from './db-types';
+
 export interface ITransactionsTable {
   id: string;
   date: string;
@@ -28,29 +32,128 @@ export interface ITransactionsTable {
   userId: string;
 }
 
-type TTransactionsTableDefinition = {
-  [key in keyof ITransactionsTable]: {
-    idx: number;
-  };
+export enum ECoin {
+  ils = 'ILS',
+  usd = 'USD',
+  eur = 'EUR',
+  rub = 'RUB',
+}
+
+export enum ETransactionType {
+  income = 'income',
+  expense = 'expense',
+  transferFromAccount = 'transferFromAccount',
+}
+
+export const getFloatMaybe = (valueStr: string): number|undefined => {
+  return valueStr !== '' ? parseFloat(valueStr) : undefined;
 };
 
-export const TransactionsTableDefinition: Readonly<TTransactionsTableDefinition> = {
-  id: { idx: 0 },
-  date: { idx: 1 },
-  accountFrom: { idx: 2 },
-  accountTo: { idx: 3 },
-  transactionType: { idx: 4 },
-  amountInDefaultCoin: { idx: 5 },
-  defaultCoin: { idx: 6 },
-  amountInAccountFromCoin: { idx: 7 },
-  accountFromCoin: { idx: 8 },
-  exchangeRate: { idx: 9 },
-  amountInAccountToCoin: { idx: 10 },
-  accountToCoin: { idx: 11 },
-  comment: { idx: 12 },
-  tags: { idx: 13 },
-  category: { idx: 14 },
-  rootCategory: { idx: 15 },
-  parentId: { idx: 16 },
-  userId: { idx: 17 },
+export const getStringMaybe = (valueStr: string): string|undefined => {
+  return valueStr !== '' ? valueStr : undefined;
+};
+
+export const getCoinMaybe = (valueStr: string): ECoin|undefined => {
+  return valueStr !== '' ? ECoin[valueStr] : undefined;
+};
+
+export const getExchangeRate = (valueStr: string): number => {
+  return valueStr !== '' ? parseFloat(valueStr) : 1
+};
+
+export const transactionsTableDefinition: Readonly<TTableDefinition<ITransactionsTable>> = {
+  id: {
+    idx: 0,
+    name: 'id',
+  },
+  date: {
+    idx: 1,
+    name: 'date',
+    convertToExcel: (value: Date) => formatISO(value),
+    convertFromExcel: (value: string) => parseISO(value),
+  },
+  accountFrom: {
+    idx: 2,
+    name: 'accountFrom',
+  },
+  accountTo: {
+    idx: 3,
+    name: 'accountTo',
+    convertToExcel: (value: string) => value ?? '',
+    convertFromExcel: getStringMaybe,
+  },
+  transactionType: {
+    idx: 4,
+    name: 'transactionType',
+    convertFromExcel: (value: string) => ETransactionType[value],
+  },
+  amountInDefaultCoin: {
+    idx: 5,
+    name: 'amountInDefaultCoin',
+    convertFromExcel: (value: string) => parseFloat(value),
+  },
+  defaultCoin: {
+    idx: 6,
+    name: 'defaultCoin',
+    convertFromExcel: getFloatMaybe,
+  },
+  amountInAccountFromCoin: {
+    idx: 7,
+    name: 'amountInAccountFromCoin',
+    convertFromExcel: getFloatMaybe,
+  },
+  accountFromCoin: {
+    idx: 8,
+    name: 'accountFromCoin',
+    convertFromExcel: getCoinMaybe,
+  },
+  exchangeRate: {
+    idx: 9,
+    name: 'exchangeRate',
+    convertToExcel: exchangeRate => exchangeRate ?? 1,
+    convertFromExcel: getExchangeRate,
+  },
+  amountInAccountToCoin: {
+    idx: 10,
+    name: 'amountInAccountToCoin',
+    convertToExcel: amountInAccountToCoin => amountInAccountToCoin ?? '',
+    convertFromExcel: getFloatMaybe,
+  },
+  accountToCoin: {
+    idx: 11,
+    name: 'accountToCoin',
+    convertToExcel: accountToCoin => accountToCoin ?? '',
+    convertFromExcel: getCoinMaybe,
+  },
+  comment: {
+    idx: 12,
+    name: 'comment',
+    convertToExcel: comment => comment ?? '',
+    convertFromExcel: getStringMaybe,
+  },
+  tags: {
+    idx: 13,
+    name: 'tags',
+    convertToExcel: tags => tags ?? '',
+    convertFromExcel: (valueStr: string) => valueStr !== '' ? valueStr.split(',') : [],
+  },
+  category: {
+    idx: 14,
+    name: 'category',
+    convertToExcel: category => category ?? '',
+    convertFromExcel: getStringMaybe,
+  },
+  rootCategory: {
+    idx: 15,
+    name: 'rootCategory'
+  },
+  parentId: {
+    idx: 16,
+    name: 'parentId',
+    convertFromExcel: getStringMaybe,
+  },
+  userId: {
+    idx: 17,
+    name: 'userId',
+  },
 };

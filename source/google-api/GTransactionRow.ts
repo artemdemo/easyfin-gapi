@@ -1,17 +1,40 @@
 import _cloneDeep from 'lodash/cloneDeep';
 import GRow from './GRow';
-import transactionArrToData, {
-    TCreateTransactionValues,
-    ITransactionRowValues,
-} from './services/transactionArrToData';
-import dataToTransactionArr from './services/dataToTransactionArr';
 import {generateId} from '../services/id';
+import {convertArrToData, convertDataToArr} from './services/converter';
+import {ECoin, ETransactionType, ITransactionsTable, transactionsTableDefinition} from './db/TransactionsTable';
+import {Modify} from '../types/utils';
+
+export type TCreateTransactionValues = Modify<ITransactionsTable, {
+    id?: string;
+    date: Date;
+    accountTo?: string;
+    transactionType: ETransactionType;
+    amountInDefaultCoin: number;
+    defaultCoin: ECoin;
+    amountInAccountFromCoin?: number;
+    accountFromCoin?: ECoin;
+    exchangeRate?: number;
+    amountInAccountToCoin?: number;
+    accountToCoin?: ECoin;
+    comment?: string;
+    tags?: string[];
+    category?: string;
+    parentId?: string;
+}>;
+
+export interface ITransactionRowValues extends TCreateTransactionValues {
+    id: string;
+}
 
 class GTransactionRow extends GRow {
     private readonly _values: ITransactionRowValues;
 
     static fromArr(rowArr: string[], lineIdx?: number): GTransactionRow {
-        return new GTransactionRow(transactionArrToData(rowArr), lineIdx);
+        return new GTransactionRow(
+          convertArrToData(rowArr, transactionsTableDefinition),
+          lineIdx,
+        );
     }
 
     constructor(values: TCreateTransactionValues, lineIdx?: number) {
@@ -23,7 +46,7 @@ class GTransactionRow extends GRow {
     }
 
     toJSON(): any[] {
-        return dataToTransactionArr(this._values);
+        return convertDataToArr(this._values, transactionsTableDefinition);
     }
 
     getValues(): ITransactionRowValues {
